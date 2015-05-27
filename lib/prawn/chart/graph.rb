@@ -13,6 +13,7 @@ module Prawn
           draw_legend
           draw_y_grid
           draw_y_axis
+          # draw_x_axis
         end
       end
 

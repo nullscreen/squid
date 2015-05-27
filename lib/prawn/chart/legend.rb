@@ -28,13 +28,6 @@ module Prawn
       def series_colors
         %w(ff0000 00ff00 0000ff)
       end
-
-      def with(property, new_value)
-        old_value = self.public_send(property)
-        public_send "#{property}=", new_value
-        yield
-        public_send "#{property}=", old_value
-      end
     end
   end
 end
