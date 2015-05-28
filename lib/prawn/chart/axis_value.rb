@@ -5,14 +5,8 @@ module Prawn
     class AxisValue < Base
       def draw
         return unless visible?
-
-        maximum_values = data.map do |max|
-          number_with_precision(max, significant: true, precision: 2).to_i
-        end
-
-        w = settings[:x1] - 5 # padding
-        draw_label_one label_for(maximum_values.first), w
-        draw_label_two label_for(maximum_values.last), w if settings[:two_axis]
+        draw_label_one label_for(data.first)
+        draw_label_two label_for(data.last) if settings[:two_axis]
       end
 
     private
@@ -25,20 +19,23 @@ module Prawn
         end
       end
 
-      def draw_label_one(label, width)
-        draw_label label, settings[:left], align: :right, width: width
+      def draw_label_one(label)
+        draw_label label, bounds.left, align: :right, width: label_width
       end
 
-      def draw_label_two(label, width)
-        draw_label label, settings[:w] - width, align: :left, width: width
+      def draw_label_two(label)
+        left = settings[:width] + settings[:axis_width] + padding
+        draw_label label, left, align: :left, width: label_width
       end
 
       def draw_label(label, left, options = {})
-        padding, height = 5, 20
-        x2 = settings[:y] + height/2
-        options.merge! size: 8, valign: :center, height: height
-        options.merge! overflow: :shrink_to_fit, disable_wrap_by_char: true
+        options.reverse_merge! text_options
+        x2 = settings[:y] + options[:height]/2
         text_box label, options.merge(at: [left, x2])
+      end
+
+      def label_width
+        settings[:axis_width] - padding
       end
     end
   end

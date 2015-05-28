@@ -24,10 +24,6 @@ module Prawn
           stroke { fill_rectangle origin, size, size }
         end
       end
-
-      def series_colors
-        %w(ff0000 00ff00 0000ff)
-      end
     end
   end
 end

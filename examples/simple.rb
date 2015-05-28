@@ -7,9 +7,9 @@ year_on_year  = {"this_period"=> {"Apr 01"=>20555, "Apr 02"=>29722, "Apr 03"=>12
 demographics  = {"71.8% male"=>{"13-17"=>5.7, "18-24"=>14.0, "25-34"=>25.6, "35-44"=>13.8, "45-54"=>8.6, "55-64"=>2.6, "65-"=>1.5}, "28.3% female"=>{"13-17"=>4.5, "18-24"=>6.3, "25-34"=>7.4, "35-44"=>4.2, "45-54"=>3.3, "55-64"=>1.6, "65-"=>1.0}}
 
 Prawn::Document.generate(name) do
-  chart viewership, type: :two_axis, legend: {x_offset: -65}
+  chart viewership, type: :two_axis, legend: {x_offset: -65}, categories: {ticks: true, every: 4}
   stroke_horizontal_rule
-  move_down 30
+  move_down 40
 
   chart monthly_views, legend: false
   stroke_horizontal_rule
@@ -17,9 +17,9 @@ Prawn::Document.generate(name) do
 
   chart demographics, format: :percentage, legend: {x_offset: -65}
   stroke_horizontal_rule
-  move_down 30
+  move_down 40
 
-  chart year_on_year, height: 124
+  chart year_on_year, height: 124, categories: {ticks: true, every: 4}
   stroke_horizontal_rule
 
 end

@@ -1,19 +1,24 @@
-require 'prawn/chart/base'
-require 'prawn/chart/legend'
-require 'prawn/chart/gridline'
 require 'prawn/chart/axis_value'
+require 'prawn/chart/category'
+require 'prawn/chart/graph_value'
+require 'prawn/chart/gridline'
+require 'prawn/chart/legend'
 
 module Prawn
   module Chart
     class Graph < Base
-      def draw
-        x, y, w, h = 0, pdf.cursor, bounds.width, settings.fetch(:height, 200)
+      AXIS_WIDTH = 50
+      LINES = 4
 
-        bounding_box [x, y], width: w, height: h do
+      def draw
+        bounding_box [0, pdf.cursor], width: bounds.width, height: height do
           draw_legend
           draw_y_grid
           draw_y_axis
-          # draw_x_axis
+          draw_categories
+          draw_graph
+          draw_baseline
+          stroke_bounds # TEMPORARY
         end
       end
 
@@ -25,30 +30,89 @@ module Prawn
 
       def draw_y_grid
         each_gridline do |options = {}|
-          Gridline.new(pdf, series_limits, options).draw
+          Gridline.new(pdf, maximum_values, options).draw
         end
       end
 
       def draw_y_axis
         each_gridline do |options = {}|
-          AxisValue.new(pdf, series_limits, options).draw
+          options.merge! format: format, two_axis: two_axis?
+          AxisValue.new(pdf, maximum_values, options).draw
         end
       end
 
-      def series_limits
-        data.values.map{|series| series.values.max}
+      # Note: This must come after draw_graph to draw the line on top
+      def draw_baseline
+        stroke_horizontal_line AXIS_WIDTH, graph_width+AXIS_WIDTH, at: baseline
+      end
+
+      def maximum_values
+        data.values.map do |series|
+          max = series.values.max
+          number_with_precision(max, significant: true, precision: 2).to_f
+        end
       end
 
       def each_gridline
-        lines = 4
-        options = {x1: 50, w: bounds.width, left: bounds.left}
-        options[:two_axis] = settings.fetch(:type, :column) == :two_axis
-        options[:format] = settings.fetch :format, :number
-
-        0.upto(lines) do |i|
-          y = cursor - i*bounds.height/(lines+1)
-          yield options.merge(y: y, fraction: (lines-i)/lines.to_f)
+        0.upto(LINES-1) do |i|
+          y = bounds.top - graph_height*i/LINES
+          part = (LINES-i)/LINES.to_f
+          yield axis_width: AXIS_WIDTH, width: graph_width, y: y, fraction: part
         end
+      end
+
+      def graph_height
+        bounds.height - TEXT_HEIGHT
+      end
+
+      def graph_width
+        bounds.width - AXIS_WIDTH * (two_axis? ? 2 : 1)
+      end
+
+      def height
+        settings.fetch :height, 200
+      end
+
+      def two_axis?
+        settings.fetch(:type, :column) == :two_axis
+      end
+
+      def format
+        settings.fetch :format, :number
+      end
+
+      def draw_graph
+        each_category do |series, key, options = {}|
+          GraphValue.new(pdf, {value: series[key]}, options).draw
+        end
+      end
+
+      def draw_categories
+        every = settings.fetch(:categories, {}).fetch :every, 1
+        ticks = settings.fetch(:categories, {}).fetch :ticks, false
+
+        each_category(limit: 1, every: every) do |series, key, options = {}|
+          options.merge! h: TEXT_HEIGHT, ticks: ticks
+          Category.new(pdf, {label: key}, options).draw
+        end
+      end
+
+      def each_category(limit: nil, every: 1)
+        values = limit ? data.values.first(limit) : data.values
+        values.each.with_index do |series, series_i|
+          w = graph_width/series.keys.size
+          options = {y: baseline, color: series_colors[series_i]}
+          options.merge! height_per_unit: graph_height/maximum_values[series_i]
+
+          series.keys.each_slice(every).with_index do |keys, i|
+            x = AXIS_WIDTH + w*i*every
+            yield series, keys.first, options.merge(x: x, w: w)
+           end
+        end
+      end
+
+      def baseline
+        cursor - graph_height
       end
     end
   end
