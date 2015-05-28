@@ -6,8 +6,12 @@ module Prawn
       def draw
         h = data[:value]*settings[:height_per_unit]
         case settings[:type]
-          when :column then draw_column(h)
-          when :line then draw_line(h)
+        when :column
+          draw_column(h)
+        when :line
+          draw_line(h)
+        when :two_axis
+          settings[:series_i].zero? ? draw_column(h) : draw_line(h)
         end
       end
 

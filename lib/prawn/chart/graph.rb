@@ -81,7 +81,7 @@ module Prawn
         values.each.with_index do |series, series_i|
           height_per_unit = graph_height/maximum_values[series_i]
           options = {y: baseline, height_per_unit: height_per_unit, type: type}
-          options.merge! w: graph_width/series.keys.size
+          options.merge! w: graph_width/series.keys.size, series_i: series_i
 
           (slices = series.keys.each_slice every).with_index do |keys, i|
             options[:x] = AXIS_WIDTH + options[:w]*i*every
