@@ -8,7 +8,7 @@ demographics  = {"71.8% male"=>{"13-17"=>5.7, "18-24"=>14.0, "25-34"=>25.6, "35-
 
 Prawn::Document.generate(name) do
   # double_graph
-  chart viewership, type: :two_axis, legend: {x_offset: -65}, ticks: true, categories: {every: 4}
+  chart viewership, type: :two_axis, legend: {x_offset: -65}, ticks: true, every: 4
   stroke_horizontal_rule
   move_down 40
 
@@ -22,7 +22,7 @@ Prawn::Document.generate(name) do
   move_down 40
 
   # double_graph
-  chart year_on_year, type: :line, height: 124, ticks: true, categories: {every: 4}
+  chart year_on_year, type: :line, height: 124, ticks: true, every: 4
   stroke_horizontal_rule
 
 end
