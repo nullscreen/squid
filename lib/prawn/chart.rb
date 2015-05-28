@@ -1,7 +1,8 @@
 require 'active_support'
 require 'active_support/core_ext/string/inflections' # for titleize
 require 'active_support/core_ext/module/delegation' # for delegate
-require 'active_support/core_ext/hash/reverse_merge.rb' # for reverse_merge!
+require 'active_support/core_ext/hash/reverse_merge' # for reverse_merge!
+require 'active_support/core_ext/array/wrap' # for Array.wrap
 require 'action_view/helpers/number_helper' # for number_with_precision
 
 require 'prawn'

@@ -8,21 +8,21 @@ demographics  = {"71.8% male"=>{"13-17"=>5.7, "18-24"=>14.0, "25-34"=>25.6, "35-
 
 Prawn::Document.generate(name) do
   # double_graph
-  chart viewership, type: :two_axis, legend: {x_offset: -65}, ticks: true, every: 4
+  chart viewership, type: :two_axis, legend_offset: -65, ticks: true, every: 4
   stroke_horizontal_rule
   move_down 40
 
-  chart monthly_views, type: :column, legend: false, categories: {mark_last: true}
+  chart monthly_views, type: :column, colors: [['4ecdc4']*12 + ['c7f464']]
   stroke_horizontal_rule
   start_new_page
 
   # double_bar_graph
-  chart demographics, format: :percentage, legend: {x_offset: -65}
+  chart demographics, format: :percentage, legend_offset: -65
   stroke_horizontal_rule
   move_down 40
 
   # double_graph
-  chart year_on_year, type: :line, height: 124, ticks: true, every: 4
+  chart year_on_year, type: :line, height: 124, ticks: true, every: 4, colors: ['c7f464', '4ecdc4'], line_widths: [2, 4]
   stroke_horizontal_rule
 
 end

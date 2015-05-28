@@ -46,7 +46,7 @@ module Prawn
       end
 
 
-      def series_colors
+      def default_colors
         %w(0000ff 00ff00 ff0000 00ffff ff00ff ffff00 ff8800 ff88ff
            0088ff 8800ff ff0088 88ff00 00cccc 00cc88 cc8800 88ccff
            cc88cc ffcc00 004488 448800 880044 44ffff 440088 884400)

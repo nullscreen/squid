@@ -25,7 +25,8 @@ module Prawn
     private
 
       def draw_legend
-        Legend.new(pdf, data.keys, settings.fetch(:legend, {})).draw
+        options = {colors: colors, offset: legend_offset}
+        Legend.new(pdf, data.keys, options).draw
       end
 
       def draw_y_grid
@@ -62,35 +63,32 @@ module Prawn
       end
 
       def draw_graph
-        mark_last = settings.fetch(:categories, {}).fetch :mark_last, false
-
-        each_category(mark_last: mark_last) do |series, key, options = {}|
-          index = series.keys.index(key)
-          options[:last_value] = series.values[index - 1] unless index.zero?
+        each_category do |key, series, i, options = {}|
+          options[:last_value] = series.values[i - 1] unless i.zero?
           GraphValue.new(pdf, {value: series[key]}, options).draw
         end
       end
 
       def draw_categories
-        each_category(limit: 1, every: every) do |series, key, options = {}|
+        each_category(limit: 1, every: every) do |key, _, _, options = {}|
           options.merge! h: TEXT_HEIGHT, ticks: ticks
           Category.new(pdf, {label: key}, options).draw
         end
       end
 
-      def each_category(limit: nil, every: 1, mark_last: false)
+      def each_category(limit: nil, every: 1)
         values = limit ? data.values.first(limit) : data.values
         values.each.with_index do |series, series_i|
-          w = graph_width/series.keys.size
           height_per_unit = graph_height/maximum_values[series_i]
           options = {y: baseline, height_per_unit: height_per_unit, type: type}
+          options.merge! w: graph_width/series.keys.size
 
           (slices = series.keys.each_slice every).with_index do |keys, i|
-            x = AXIS_WIDTH + w*i*every
-            highlight_i = mark_last && (slices.size - i - 1).zero? ? 1 : 0
-            color = series_colors[series_i + highlight_i]
-            yield series, keys.first, options.merge(x: x, w: w, color: color)
-           end
+            options[:x] = AXIS_WIDTH + options[:w]*i*every
+            options[:color] = colors[series_i].next
+            options[:line_width] = line_widths[series_i]
+            yield keys.first, series, i, options
+          end
         end
       end
 
@@ -113,13 +111,27 @@ module Prawn
       def type
         settings.fetch :type, :column
       end
-      
+
       def ticks
         settings.fetch :ticks, false
       end
-      
+
+      def colors
+        @colors ||= settings.fetch(:colors, default_colors).map do |i|
+          Array.wrap(i).cycle
+        end
+      end
+
+      def line_widths
+        settings.fetch :line_widths, Hash.new{1}
+      end
+
       def every
         settings.fetch :every, 1
+      end
+
+      def legend_offset
+        settings.fetch :legend_offset, -20
       end
 
       def two_axis?

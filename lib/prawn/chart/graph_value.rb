@@ -25,7 +25,7 @@ module Prawn
         last_x = settings[:x]-settings[:w]/2
         last_y = settings[:y] + settings[:last_value]*settings[:height_per_unit]
 
-        with stroke_color: settings[:color], cap_style: :round, line_width: 5 do
+        with stroke_color: settings[:color], cap_style: :round, line_width: settings[:line_width] do
           line [last_x, last_y], [last_x + settings[:w], settings[:y]+h]
         end
       end
