@@ -82,7 +82,9 @@ module Prawn
       end
 
       def draw_graph
-        each_category do |series, key, options = {}|
+        mark_last = settings.fetch(:categories, {}).fetch :mark_last, false
+
+        each_category(mark_last: mark_last) do |series, key, options = {}|
           GraphValue.new(pdf, {value: series[key]}, options).draw
         end
       end
@@ -97,16 +99,18 @@ module Prawn
         end
       end
 
-      def each_category(limit: nil, every: 1)
+      def each_category(limit: nil, every: 1, mark_last: false)
         values = limit ? data.values.first(limit) : data.values
         values.each.with_index do |series, series_i|
           w = graph_width/series.keys.size
-          options = {y: baseline, color: series_colors[series_i]}
-          options.merge! height_per_unit: graph_height/maximum_values[series_i]
+          height_per_unit = graph_height/maximum_values[series_i]
+          options = {y: baseline, height_per_unit: height_per_unit}
 
-          series.keys.each_slice(every).with_index do |keys, i|
+          (slices = series.keys).each_slice(every).with_index do |keys, i|
             x = AXIS_WIDTH + w*i*every
-            yield series, keys.first, options.merge(x: x, w: w)
+            highlight_i = mark_last && (slices.size - i - 1).zero? ? 1 : 0 
+            color = series_colors[series_i + highlight_i]
+            yield series, keys.first, options.merge(x: x, w: w, color: color)
            end
         end
       end
