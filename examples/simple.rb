@@ -17,7 +17,7 @@ Prawn::Document.generate(name) do
   start_new_page
 
   # double_bar_graph
-  chart demographics, format: :percentage, legend_offset: -65
+  chart demographics, format: :percentage, legend_offset: -65, colors: ['c7f464', '4ecdc4']
   stroke_horizontal_rule
   move_down 40
 
