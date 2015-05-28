@@ -5,7 +5,7 @@ module Prawn
     class Gridline < Base
       def draw
         return unless visible?
-        transparent(0.25) { with(:line_width, 0.5) { draw_line } }
+        transparent(0.25) { with(line_width: 0.5) { draw_line } }
       end
 
     private

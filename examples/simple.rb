@@ -22,7 +22,7 @@ Prawn::Document.generate(name) do
   move_down 40
 
   # double_graph
-  chart year_on_year, height: 124, categories: {ticks: true, every: 4}
+  chart year_on_year, type: :line, height: 124, categories: {ticks: true, every: 4, mark_last: true}
   stroke_horizontal_rule
 
 end

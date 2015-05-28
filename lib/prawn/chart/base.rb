@@ -38,11 +38,11 @@ module Prawn
         {height: TEXT_HEIGHT, size: TEXT_HEIGHT/2-2, valign: :center, overflow: :shrink_to_fit, disable_wrap_by_char: true}
       end
 
-      def with(property, new_value)
-        old_value = self.public_send(property)
-        public_send "#{property}=", new_value
-        yield
-        public_send "#{property}=", old_value
+      def with(new_values = {})
+        old_values = new_values.map{|k,_| [k,self.public_send(k)]}.to_h
+        new_values.each{|k, new_value| public_send "#{k}=", new_value }
+        stroke { yield }
+        old_values.each{|k, old_value| public_send "#{k}=", old_value }
       end
 
 

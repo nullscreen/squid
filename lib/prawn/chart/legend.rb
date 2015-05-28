@@ -20,8 +20,8 @@ module Prawn
     private
 
       def draw_square(origin, size, color)
-        with :fill_color, color do
-          stroke { fill_rectangle origin, size, size }
+        with fill_color: color do
+          fill_rectangle origin, size, size
         end
       end
     end

@@ -61,30 +61,12 @@ module Prawn
         end
       end
 
-      def graph_height
-        bounds.height - TEXT_HEIGHT
-      end
-
-      def graph_width
-        bounds.width - AXIS_WIDTH * (two_axis? ? 2 : 1)
-      end
-
-      def height
-        settings.fetch :height, 200
-      end
-
-      def two_axis?
-        settings.fetch(:type, :column) == :two_axis
-      end
-
-      def format
-        settings.fetch :format, :number
-      end
-
       def draw_graph
         mark_last = settings.fetch(:categories, {}).fetch :mark_last, false
 
         each_category(mark_last: mark_last) do |series, key, options = {}|
+          index = series.keys.index(key)
+          options[:last_value] = series.values[index - 1] unless index.zero?
           GraphValue.new(pdf, {value: series[key]}, options).draw
         end
       end
@@ -104,15 +86,39 @@ module Prawn
         values.each.with_index do |series, series_i|
           w = graph_width/series.keys.size
           height_per_unit = graph_height/maximum_values[series_i]
-          options = {y: baseline, height_per_unit: height_per_unit}
+          options = {y: baseline, height_per_unit: height_per_unit, type: type}
 
-          (slices = series.keys).each_slice(every).with_index do |keys, i|
+          (slices = series.keys.each_slice every).with_index do |keys, i|
             x = AXIS_WIDTH + w*i*every
-            highlight_i = mark_last && (slices.size - i - 1).zero? ? 1 : 0 
+            highlight_i = mark_last && (slices.size - i - 1).zero? ? 1 : 0
             color = series_colors[series_i + highlight_i]
             yield series, keys.first, options.merge(x: x, w: w, color: color)
            end
         end
+      end
+
+      def graph_height
+        bounds.height - TEXT_HEIGHT
+      end
+
+      def graph_width
+        bounds.width - AXIS_WIDTH * (two_axis? ? 2 : 1)
+      end
+
+      def height
+        settings.fetch :height, 200
+      end
+
+      def format
+        settings.fetch :format, :number
+      end
+
+      def type
+        settings.fetch :type, :column
+      end
+
+      def two_axis?
+        type == :two_axis
       end
 
       def baseline
