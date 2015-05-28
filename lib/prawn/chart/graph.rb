@@ -73,7 +73,6 @@ module Prawn
 
       def draw_categories
         every = settings.fetch(:categories, {}).fetch :every, 1
-        ticks = settings.fetch(:categories, {}).fetch :ticks, false
 
         each_category(limit: 1, every: every) do |series, key, options = {}|
           options.merge! h: TEXT_HEIGHT, ticks: ticks
@@ -115,6 +114,10 @@ module Prawn
 
       def type
         settings.fetch :type, :column
+      end
+      
+      def ticks
+        settings.fetch :ticks, false
       end
 
       def two_axis?
