@@ -15,17 +15,12 @@ describe Prawn::Chart::Legend do
   context 'given data with one series' do
     it 'includes the titleized name of the series' do
       pdf.chart data
-      expect(text.strings).to match_array %w(Views)
+      expect(text.strings).to include *%w(Views)
     end
 
     it 'includes a square to represent each series' do
       pdf.chart data
       expect(rectangle.rectangles).to include point: anything, width: 5.0, height: 5.0
-    end
-
-    it 'is not printed out if {legend: false}' do
-      pdf.chart data, legend: false
-      expect(text.strings).not_to include 'Views'
     end
 
     it 'changes its horizontal position based on {legend: :x_offset}' do
@@ -38,7 +33,7 @@ describe Prawn::Chart::Legend do
   context 'given data with two series' do
     specify 'includes the titleized name of both series' do
       pdf.chart data.merge(uploads: {})
-      expect(text.strings).to match_array %w(Views Uploads)
+      expect(text.strings).to include *%w(Views Uploads)
     end
   end
 end

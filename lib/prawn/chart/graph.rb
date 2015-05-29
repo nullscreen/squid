@@ -44,6 +44,7 @@ module Prawn
 
       # Note: This must come after draw_graph to draw the line on top
       def draw_baseline
+        return unless data.any?
         stroke_horizontal_line AXIS_WIDTH, graph_width+AXIS_WIDTH, at: baseline
       end
 
@@ -55,7 +56,7 @@ module Prawn
       end
 
       def each_gridline
-        0.upto(LINES-1) do |i|
+        0.upto(LINES) do |i|
           y = bounds.top - graph_height*i/LINES
           part = (LINES-i)/LINES.to_f
           yield axis_width: AXIS_WIDTH, width: graph_width, y: y, fraction: part
@@ -72,7 +73,7 @@ module Prawn
       def draw_categories
         each_category(limit: 1, every: every) do |key, _, _, options = {}|
           options.merge! h: TEXT_HEIGHT, ticks: ticks
-          Category.new(pdf, {label: key}, options).draw
+          Category.new(pdf, {label: key.to_s}, options).draw
         end
       end
 

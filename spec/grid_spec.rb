@@ -13,12 +13,7 @@ describe Prawn::Chart::Gridline do
     expect(line.points).to be_empty
   end
 
-  specify 'does not print anything given a series without values' do
-    pdf.chart empty_data, options
-    expect(line.points).to be_empty
-  end
-
-  specify 'draws 4 equidistant horizontal lines' do
+  specify 'draws 5 equidistant horizontal lines' do
     pdf.chart valid_data, options
     y = line.points.each_slice(2).map{|x| x.first.last}
     gaps = y.each_cons(2).map{|a| a.first - a.last}
