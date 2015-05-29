@@ -5,8 +5,8 @@ module Prawn
     class AxisValue < Base
       def draw
         return unless visible?
-        draw_label_one label_for(data.first)
-        draw_label_two label_for(data.last) if settings[:two_axis]
+        draw_label_one label_for(data.last)
+        draw_label_two label_for(data.first) if settings[:two_axis]
       end
 
     private

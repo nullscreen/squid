@@ -80,7 +80,8 @@ module Prawn
         values = limit ? data.values.first(limit) : data.values
         values.each.with_index do |series, series_i|
           height_per_unit = graph_height/maximum_values[series_i]
-          options = {y: baseline, height_per_unit: height_per_unit, type: type}
+          options = {y: baseline, height_per_unit: height_per_unit}
+          options.merge! series_count: values.size, y: baseline, type: type
           options.merge! w: graph_width/series.keys.size, series_i: series_i
 
           (slices = series.keys.each_slice every).with_index do |keys, i|
