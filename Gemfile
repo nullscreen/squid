@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in prawn-chart.gemspec
+# Specify your gem's dependencies in squid.gemspec
 gemspec

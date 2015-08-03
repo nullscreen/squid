@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Prawn::Chart::Graph do
+describe Squid::Graph do
   let(:pdf) { Prawn::Document.new }
   let(:data) { {} }
   let(:output) { pdf.render }
@@ -8,7 +8,7 @@ describe Prawn::Chart::Graph do
 
   it 'has a default height of 200' do
     pdf.stroke_horizontal_rule
-    pdf.chart data
+    pdf.chart
     pdf.stroke_horizontal_rule
     y = line.points.each_slice(2).map{|x| x.first.last}
     height = y.first - y.last
@@ -17,7 +17,7 @@ describe Prawn::Chart::Graph do
 
   it 'changes its height based on the :height setting' do
     pdf.stroke_horizontal_rule
-    pdf.chart data, height: 300
+    pdf.chart height: 300
     pdf.stroke_horizontal_rule
     y = line.points.each_slice(2).map{|x| x.first.last}
     height = y.first - y.last
