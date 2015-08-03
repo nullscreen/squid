@@ -48,4 +48,3 @@ How to contribute
 
 1. Run tests with `bundle exec rspec`
 2. [...]
-
