@@ -1,15 +1,11 @@
+require 'squid/settings'
+
 module Squid
   class Graph
-    def self.has_settings(*settings)
-      settings.each do |setting|
-        define_method setting do # make private
-          @settings.fetch setting, 200 # replace 200 with Squid.configuration.setting
-        end
-      end
-    end
+    extend Settings
+    has_settings :height
 
     attr_reader :pdf
-    has_settings :height
 
     def initialize(document, settings = {})
       @pdf = document
