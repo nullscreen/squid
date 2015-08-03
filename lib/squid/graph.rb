@@ -3,7 +3,7 @@ module Squid
     def self.has_settings(*settings)
       settings.each do |setting|
         define_method setting do # make private
-          @settings.fetch setting, 200 # replace 200 with Squid.configuration.setting
+          @settings.fetch setting, 100 # replace 200 with Squid.configuration.setting
         end
       end
     end
