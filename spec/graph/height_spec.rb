@@ -1,26 +1,31 @@
 require 'spec_helper'
 
-describe Squid::Graph do
-  let(:pdf) { Prawn::Document.new }
-  let(:data) { {} }
-  let(:output) { pdf.render }
-  let(:line) { PDF::Inspector::Graphics::Line.analyze output }
-
-  it 'has a default height of 200' do
+describe 'Graph height' do
+  let(:default_height) { Squid.configuration.height }
+  let(:options) { {} }
+  let(:height) {
+    pdf = Prawn::Document.new
     pdf.stroke_horizontal_rule
-    pdf.chart
+    pdf.chart options
     pdf.stroke_horizontal_rule
+    output = pdf.render
+    line = PDF::Inspector::Graphics::Line.analyze output
     y = line.points.each_slice(2).map{|x| x.first.last}
     height = y.first - y.last
-    expect(height).to eq 200.0
+  }
+
+  it 'uses the Squid.configuration value by default' do
+    expect(height).to eq default_height
   end
 
-  it 'changes its height based on the :height setting' do
-    pdf.stroke_horizontal_rule
-    pdf.chart height: 300
-    pdf.stroke_horizontal_rule
-    y = line.points.each_slice(2).map{|x| x.first.last}
-    height = y.first - y.last
-    expect(height).to eq 300.0
+  context 'can be set calling chart with the :height option' do
+    let(:options) { {height: 300} }
+    it { expect(height).to eq 300.0 }
+  end
+
+  context 'can be set with Squid.config' do
+    before { Squid.configure {|config| config.height = 400} }
+    after  { Squid.configure {|config| config.height = default_height } }
+    it { expect(height).to eq 400.0 }
   end
 end
