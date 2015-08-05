@@ -30,4 +30,5 @@ RSpec.shared_context 'PDF Inspector', inspect: true do
 
   let(:views) { {2013 => 182, 2014 => 46, 2015 => 102} }
   let(:uniques) { {2013 => 110, 2014 => 30, 2015 => 88} }
+  let(:subscribers) { {2013 => 50, 2014 => -30, 2015 => 20} }
 end
