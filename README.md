@@ -32,6 +32,7 @@ How to install
 
 Squid requires **Ruby 2.0 or higher**.
 To include in your project, add `gem 'squid', '~> 0.1.0'` to the `Gemfile` file of your Ruby project.
+If used in a Rails project, requires **Rails 4.0 or higher**.
 
 How to use
 ==========

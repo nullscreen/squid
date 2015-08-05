@@ -4,6 +4,3 @@ notifications:
 matrix:
   include:
   - rvm: 2.0.0
-    gemfile: gemfiles/Gemfile.activesupport-3.x
-  - rvm: 2.2.2
-    gemfile: gemfiles/Gemfile.activesupport-4.x
