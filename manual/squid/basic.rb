@@ -5,5 +5,6 @@
 #
 filename = File.basename(__FILE__).gsub('.rb', '.pdf')
 Prawn::ManualBuilder::Example.generate(filename) do
-  chart
+  data = {views: {2013 => 182, 2014 => 46, 2015 => 102}}
+  chart data
 end

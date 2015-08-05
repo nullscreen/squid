@@ -21,6 +21,8 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
 
     p.section 'Styling' do |s|
       s.example 'height'
+      s.example 'baseline'
+      s.example 'gridlines'
     end
 
   end

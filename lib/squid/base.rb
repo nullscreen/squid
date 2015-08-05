@@ -19,5 +19,16 @@ module Squid
       return super unless pdf.respond_to?(method)
       pdf.send method, *args, &block
     end
+
+  private
+
+    # Convenience method to wrap a block by setting and unsetting a Prawn
+    # property such as line_width.
+    def with(new_values = {})
+      old_values = Hash[new_values.map{|k,_| [k,self.public_send(k)]}]
+      new_values.each{|k, new_value| public_send "#{k}=", new_value }
+      stroke { yield }
+      old_values.each{|k, old_value| public_send "#{k}=", old_value }
+    end
   end
 end

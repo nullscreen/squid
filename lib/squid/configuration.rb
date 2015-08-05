@@ -8,6 +8,7 @@ module Squid
   # @example Set the default height for Squid graphs:
   #   Squid.configure do |config|
   #     config.height = 150
+  #     config.gridlines = 4
   #   end
   #
   # @see Squid::Config for more examples.
@@ -22,14 +23,17 @@ module Squid
   #
   # @example Set the default graph height:
   #   ENV['SQUID_HEIGHT'] =  '150'
+  #   ENV['SQUID_GRIDLINES'] =  '4'
   #
   class Configuration < OpenStruct
     # @return [Integer] the default graph height
-    attr_accessor :height
+    attr_accessor :baseline, :gridlines, :height
 
     # Initialize the global configuration settings, using the values of
     # the specified following environment variables by default.
     def initialize
+      @baseline = ENV.fetch('SQUID_BASELINE', 'true').in? %w(1 t T true TRUE)
+      @gridlines = ENV.fetch('SQUID_GRIDLINES', '5').to_i
       @height = ENV.fetch('SQUID_HEIGHT', '200').to_f
     end
   end
