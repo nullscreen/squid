@@ -3,10 +3,12 @@
 #
 filename = File.basename(__FILE__).gsub('.rb', '.pdf')
 Prawn::ManualBuilder::Example.generate(filename) do
+  data = {views: {2013 => 182, 2014 => 46, 2015 => 102}}
+  
   text 'Default height:'
-  chart
-  move_down 20
+  chart data
+  move_down 30
 
   text 'Custom height:'
-  chart height: 100
+  chart data, height: 100
 end

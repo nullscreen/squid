@@ -16,6 +16,7 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
 
     p.section 'Basics' do |s|
       s.example 'basic'
+      s.example 'legend'
     end
 
     p.section 'Styling' do |s|

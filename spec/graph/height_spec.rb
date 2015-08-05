@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Graph height', inspect: true do
   before do
     pdf.stroke_horizontal_rule
-    pdf.chart options
+    pdf.chart data, options
     pdf.stroke_horizontal_rule
   end
 
