@@ -11,7 +11,7 @@ describe 'Graph height' do
     output = pdf.render
     line = PDF::Inspector::Graphics::Line.analyze output
     y = line.points.each_slice(2).map{|x| x.first.last}
-    height = y.first - y.last
+    y.first - y.last
   }
 
   it 'uses the Squid.configuration value by default' do
