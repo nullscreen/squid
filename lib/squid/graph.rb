@@ -3,7 +3,7 @@ require 'squid/graph/legend'
 
 module Squid
   class Graph < Base
-    has_settings :height
+    has_settings :height, :baseline
 
     # Draws the graph.
     def draw
@@ -11,7 +11,7 @@ module Squid
         Legend.new(pdf, data.keys).draw
 
         # The baseline is last so it’s drawn on top of any graph element.
-        stroke_horizontal_line 0, bounds.width, at: cursor - height
+        stroke_horizontal_line 0, bounds.width, at: cursor - height if baseline
       end
     end
 

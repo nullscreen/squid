@@ -21,10 +21,10 @@ describe 'Graph height', inspect: true do
 
   context 'can be set with Squid.config' do
     before(:all) do
-      @original_height = Squid.configuration.height
+      @original = Squid.configuration.height
       Squid.configure {|config| config.height = 400}
     end
-    after(:all) { Squid.configure {|config| config.height = @original_height} }
+    after(:all) { Squid.configure {|config| config.height = @original} }
     it { expect(height).to eq 400.0 }
   end
 end

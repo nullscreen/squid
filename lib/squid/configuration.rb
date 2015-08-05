@@ -25,11 +25,12 @@ module Squid
   #
   class Configuration < OpenStruct
     # @return [Integer] the default graph height
-    attr_accessor :height
+    attr_accessor :baseline, :height
 
     # Initialize the global configuration settings, using the values of
     # the specified following environment variables by default.
     def initialize
+      @baseline = ENV.fetch('SQUID_BASELINE', 'true').in? %w(1 t T true TRUE)
       @height = ENV.fetch('SQUID_HEIGHT', '200').to_f
     end
   end
