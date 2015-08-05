@@ -2,8 +2,8 @@ require 'squid/graph'
 
 module Squid
   module Interface
-    def chart(settings = {})
-      Graph.new(self, settings).draw
+    def chart(data =  {}, settings = {})
+      Graph.new(self, data, settings).draw
     end
   end
 end
