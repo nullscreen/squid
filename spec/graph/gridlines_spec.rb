@@ -3,9 +3,9 @@ require 'spec_helper'
 describe 'Graph gridlines', inspect: true do
   before { pdf.chart data, options.merge(baseline: false) }
 
-  # context 'given no series, does not print any gridline' do
-  #   it { expect(inspected_line.points).to be_empty }
-  # end
+  context 'given no series, does not print any gridline' do
+    it { expect(inspected_line.points).to be_empty }
+  end
 
   context 'given one or more series' do
     let(:data) { {views: views} }
@@ -26,5 +26,4 @@ describe 'Graph gridlines', inspect: true do
       expect(distance.uniq).to be_one
     end
   end
-
 end

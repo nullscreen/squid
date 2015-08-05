@@ -30,5 +30,11 @@ module Squid
       stroke { yield }
       old_values.each{|k, old_value| public_send "#{k}=", old_value }
     end
+
+    # Default options for text elements (labels, categories, ...)
+    def text_options
+      {size: 8, valign: :center, overflow: :shrink_to_fit, disable_wrap_by_char: true}
+    end
+
   end
 end

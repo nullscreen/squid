@@ -14,6 +14,7 @@ describe Squid::Configuration do
     it 'can be set with the environment variable SQUID_BASELINE' do
       ENV['SQUID_BASELINE'] = baseline
       expect(config.baseline).to be false
+      ENV['SQUID_BASELINE'] = nil
     end
   end
 
@@ -28,6 +29,7 @@ describe Squid::Configuration do
     it 'can be set with the environment variable SQUID_HEIGHT' do
       ENV['SQUID_HEIGHT'] = height.to_s
       expect(config.height).to eq height
+      ENV['SQUID_HEIGHT'] = nil
     end
   end
 end

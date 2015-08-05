@@ -1,7 +1,6 @@
 # Creating graphs with Squid is easy. Just use the <code>chart</code> method.
 #
-# The most simple graph can be created by providing only a hash containing
-# the data of the series you want to plot.
+# Provide a hash containing the data of the series and plot it with <code>chart</code>.
 #
 filename = File.basename(__FILE__).gsub('.rb', '.pdf')
 Prawn::ManualBuilder::Example.generate(filename) do
