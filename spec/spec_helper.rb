@@ -16,3 +16,10 @@ end
 
 require 'pdf/inspector'
 require 'squid'
+
+RSpec.shared_context 'PDF Inspector', inspect: true do
+  let(:pdf) { Prawn::Document.new }
+  let(:output) { pdf.render }
+  let(:inspected_line) { PDF::Inspector::Graphics::Line.analyze output }
+  let(:options) { {} }
+end
