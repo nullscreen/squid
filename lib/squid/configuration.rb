@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module Squid
   # Provides an object to store global configuration settings.
   #
@@ -27,13 +29,14 @@ module Squid
   #
   class Configuration < OpenStruct
     # @return [Integer] the default graph height
-    attr_accessor :baseline, :gridlines, :height
+    attr_accessor :baseline, :gridlines, :height, :legend
 
     # Initialize the global configuration settings, using the values of
     # the specified following environment variables by default.
     def initialize
       @baseline = ENV.fetch('SQUID_BASELINE', 'true').in? %w(1 t T true TRUE)
-      @gridlines = ENV.fetch('SQUID_GRIDLINES', '5').to_i
+      @legend = ENV.fetch('SQUID_LEGEND', 'true').in? %w(1 t T true TRUE)
+      @gridlines = ENV.fetch('SQUID_GRIDLINES', '4').to_i
       @height = ENV.fetch('SQUID_HEIGHT', '200').to_f
     end
   end

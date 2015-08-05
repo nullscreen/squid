@@ -23,6 +23,7 @@ RSpec.shared_context 'PDF Inspector', inspect: true do
   let(:inspected_line) { PDF::Inspector::Graphics::Line.analyze output }
   let(:inspected_points) { inspected_line.points.each_slice(2) }
   let(:inspected_text) { PDF::Inspector::Text.analyze output }
+  let(:inspected_strings) { inspected_text.strings }
   let(:inspected_rectangle) { PDF::Inspector::Graphics::Rectangle.analyze output }
   let(:data) { {} }
   let(:options) { {} }

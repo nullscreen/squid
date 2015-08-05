@@ -4,12 +4,12 @@ require 'squid/graph/legend'
 
 module Squid
   class Graph < Base
-    has_settings :baseline, :gridlines, :height
+    has_settings :baseline, :gridlines, :height, :legend
 
     # Draws the graph.
     def draw
       bounding_box [0, cursor], width: bounds.width, height: height do
-        Legend.new(pdf, data.keys).draw
+        Legend.new(pdf, data.keys).draw if legend
 
         each_gridline do |options = {}|
           Gridline.new(pdf, {}, options).draw
@@ -25,10 +25,10 @@ module Squid
     # Yields the block once for each gridline, setting +y+ appropriately.
     def each_gridline
       0.upto(gridlines) do |index|
-        fraction = gridlines.zero? ? 0 : (gridlines - index) / gridlines.to_f
-        y = gridlines.zero? ? 0 : bounds.top - height*index / gridlines
+        fraction = (gridlines - index) / gridlines.to_f
+        y = bounds.top - height*index / gridlines
         yield width: bounds.width, y: y, fraction: fraction
-      end
+      end if data.any? && gridlines > 0
     end
   end
 end
