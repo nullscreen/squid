@@ -10,16 +10,22 @@ module Squid
 
     def draw
       bounding_box [width, bounds.top], width: width, height: legend_height do
-        right_margin = bounds.right
-        data.each do |series|
-          right_margin = draw_label series, right_margin
-          right_margin = draw_square series, right_margin
-          right_margin -= label_padding
+        each_series do |x, series|
+          x = draw_label series, x
+          x = draw_square series, x
         end
       end
     end
 
   private
+
+    def each_series
+      x = bounds.right
+      data.each do |series|
+        x = yield x, series
+        x -= label_padding
+      end
+    end
 
     # Writes the name of the series, left-aligned, with a small font size.
     # @param [Symbol, String] series The series to add to the legend
