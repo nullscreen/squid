@@ -9,14 +9,12 @@ module Squid
   class Legend < Base
 
     def draw
-      float do
-        bounding_box [width, cursor+height*2], width: width, height: height do
-          right_margin = bounds.right
-          data.each do |series|
-            right_margin = draw_label series, right_margin
-            right_margin = draw_square series, right_margin
-            right_margin -= label_padding
-          end
+      bounding_box [width, bounds.top], width: width, height: legend_height do
+        right_margin = bounds.right
+        data.each do |series|
+          right_margin = draw_label series, right_margin
+          right_margin = draw_square series, right_margin
+          right_margin -= label_padding
         end
       end
     end
@@ -30,7 +28,8 @@ module Squid
     def draw_label(series, x)
       label = series.to_s.titleize
       x -= width_of label, size: font_size
-      text_box label, at: [x, bounds.top], size: font_size, height: height, valign: :center
+      options = {size: font_size, height: legend_height, valign: :center}
+      text_box label, options.merge(at: [x, bounds.top])
       x
     end
 
@@ -49,29 +48,24 @@ module Squid
       bounds.width/2
     end
 
-    # Restrict the legend to a specific vertical space
-    def height
-      15
-    end
-
     # Ensure the label fits in the height of the legend
     def font_size
-      height/2
+      legend_height/2
     end
 
     # Ensure the square fits in the height of the legend
     def square_size
-      height/3
+      legend_height/3
     end
 
     # The horizontal distance left between the labels of two series
     def label_padding
-      height
+      legend_height
     end
 
     # The horizontal distance left between the squares of two series
     def square_padding
-      height/5
+      legend_height/5
     end
   end
 end

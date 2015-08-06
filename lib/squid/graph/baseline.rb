@@ -48,7 +48,7 @@ module Squid
 
     # Returns the vertical position of the baseline.
     def y
-      cursor - bounds.height
+      bounds.bottom + text_height
     end
 
     # Returns the height of the tick

@@ -13,10 +13,10 @@ module Squid
   private
 
     def each_line
-      y = bounds.top
+      y = @settings[:top]
       data.each.with_index do |labels, index|
         yield y, labels, (index == lines)
-        y -= bounds.height / lines
+        y -= @settings[:height] / lines
       end
     end
 

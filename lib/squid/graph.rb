@@ -31,7 +31,7 @@ module Squid
     end
 
     def draw_grid
-      Grid.new(pdf, labels, left: left).draw
+      Grid.new(pdf, labels, grid_options).draw
     end
 
     def draw_baseline
@@ -40,7 +40,11 @@ module Squid
 
     def draw_chart
       min, max = min_max first_series
-      Chart.new(pdf, first_series, left: left, min: min, max: max).draw
+      Chart.new(pdf, first_series, grid_options.merge(min: min, max: max)).draw
+    end
+
+    def grid_options
+      {left: left, height: chart_height, top: chart_top}
     end
 
     def draw_border
@@ -59,6 +63,27 @@ module Squid
     # Returns the width of the left axis
     def left
       @left ||= max_width_of left_labels
+    end
+
+    def chart_height
+      bounds.height - padding_top - padding_bottom
+    end
+
+    def chart_top
+      bounds.top - padding_top
+    end
+
+    # Return the padding between the top of the graph and the grid.
+    # In any case, a padding is present (for values above the top of the grid).
+    # If there is a legend, an equivalent padding is present for the legend.
+    def padding_top
+      legend_height * (legend ? 2 : 1)
+    end
+
+    # Return the padding between the grid and the bottom of the graph.
+    # It is only present if baseline and categories are drawn
+    def padding_bottom
+      baseline ? text_height : 0
     end
 
     # Returns the labels to print in the left axis.
