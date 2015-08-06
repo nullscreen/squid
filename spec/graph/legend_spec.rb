@@ -1,14 +1,15 @@
 require 'spec_helper'
 
 describe 'Graph legend', inspect: true do
-  before { pdf.chart data, options.merge(gridlines: 0) }
+  let(:options) { {gridlines: 0} }
 
-  context 'given no series, does not have any text' do
-    it { expect(inspected_strings).to be_empty }
+  specify 'given no series, is not printed' do
+    pdf.chart no_series, options
+    expect(inspected_strings).to be_empty
   end
 
   context 'given one series' do
-    let(:data) { {views: views} }
+    before { pdf.chart one_series, options }
 
     it 'includes the titleized name of the series' do
       expect(inspected_strings).to eq ['Views']
@@ -22,7 +23,7 @@ describe 'Graph legend', inspect: true do
   end
 
   context 'given two series' do
-    let(:data) { {views: views, uniques: uniques} }
+    before { pdf.chart two_series, options }
 
     it 'includes the titleized names of both series' do
       expect(inspected_strings).to eq ['Views', 'Uniques']
@@ -35,13 +36,13 @@ describe 'Graph legend', inspect: true do
   end
 
   it 'can be disabled setting the :legend option to false' do
-    pdf.chart data, options.merge(gridlines: 0, legend: false)
+    pdf.chart one_series, options.merge(legend: false)
     expect(inspected_strings).to be_empty
   end
 
   it 'can be disabled with Squid.config' do
     Squid.configure {|config| config.legend = false}
-    pdf.chart data, options.merge(gridlines: 0)
+    pdf.chart one_series, options
     Squid.configure {|config| config.legend = true}
     expect(inspected_strings).to be_empty
   end

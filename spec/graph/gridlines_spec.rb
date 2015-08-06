@@ -1,16 +1,17 @@
 require 'spec_helper'
 
 describe 'Graph gridlines', inspect: true do
-  before { pdf.chart data, options.merge(baseline: false) }
+  let(:options) { {baseline: false} }
 
-  context 'given no series, does not print any gridline' do
-    it { expect(inspected_line.points).to be_empty }
+  specify 'given no series, are not printed' do
+    pdf.chart no_series, options
+    expect(inspected_line.points).to be_empty
   end
 
   context 'given one or more series' do
-    let(:data) { {views: views} }
+    before { pdf.chart [one_series, two_series].sample, options }
 
-    it 'draws 5 equidistant horizontal lines along the height of the graph' do
+    specify 'are 5 equidistant horizontal lines along the height of the graph' do
       left_point = inspected_points.map{|x| x.first.first}
       expect(left_point.uniq).to be_one
 
@@ -25,5 +26,18 @@ describe 'Graph gridlines', inspect: true do
       end
       expect(distance.uniq).to be_one
     end
+  end
+
+  it 'can be set with the :gridlines option' do
+    pdf.chart one_series, options.merge(gridlines: 8)
+    expect(inspected_points.size).to be 8
+  end
+
+  it 'can be set with Squid.config' do
+    Squid.configure {|config| config.gridlines = 6}
+    pdf.chart one_series, options
+    Squid.configure {|config| config.gridlines = 4}
+
+    expect(inspected_points.size).to be 6
   end
 end

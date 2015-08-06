@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/fullscreen/squid'
   spec.license       = 'MIT'
 
-  spec.required_ruby_version = '>= 2.0.0'
+  spec.required_ruby_version = '>= 2.1.0' # 2.0 does not have Numeric#step(by:, to:)
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'exe'
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency             'prawn', '~> 2.0'
-  spec.add_dependency             'activesupport', '~> 4.0' # 3.2 does not have number_to_rounded
+  spec.add_dependency             'activesupport', '~> 4.0' # 3.2 does not have ActiveSupport::NumberHelper#number_to_rounded
   spec.add_development_dependency 'pdf-inspector', '~> 1.2'
   spec.add_development_dependency 'prawn-manual_builder', '~> 0.2.0'
   spec.add_development_dependency 'rake', '~> 10.0'
