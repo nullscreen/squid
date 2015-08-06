@@ -13,7 +13,7 @@ describe 'Graph axis values', inspect: true do
     let(:data) { {series: values} }
     before { pdf.chart data, options }
 
-    it 'are as many as gridlines + 1 (on the baseline)' do
+    it 'are as many as steps + 1 (on the baseline)' do
       expect(inspected_strings.size).to be 5
     end
 
@@ -52,10 +52,10 @@ describe 'Graph axis values', inspect: true do
       end
     end
 
-    context 'given the series maximum is lower than the number of gridlines' do
+    context 'given the series maximum is lower than the number of steps' do
       let(:values) { {2013 => 1, 2014 => 2, 2015 => 2} }
 
-      it 'starts with the number of gridlines' do
+      it 'starts with the number of steps' do
         expect(inspected_strings.first.to_i).to eq 4
       end
     end
@@ -114,15 +114,15 @@ describe 'Graph axis values', inspect: true do
     end
   end
 
-  it 'can be set with the :gridlines option' do
-    pdf.chart one_series, options.merge(gridlines: 8)
+  it 'can be set with the :steps option' do
+    pdf.chart one_series, options.merge(steps: 8)
     expect(inspected_strings.size).to be 9
   end
 
   it 'can be set with Squid.config' do
-    Squid.configure {|config| config.gridlines = 6}
+    Squid.configure {|config| config.steps = 6}
     pdf.chart one_series, options
-    Squid.configure {|config| config.gridlines = 4}
+    Squid.configure {|config| config.steps = 4}
 
     expect(inspected_strings.size).to be 7
   end

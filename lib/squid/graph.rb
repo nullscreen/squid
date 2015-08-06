@@ -6,8 +6,8 @@ require 'squid/graph/legend'
 
 module Squid
   class Graph < Base
-    has_settings :baseline, :border, :chart, :format, :gridlines, :height
-    has_settings :legend, :ticks
+    has_settings :baseline, :border, :chart, :format, :height
+    has_settings :legend, :steps, :ticks
 
     # Draws the graph.
     def draw
@@ -31,7 +31,7 @@ module Squid
     end
 
     def draw_grid
-      Grid.new(pdf, labels, grid_options).draw
+      Grid.new(pdf, labels, grid_options.merge(baseline: baseline)).draw
     end
 
     def draw_baseline
@@ -104,14 +104,14 @@ module Squid
     # Transform a numeric value into a label according to the given format.
     def labels_for(values)
       min, max = min_max values
-      gap = (min - max)/gridlines.to_f
+      gap = (min - max)/steps.to_f
       max.step(by: gap, to: min).map{|value| format_for value}
     end
 
     # Returns the minimum and maximum value, approximated to significant digits.
     def min_max(values)
       min = (values + [0]).compact.min
-      max = (values + [gridlines]).compact.max
+      max = (values + [steps]).compact.max
       [min, max].map{|value| approximate_value_for value}
     end
 
@@ -138,7 +138,7 @@ module Squid
 
     # Returns whether the grid should be drawn at all.
     def grid
-      gridlines > 0
+      steps > 0
     end
   end
 end

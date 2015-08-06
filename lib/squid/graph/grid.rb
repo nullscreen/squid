@@ -4,8 +4,8 @@ module Squid
   # Adds all the gridlines and axis values to the graph.
   class Grid < Base
     def draw
-      each_line do |y, labels, is_baseline|
-        draw_gridline y unless is_baseline
+      each_line do |y, labels, only_label|
+        draw_gridline y unless only_label
         labels.each{|position, label| draw_label label, y, position}
       end
     end
@@ -15,7 +15,7 @@ module Squid
     def each_line
       y = @settings[:top]
       data.each.with_index do |labels, index|
-        yield y, labels, (index == lines)
+        yield y, labels, (index == lines) && @settings[:baseline]
         y -= @settings[:height] / lines
       end
     end
