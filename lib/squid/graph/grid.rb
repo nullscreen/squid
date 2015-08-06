@@ -6,9 +6,9 @@ module Squid
     def draw
       y = bounds.top
       data.each.with_index do |labels, index|
-        y -= bounds.height / data.size
         draw_gridline y unless index == data.size - 1
         labels.each{|position, label| draw_label label, y, position}
+        y -= @settings[:height] / (data.size - 1)
       end
     end
 
