@@ -78,18 +78,18 @@ describe Squid::Configuration do
     end
   end
 
-  describe 'gridlines' do
-    let(:gridlines) { rand(9) }
+  describe 'steps' do
+    let(:steps) { rand(9) }
 
     it 'is 4 by default' do
-      ENV['SQUID_GRIDLINES'] = nil
-      expect(config.gridlines).to eq 4
+      ENV['SQUID_STEPS'] = nil
+      expect(config.steps).to eq 4
     end
 
-    it 'can be set with the environment variable SQUID_GRIDLINES' do
-      ENV['SQUID_GRIDLINES'] = gridlines.to_s
-      expect(config.gridlines).to eq gridlines
-      ENV['SQUID_GRIDLINES'] = nil
+    it 'can be set with the environment variable SQUID_STEPS' do
+      ENV['SQUID_STEPS'] = steps.to_s
+      expect(config.steps).to eq steps
+      ENV['SQUID_STEPS'] = nil
     end
   end
 

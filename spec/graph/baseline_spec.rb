@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Graph baseline', inspect: true do
-  let(:options) { {legend: false, gridlines: 0} }
+  let(:options) { {legend: false, steps: 0} }
 
   specify 'given no series, is not drawn' do
     pdf.chart no_series, options

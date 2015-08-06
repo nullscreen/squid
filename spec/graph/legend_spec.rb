@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Graph legend', inspect: true do
-  let(:options) { {gridlines: 0, baseline: false} }
+  let(:options) { {steps: 0, baseline: false} }
 
   specify 'given no series, is not printed' do
     pdf.chart no_series, options

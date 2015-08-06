@@ -10,7 +10,7 @@ module Squid
   # @example Set the default height for Squid graphs:
   #   Squid.configure do |config|
   #     config.height = 150
-  #     config.gridlines = 4
+  #     config.steps = 4
   #   end
   #
   # @see Squid::Config for more examples.
@@ -34,7 +34,7 @@ module Squid
       chart:     {default: 'true',    as: -> (value) { true? value }},
       format:    {default: 'integer', as: -> (value) { value.to_sym }},
       legend:    {default: 'true',    as: -> (value) { true? value }},
-      gridlines: {default: '4',       as: -> (value) { value.to_i }},
+      steps:     {default: '4',       as: -> (value) { value.to_i }},
       height:    {default: '250',     as: -> (value) { value.to_f }},
       ticks:     {default: 'true',    as: -> (value) { true? value }},
     }

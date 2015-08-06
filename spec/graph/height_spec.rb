@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Graph height', inspect: true do
-  let(:options) { {baseline: false, gridlines: 0} }
+  let(:options) { {baseline: false, steps: 0} }
 
   it 'is 250 by default' do
     pdf.stroke_horizontal_rule

@@ -28,16 +28,16 @@ describe 'Graph gridlines', inspect: true do
     end
   end
 
-  it 'can be set with the :gridlines option' do
-    pdf.chart one_series, options.merge(gridlines: 8)
-    expect(inspected_points.size).to be 8
+  it 'can be set with the :steps option' do
+    pdf.chart one_series, options.merge(steps: 8)
+    expect(inspected_points.size).to be 9
   end
 
   it 'can be set with Squid.config' do
-    Squid.configure {|config| config.gridlines = 6}
+    Squid.configure {|config| config.steps = 6}
     pdf.chart one_series, options
-    Squid.configure {|config| config.gridlines = 4}
+    Squid.configure {|config| config.steps = 4}
 
-    expect(inspected_points.size).to be 6
+    expect(inspected_points.size).to be 7
   end
 end
