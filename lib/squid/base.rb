@@ -33,8 +33,17 @@ module Squid
 
     # Default options for text elements (labels, categories, ...)
     def text_options
-      {size: 8, valign: :center, overflow: :shrink_to_fit, disable_wrap_by_char: true}
+      {valign: :center, overflow: :shrink_to_fit, disable_wrap_by_char: true}
     end
 
+    # Default font size for text elements (labels, categories, ...)
+    def font_size
+      8
+    end
+
+    # Default horizontal padding between elements
+    def padding
+      5
+    end
   end
 end

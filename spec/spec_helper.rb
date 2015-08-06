@@ -25,10 +25,11 @@ RSpec.shared_context 'PDF Inspector', inspect: true do
   let(:inspected_text) { PDF::Inspector::Text.analyze output }
   let(:inspected_strings) { inspected_text.strings }
   let(:inspected_rectangle) { PDF::Inspector::Graphics::Rectangle.analyze output }
-  let(:data) { {} }
   let(:options) { {} }
 
   let(:views) { {2013 => 182, 2014 => 46, 2015 => 102} }
   let(:uniques) { {2013 => 110, 2014 => 30, 2015 => 88} }
-  let(:subscribers) { {2013 => 50, 2014 => -30, 2015 => 20} }
+  let(:no_series) { {} }
+  let(:one_series) { {views: views} }
+  let(:two_series) { {views: views, uniques: uniques} }
 end

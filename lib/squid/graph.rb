@@ -1,6 +1,6 @@
 require 'squid/base'
-require 'squid/graph/axis_value'
-require 'squid/graph/gridline'
+require 'squid/graph/baseline'
+require 'squid/graph/grid'
 require 'squid/graph/legend'
 
 module Squid
@@ -11,34 +11,41 @@ module Squid
     def draw
       bounding_box [0, cursor], width: bounds.width, height: height do
         Legend.new(pdf, data.keys).draw if legend
-
-        each_gridline do |options = {}|
-          Gridline.new(pdf, {}, options).draw
-          AxisValue.new(pdf, max_min_values, options).draw
-        end
-
-        # The baseline is last so it’s drawn on top of any graph element.
-        stroke_horizontal_line 0, bounds.width, at: cursor - height if baseline
-      end
+        Grid.new(pdf, labels, left: left).draw if grid
+        Baseline.new(pdf, {}, left: left, height: height).draw if baseline
+      end if data.any?
     end
 
   private
 
-    # Yields the block once for each gridline, setting +y+ appropriately.
-    def each_gridline
-      0.upto(gridlines) do |index|
-        fraction = (gridlines - index) / gridlines.to_f
-        y = bounds.top - height*index / gridlines
-        yield width: bounds.width, y: y, fraction: fraction
-      end if data.any? && gridlines > 0
+    # Returns the width of the left axis
+    def left
+      @left ||= max_width_of left_labels
     end
 
-    # Returns the maximum and minimum values of each series.
-    def max_min_values
-      data.values.map do |series|
-        max = (series.values + [gridlines]).compact.max
-        min = (series.values + [0]).compact.min
-        [max, min].map{|value| approximate_value_for value}
+    # Returns the labels to print in the left axis.
+    def left_labels
+      @left_labels ||= labels_for data.values.first.values
+    end
+
+    # Returns the labels to print on both axes.
+    def labels
+      @labels ||= left_labels.map{|v| {left: v}}
+    end
+
+    # Returns the width of the longest label in the given font size.
+    def max_width_of(labels)
+      labels.map{|label| width_of label, size: font_size}.max
+    end
+
+    # Transform a numeric value into a label according to the given format.
+    def labels_for(values)
+      min = (values + [0]).compact.min
+      max = (values + [gridlines]).compact.max
+      min, max = [min, max].map{|value| approximate_value_for value}
+      gap = (min - max)/gridlines.to_f
+      max.step(by: gap, to: min).map do |x|
+        x.to_s # TODO: Add format
       end
     end
 
@@ -47,6 +54,11 @@ module Squid
     def approximate_value_for(value)
       options = {significant: true, precision: 2}
       ActiveSupport::NumberHelper.number_to_rounded(value, options).to_f
+    end
+
+    # Returns whether the grid should be drawn at all.
+    def grid
+      gridlines > 0
     end
   end
 end
