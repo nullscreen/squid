@@ -5,6 +5,7 @@ module Squid
   # is convenient when working with Prawn methods
   class Base
     extend Settings
+    include ActiveSupport::NumberHelper
 
     attr_reader :pdf, :data
 
@@ -33,7 +34,7 @@ module Squid
 
     # Default options for text elements (labels, categories, ...)
     def text_options
-      {valign: :center, overflow: :shrink_to_fit, disable_wrap_by_char: true}
+      {valign: :center, overflow: :shrink_to_fit}
     end
 
     # Default font size for text elements (labels, categories, ...)

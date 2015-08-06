@@ -16,7 +16,7 @@ describe 'Graph legend', inspect: true do
     end
 
     it 'draws a small square representing the series' do
-      square = inspected_rectangle.rectangles.first
+      square = inspected_rectangles.first
       expect(square[:width]).to be 5.0
       expect(square[:height]).to be 5.0
     end

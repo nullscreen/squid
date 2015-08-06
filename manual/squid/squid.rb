@@ -24,6 +24,7 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
       s.example 'baseline'
       s.example 'ticks'
       s.example 'gridlines'
+      s.example 'format'
     end
 
   end
