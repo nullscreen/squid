@@ -36,9 +36,9 @@ module Squid
     # the specified following environment variables by default.
     def initialize
       @baseline  = ENV.fetch('SQUID_BASELINE', 'true').in? true_values
-      @border    = ENV.fetch('SQUID_BASELINE', 'false').in? true_values
+      @border    = ENV.fetch('SQUID_BORDER', 'false').in? true_values
       @chart     = ENV.fetch('SQUID_CHART', 'true').in? true_values
-      @format    = ENV.fetch('SQUID_FORMAT', nil)
+      @format    = ENV.fetch('SQUID_FORMAT', 'integer').to_sym
       @legend    = ENV.fetch('SQUID_LEGEND', 'true').in? true_values
       @gridlines = ENV.fetch('SQUID_GRIDLINES', '4').to_i
       @height    = ENV.fetch('SQUID_HEIGHT', '200').to_f

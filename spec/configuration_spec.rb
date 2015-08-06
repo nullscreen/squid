@@ -18,6 +18,51 @@ describe Squid::Configuration do
     end
   end
 
+  describe 'border' do
+    let(:border) { %w(1 t T true TRUE).sample }
+
+    it 'is false by default' do
+      ENV['SQUID_BORDER'] = nil
+      expect(config.border).to be false
+    end
+
+    it 'can be set with the environment variable SQUID_BORDER' do
+      ENV['SQUID_BORDER'] = border
+      expect(config.border).to be true
+      ENV['SQUID_BORDER'] = nil
+    end
+  end
+
+  describe 'chart' do
+    let(:chart) { %w(0 f F false FALSE).sample }
+
+    it 'is true by default' do
+      ENV['SQUID_CHART'] = nil
+      expect(config.chart).to be true
+    end
+
+    it 'can be set with the environment variable SQUID_CHART' do
+      ENV['SQUID_CHART'] = chart
+      expect(config.chart).to be false
+      ENV['SQUID_CHART'] = nil
+    end
+  end
+
+  describe 'format' do
+    let(:format) { %i(percentage currency seconds float).sample }
+
+    it 'is integer by default' do
+      ENV['SQUID_FORMAT'] = nil
+      expect(config.format).to be :integer
+    end
+
+    it 'can be set with the environment variable SQUID_FORMAT' do
+      ENV['SQUID_FORMAT'] = format.to_s
+      expect(config.format).to be format
+      ENV['SQUID_FORMAT'] = nil
+    end
+  end
+
   describe 'legend' do
     let(:legend) { %w(0 f F false FALSE).sample }
 
