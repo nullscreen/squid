@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Graph baseline', inspect: true do
-  let(:options) { {gridlines: 0} }
+  let(:options) { {legend: false, gridlines: 0} }
 
   specify 'given no series, is not drawn' do
     pdf.chart no_series, options
@@ -23,6 +23,20 @@ describe 'Graph baseline', inspect: true do
     it 'ends at the right of the bounding box' do
       right = pdf.bounds.right + pdf.page.margins[:left]
       expect(inspected_line.points.last.first).to eq right
+    end
+
+    it 'includes the keys of the first series as categories' do
+      expect(inspected_strings).to eq %w(2013 2014 2015)
+    end
+
+    it 'equally distances the categories along the baseline' do
+      y = inspected_text.positions.map(&:last)
+      expect(y.uniq).to be_one
+
+      distance = inspected_text.positions.each_cons(2).map do |x|
+        (x.first.first - x.last.first).round(2)
+      end
+      expect(distance.uniq).to be_one
     end
   end
 

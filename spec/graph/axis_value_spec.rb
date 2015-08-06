@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Graph axis values', inspect: true do
-  let(:options) { {legend: false} }
+  let(:options) { {legend: false, baseline: false} }
 
   specify 'given no series, does not print any axis value' do
     pdf.chart no_series, options

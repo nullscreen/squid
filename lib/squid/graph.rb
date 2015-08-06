@@ -12,11 +12,20 @@ module Squid
       bounding_box [0, cursor], width: bounds.width, height: height do
         Legend.new(pdf, data.keys).draw if legend
         Grid.new(pdf, labels, left: left).draw if grid
-        Baseline.new(pdf, {}, left: left, height: height).draw if baseline
+        Baseline.new(pdf, categories, left: left, height: height).draw if baseline
+
+
       end if data.any?
     end
 
+
   private
+
+
+    # Returns the categories to print below the baseline.
+    def categories
+      data.values.first.keys
+    end
 
     # Returns the width of the left axis
     def left
