@@ -3,7 +3,6 @@ require 'squid/base'
 module Squid
   # Adds the chart components (columns, lines, ...) to the graph.
   class Chart < Base
-
     def draw
       x = left
       data.each do |value|
@@ -18,7 +17,7 @@ module Squid
     # value in the chart. Adds some padding to separate between elements.
     def draw_element(value, x)
       w = width - 2 * element_padding
-      h = height value
+      h = height_per_unit * value.to_f
       fill_rectangle [x + element_padding, zero_y + h], w, h
     end
 
@@ -37,20 +36,14 @@ module Squid
       width / 8
     end
 
-    # Returns the vertical space for a given value.
-    def height(value)
-      height_per_unit * value.to_f
-    end
-
     # Returns the vertical position for the "0" value.
     def zero_y
-      baseline = cursor - bounds.height
-      baseline - @settings[:min] * height_per_unit
+      @settings[:top] - @settings[:height] - @settings[:min] * height_per_unit
     end
 
     # Returns how many points correspond to how many units of the value
     def height_per_unit
-      @h_p_u ||= bounds.height.to_f / (@settings[:max] - @settings[:min])
+      @h_p_u ||= @settings[:height].to_f / (@settings[:max] - @settings[:min])
     end
   end
 end

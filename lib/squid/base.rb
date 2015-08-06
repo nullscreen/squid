@@ -37,6 +37,10 @@ module Squid
       {valign: :center, overflow: :shrink_to_fit}
     end
 
+    def legend_height
+      15
+    end
+
     # Default font size for text elements (labels, categories, ...)
     def font_size
       8

@@ -96,9 +96,9 @@ describe Squid::Configuration do
   describe 'height' do
     let(:height) { rand(600).to_f }
 
-    it 'is 200 by default' do
+    it 'is 250 by default' do
       ENV['SQUID_HEIGHT'] = nil
-      expect(config.height).to eq 200.0
+      expect(config.height).to eq 250.0
     end
 
     it 'can be set with the environment variable SQUID_HEIGHT' do
