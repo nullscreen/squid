@@ -78,13 +78,15 @@ module Squid
     # Returns the formatted value (currency, percentage, ...).
     def format_for(value)
       case format
-      when :percentage
-        number_to_percentage value, precision: 1
-      when :currency
-        number_to_currency value
-      else
-        value
+      when :percentage then number_to_percentage value, precision: 1
+      when :currency then number_to_currency value
+      when :seconds then number_to_minutes_and_seconds value
+      else value
       end.to_s
+    end
+
+    def number_to_minutes_and_seconds(value)
+      "#{value.round / 60}:#{(value.round % 60).to_s.rjust 2, '0'}"
     end
 
     # Returns whether the grid should be drawn at all.

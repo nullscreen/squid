@@ -94,6 +94,16 @@ describe 'Graph axis values', inspect: true do
         expect(inspected_strings).to eq %w($390.00 $292.50 $195.00 $97.50 $0.00)
       end
     end
+
+    context 'given the :format is set to :seconds' do
+      let(:values) { {2013 => 42.009, 2014 => 390.1, 2015 => 18.6} }
+      let(:options) { {legend: false, baseline: false, format: :seconds} }
+
+      it 'prints the values as minutes and seconds' do
+        expect(inspected_strings).to eq %w(6:30 4:53 3:15 1:38 0:00)
+
+      end
+    end
   end
 
   it 'can be set with the :gridlines option' do
