@@ -61,10 +61,10 @@ describe 'Graph axis values', inspect: true do
     end
 
     context 'given the axis values have more than 2 significant digits' do
-      let(:values) { {2013 => 182, 2014 => 46, 2015 => 102} }
+      let(:values) { {2013 => 18212, 2014 => 4634, 2015 => 10256} }
 
-      it 'displays the axis values rounded to 2 significant digits' do
-        expect(inspected_strings).to eq %w(180.0 135.0 90.0 45.0 0.0)
+      it 'displays the axis values with delimiter and 2 significant digits' do
+        expect(inspected_strings).to eq %w(18,000 13,500 9,000 4,500 0)
       end
     end
 
@@ -101,7 +101,15 @@ describe 'Graph axis values', inspect: true do
 
       it 'prints the values as minutes and seconds' do
         expect(inspected_strings).to eq %w(6:30 4:53 3:15 1:38 0:00)
+      end
+    end
 
+    context 'given the :format is set to :float' do
+      let(:values) { {2013 => 42.009, 2014 => 390.1, 2015 => 18.6} }
+      let(:options) { {legend: false, baseline: false, format: :float} }
+
+      it 'prints the values as floats' do
+        expect(inspected_strings).to eq %w(390.0 292.5 195.0 97.5 0.0)
       end
     end
   end

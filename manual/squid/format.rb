@@ -1,6 +1,6 @@
 # You can specify the format of the axis values with the <code>:format</code> option.
 #
-# Valid options are: <code>:percentage</code>, <code>:currency</code>, <code>:seconds</code>.
+# Valid options are: <code>:percentage</code>, <code>:currency</code>, <code>:seconds</code>, <code>:float</code>.
 #
 filename = File.basename(__FILE__).gsub('.rb', '.pdf')
 Prawn::ManualBuilder::Example.generate(filename) do

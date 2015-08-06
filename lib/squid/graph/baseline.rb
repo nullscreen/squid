@@ -31,7 +31,8 @@ module Squid
     # Writes the category label below the line.
     def draw_category(category, x)
       category_options = {height: text_height, width: width, size: font_size}
-      category_options.merge! align: :center, at: [x, y] #, leading: -3 ???
+      category_options.merge! align: :center, at: [x, y]
+      category_options.merge! disable_wrap_by_char: true #, leading: -3 ???
       text_box category.to_s, text_options.merge(category_options)
     end
 

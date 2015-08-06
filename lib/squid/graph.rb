@@ -71,8 +71,7 @@ module Squid
     # Returns an approximation of a value that looks nicer on a graph axis.
     # For instance, rounds 99.67 to 100, which makes for a better axis value.
     def approximate_value_for(value)
-      options = {significant: true, precision: 2}
-      number_to_rounded(value, options).to_f
+      number_to_rounded(value, significant: true, precision: 2).to_f
     end
 
     # Returns the formatted value (currency, percentage, ...).
@@ -81,7 +80,8 @@ module Squid
       when :percentage then number_to_percentage value, precision: 1
       when :currency then number_to_currency value
       when :seconds then number_to_minutes_and_seconds value
-      else value
+      when :float then number_to_delimited value
+      else number_to_delimited value.to_i
       end.to_s
     end
 

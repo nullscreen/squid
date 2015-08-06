@@ -34,7 +34,7 @@ module Squid
 
     # If labels are wider than this, they will be shrunk to fit
     def max_width
-      100
+      50
     end
 
     def align(position)
