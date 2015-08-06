@@ -6,7 +6,7 @@ require 'squid/graph/legend'
 
 module Squid
   class Graph < Base
-    has_settings :baseline, :gridlines, :height, :legend, :ticks
+    has_settings :baseline, :format, :gridlines, :height, :legend, :ticks
 
     # Draws the graph.
     def draw
@@ -58,9 +58,7 @@ module Squid
     def labels_for(values)
       min, max = min_max values
       gap = (min - max)/gridlines.to_f
-      max.step(by: gap, to: min).map do |x|
-        x.to_s # TODO: Add format
-      end
+      max.step(by: gap, to: min).map{|value| format_for value}
     end
 
     # Returns the minimum and maximum value, approximated to significant digits.
@@ -75,6 +73,16 @@ module Squid
     def approximate_value_for(value)
       options = {significant: true, precision: 2}
       ActiveSupport::NumberHelper.number_to_rounded(value, options).to_f
+    end
+
+    # Returns the formatted value (currency, percentage, ...).
+    def format_for(value)
+      case format
+      when :percentage
+        ActiveSupport::NumberHelper.number_to_percentage value, precision: 1
+      else
+        value
+      end.to_s
     end
 
     # Returns whether the grid should be drawn at all.

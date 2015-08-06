@@ -76,6 +76,15 @@ describe 'Graph axis values', inspect: true do
         expect(inspected_strings.last.to_i).to be -50
       end
     end
+
+    context 'given the :format is set to :percentage' do
+      let(:values) { {2013 => 42.10001, 2014 => 39.29999, 2015 => 18.6} }
+      let(:options) { {legend: false, baseline: false, format: :percentage} }
+
+      it 'prints the values as rounded percentages' do
+        expect(inspected_strings).to eq %w(42.0% 31.5% 21.0% 10.5% 0.0%)
+      end
+    end
   end
 
   it 'can be set with the :gridlines option' do
@@ -89,5 +98,17 @@ describe 'Graph axis values', inspect: true do
     Squid.configure {|config| config.gridlines = 4}
 
     expect(inspected_strings.size).to be 7
+  end
+
+  it 'can have a different format with the :format option' do
+    pdf.chart one_series, options.merge(format: :percentage)
+    expect(inspected_strings).to eq %w(180.0% 135.0% 90.0% 45.0% 0.0%)
+  end
+
+  it 'can be drawn without ticks with Squid.config' do
+    Squid.configure {|config| config.format = :percentage}
+    pdf.chart one_series, options
+    Squid.configure {|config| config.format = nil}
+    expect(inspected_strings).to eq %w(180.0% 135.0% 90.0% 45.0% 0.0%)
   end
 end
