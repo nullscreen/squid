@@ -28,27 +28,32 @@ module Squid
   #   ENV['SQUID_GRIDLINES'] =  '4'
   #
   class Configuration < OpenStruct
-    # @return [Integer] the default graph height
-    attr_accessor :baseline, :border, :chart, :format, :gridlines, :height
-    attr_accessor :legend, :ticks
+    ATTRIBUTES = {
+      baseline:  {default: 'true',    as: -> (value) { true? value }},
+      border:    {default: 'false',   as: -> (value) { true? value }},
+      chart:     {default: 'true',    as: -> (value) { true? value }},
+      format:    {default: 'integer', as: -> (value) { value.to_sym }},
+      legend:    {default: 'true',    as: -> (value) { true? value }},
+      gridlines: {default: '4',       as: -> (value) { value.to_i }},
+      height:    {default: '200',     as: -> (value) { value.to_f }},
+      ticks:     {default: 'true',    as: -> (value) { true? value }},
+    }
 
-    # Initialize the global configuration settings, using the values of
-    # the specified following environment variables by default.
+    attr_accessor *ATTRIBUTES.keys
+
+    # Initialize the global configuration settings.
     def initialize
-      @baseline  = ENV.fetch('SQUID_BASELINE', 'true').in? true_values
-      @border    = ENV.fetch('SQUID_BORDER', 'false').in? true_values
-      @chart     = ENV.fetch('SQUID_CHART', 'true').in? true_values
-      @format    = ENV.fetch('SQUID_FORMAT', 'integer').to_sym
-      @legend    = ENV.fetch('SQUID_LEGEND', 'true').in? true_values
-      @gridlines = ENV.fetch('SQUID_GRIDLINES', '4').to_i
-      @height    = ENV.fetch('SQUID_HEIGHT', '200').to_f
-      @ticks     = ENV.fetch('SQUID_TICKS', 'true').in? true_values
+      ATTRIBUTES.each do |key, options|
+        var = "squid_#{key}".upcase
+        value = ENV.fetch var, options[:default]
+        public_send "#{key}=", options[:as].call(value)
+      end
     end
 
   private
 
-    def true_values
-      %w(1 t T true TRUE)
+    def self.true?(value)
+      value.in? %w(1 t T true TRUE)
     end
   end
 end
