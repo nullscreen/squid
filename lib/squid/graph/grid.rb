@@ -15,8 +15,8 @@ module Squid
     def each_line
       y = bounds.top
       data.each.with_index do |labels, index|
-        yield y, labels, (index == data.size - 1)
-        y -= bounds.height / (data.size - 1)
+        yield y, labels, (index == lines)
+        y -= bounds.height / lines
       end
     end
 
@@ -58,6 +58,11 @@ module Squid
     # The horizontal space between the label and the gridline
     def label_padding(position)
       @settings.key?(position) ? padding : 0
+    end
+
+    # The number of lines to draw.
+    def lines
+      data.size - 1
     end
   end
 end
