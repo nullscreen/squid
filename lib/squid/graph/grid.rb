@@ -4,15 +4,21 @@ module Squid
   # Adds all the gridlines and axis values to the graph.
   class Grid < Base
     def draw
-      y = bounds.top
-      data.each.with_index do |labels, index|
-        draw_gridline y unless index == data.size - 1
+      each_line do |y, labels, is_baseline|
+        draw_gridline y unless is_baseline
         labels.each{|position, label| draw_label label, y, position}
-        y -= bounds.height / (data.size - 1)
       end
     end
 
   private
+
+    def each_line
+      y = bounds.top
+      data.each.with_index do |labels, index|
+        yield y, labels, (index == data.size - 1)
+        y -= bounds.height / (data.size - 1)
+      end
+    end
 
     def draw_gridline(y)
       transparent(0.25) do
