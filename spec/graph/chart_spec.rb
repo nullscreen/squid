@@ -35,4 +35,16 @@ describe 'Graph chart', inspect: true do
       end
     end
   end
+
+  it 'can be disabled with the :chart option' do
+    pdf.chart one_series, options.merge(chart: false)
+    expect(inspected_rectangles).to be_empty
+  end
+
+  it 'can be disabled with Squid.config' do
+    Squid.configure {|config| config.chart = false}
+    pdf.chart one_series, options
+    Squid.configure {|config| config.chart = true}
+    expect(inspected_rectangles).to be_empty
+  end
 end
