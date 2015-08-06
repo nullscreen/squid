@@ -15,9 +15,11 @@ module Squid
   private
 
     # Draws a single element (one column, one point, ...) to represent the
-    # value in the chart.
+    # value in the chart. Adds some padding to separate between elements.
     def draw_element(value, x)
-      fill_rectangle [x, zero_y + height(value)], width, height(value)
+      w = width - 2 * element_padding
+      h = height value
+      fill_rectangle [x + element_padding, zero_y + h], w, h
     end
 
     # Returns the leftmost point of the chart.
@@ -28,6 +30,11 @@ module Squid
     # Returns the horizontal space for each element.
     def width
       (bounds.right - left) / data.size.to_f
+    end
+
+    # Returns the horizontal space between elements.
+    def element_padding
+      width / 8
     end
 
     # Returns the vertical space for a given value.
