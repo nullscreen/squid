@@ -41,6 +41,11 @@ module Squid
       8
     end
 
+    # Default height for text elements (labels, categories, ...)
+    def text_height
+      (font_size + 2) * 2
+    end
+
     # Default horizontal padding between elements
     def padding
       5

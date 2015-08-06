@@ -29,7 +29,7 @@ module Squid
   #
   class Configuration < OpenStruct
     # @return [Integer] the default graph height
-    attr_accessor :baseline, :gridlines, :height, :legend
+    attr_accessor :baseline, :gridlines, :height, :legend, :ticks
 
     # Initialize the global configuration settings, using the values of
     # the specified following environment variables by default.
@@ -38,6 +38,7 @@ module Squid
       @legend = ENV.fetch('SQUID_LEGEND', 'true').in? %w(1 t T true TRUE)
       @gridlines = ENV.fetch('SQUID_GRIDLINES', '4').to_i
       @height = ENV.fetch('SQUID_HEIGHT', '200').to_f
+      @ticks = ENV.fetch('SQUID_TICKS', 'true').in? %w(1 t T true TRUE)
     end
   end
 end

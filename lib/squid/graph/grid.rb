@@ -25,16 +25,11 @@ module Squid
     end
 
     def draw_label(label, y, position)
-      label_options = {height: label_height, size: font_size}
+      label_options = {height: text_height, size: font_size}
       label_options[:width] = width position
       label_options[:align] = align position
-      label_options[:at] = [delta(position), y + label_height / 2]
+      label_options[:at] = [delta(position), y + text_height / 2]
       text_box label, text_options.merge(label_options)
-    end
-
-    # The height of each axis label
-    def label_height
-      20
     end
 
     # If labels are wider than this, they will be shrunk to fit

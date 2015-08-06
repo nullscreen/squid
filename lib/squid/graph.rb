@@ -5,18 +5,27 @@ require 'squid/graph/legend'
 
 module Squid
   class Graph < Base
-    has_settings :baseline, :gridlines, :height, :legend
+    has_settings :baseline, :gridlines, :height, :legend, :ticks
 
     # Draws the graph.
     def draw
       bounding_box [0, cursor], width: bounds.width, height: height do
         Legend.new(pdf, data.keys).draw if legend
         Grid.new(pdf, labels, left: left).draw if grid
-        Baseline.new(pdf, {}, left: left, height: height).draw if baseline
+        Baseline.new(pdf, categories, baseline_options).draw if baseline
       end if data.any?
     end
 
   private
+
+    def baseline_options
+      {left: left, height: height, ticks: ticks}
+    end
+
+    # Returns the categories to print below the baseline.
+    def categories
+      data.values.first.keys
+    end
 
     # Returns the width of the left axis
     def left
