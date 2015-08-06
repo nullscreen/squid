@@ -5,6 +5,7 @@ module Squid
   # is convenient when working with Prawn methods
   class Base
     extend Settings
+    include ActiveSupport::NumberHelper
 
     attr_reader :pdf, :data
 

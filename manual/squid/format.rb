@@ -1,6 +1,6 @@
-# By default, <code>chart</code> prints the axis values as unformatted numbers.
+# You can specify the format of the axis values with the <code>:format</code> option.
 #
-# You can pick a different format with the <code>:format</code>.
+# Valid options are: <code>:percentage</code>, <code>:currency</code>.
 #
 filename = File.basename(__FILE__).gsub('.rb', '.pdf')
 Prawn::ManualBuilder::Example.generate(filename) do

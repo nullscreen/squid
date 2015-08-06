@@ -85,6 +85,15 @@ describe 'Graph axis values', inspect: true do
         expect(inspected_strings).to eq %w(42.0% 31.5% 21.0% 10.5% 0.0%)
       end
     end
+
+    context 'given the :format is set to :currency' do
+      let(:values) { {2013 => 42.009, 2014 => 390.1, 2015 => 18.6} }
+      let(:options) { {legend: false, baseline: false, format: :currency} }
+
+      it 'prints the values as rounded percentages' do
+        expect(inspected_strings).to eq %w($390.00 $292.50 $195.00 $97.50 $0.00)
+      end
+    end
   end
 
   it 'can be set with the :gridlines option' do
