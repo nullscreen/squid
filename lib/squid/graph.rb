@@ -1,5 +1,6 @@
 require 'squid/base'
 require 'squid/graph/baseline'
+require 'squid/graph/chart'
 require 'squid/graph/grid'
 require 'squid/graph/legend'
 
@@ -12,14 +13,20 @@ module Squid
       bounding_box [0, cursor], width: bounds.width, height: height do
         Legend.new(pdf, data.keys).draw if legend
         Grid.new(pdf, labels, left: left).draw if grid
-        Baseline.new(pdf, categories, baseline_options).draw if baseline
+        Baseline.new(pdf, categories, left: left, ticks: ticks).draw if baseline
+        Chart.new(pdf, first_series, chart_options).draw
       end if data.any?
     end
 
   private
 
-    def baseline_options
-      {left: left, height: height, ticks: ticks}
+    def chart_options
+      min, max = min_max first_series
+      {left: left, min: min, max: max}
+    end
+
+    def first_series
+      data.values.first.values
     end
 
     # Returns the categories to print below the baseline.
@@ -34,7 +41,7 @@ module Squid
 
     # Returns the labels to print in the left axis.
     def left_labels
-      @left_labels ||= labels_for data.values.first.values
+      @left_labels ||= labels_for first_series
     end
 
     # Returns the labels to print on both axes.
@@ -49,13 +56,18 @@ module Squid
 
     # Transform a numeric value into a label according to the given format.
     def labels_for(values)
-      min = (values + [0]).compact.min
-      max = (values + [gridlines]).compact.max
-      min, max = [min, max].map{|value| approximate_value_for value}
+      min, max = min_max values
       gap = (min - max)/gridlines.to_f
       max.step(by: gap, to: min).map do |x|
         x.to_s # TODO: Add format
       end
+    end
+
+    # Returns the minimum and maximum value, approximated to significant digits.
+    def min_max(values)
+      min = (values + [0]).compact.min
+      max = (values + [gridlines]).compact.max
+      [min, max].map{|value| approximate_value_for value}
     end
 
     # Returns an approximation of a value that looks nicer on a graph axis.

@@ -8,7 +8,7 @@ module Squid
       data.each.with_index do |labels, index|
         draw_gridline y unless index == data.size - 1
         labels.each{|position, label| draw_label label, y, position}
-        y -= @settings[:height] / (data.size - 1)
+        y -= bounds.height / (data.size - 1)
       end
     end
 
