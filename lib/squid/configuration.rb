@@ -29,17 +29,26 @@ module Squid
   #
   class Configuration < OpenStruct
     # @return [Integer] the default graph height
-    attr_accessor :baseline, :format, :gridlines, :height, :legend, :ticks
+    attr_accessor :baseline, :border, :chart, :format, :gridlines, :height
+    attr_accessor :legend, :ticks
 
     # Initialize the global configuration settings, using the values of
     # the specified following environment variables by default.
     def initialize
-      @baseline  = ENV.fetch('SQUID_BASELINE', 'true').in? %w(1 t T true TRUE)
+      @baseline  = ENV.fetch('SQUID_BASELINE', 'true').in? true_values
+      @border    = ENV.fetch('SQUID_BASELINE', 'false').in? true_values
+      @chart     = ENV.fetch('SQUID_CHART', 'true').in? true_values
       @format    = ENV.fetch('SQUID_FORMAT', nil)
-      @legend    = ENV.fetch('SQUID_LEGEND', 'true').in? %w(1 t T true TRUE)
+      @legend    = ENV.fetch('SQUID_LEGEND', 'true').in? true_values
       @gridlines = ENV.fetch('SQUID_GRIDLINES', '4').to_i
       @height    = ENV.fetch('SQUID_HEIGHT', '200').to_f
-      @ticks     = ENV.fetch('SQUID_TICKS', 'true').in? %w(1 t T true TRUE)
+      @ticks     = ENV.fetch('SQUID_TICKS', 'true').in? true_values
+    end
+
+  private
+
+    def true_values
+      %w(1 t T true TRUE)
     end
   end
 end

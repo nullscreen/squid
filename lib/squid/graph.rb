@@ -6,7 +6,8 @@ require 'squid/graph/legend'
 
 module Squid
   class Graph < Base
-    has_settings :baseline, :format, :gridlines, :height, :legend, :ticks
+    has_settings :baseline, :border, :chart, :format, :gridlines, :height
+    has_settings :legend, :ticks
 
     # Draws the graph.
     def draw
@@ -14,11 +15,16 @@ module Squid
         Legend.new(pdf, data.keys).draw if legend
         Grid.new(pdf, labels, left: left).draw if grid
         Baseline.new(pdf, categories, left: left, ticks: ticks).draw if baseline
-        Chart.new(pdf, first_series, chart_options).draw
+        Chart.new(pdf, first_series, chart_options).draw if chart
+        draw_border if border
       end if data.any?
     end
 
   private
+
+    def draw_border
+      with(line_width: 0.5) { stroke_bounds }
+    end
 
     def chart_options
       min, max = min_max first_series
