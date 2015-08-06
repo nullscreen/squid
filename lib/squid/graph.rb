@@ -19,20 +19,32 @@ module Squid
   private
 
     def draw_graph
-      Legend.new(pdf, data.keys).draw if legend
-      Grid.new(pdf, labels, left: left).draw if grid
-      Baseline.new(pdf, categories, left: left, ticks: ticks).draw if baseline
-      Chart.new(pdf, first_series, chart_options).draw if chart
+      draw_legend if legend
+      draw_grid if grid
+      draw_baseline if baseline
+      draw_chart if chart
       draw_border if border
+    end
+
+    def draw_legend
+      Legend.new(pdf, data.keys).draw
+    end
+
+    def draw_grid
+      Grid.new(pdf, labels, left: left).draw
+    end
+
+    def draw_baseline
+      Baseline.new(pdf, categories, left: left, ticks: ticks).draw
+    end
+
+    def draw_chart
+      min, max = min_max first_series
+      Chart.new(pdf, first_series, left: left, min: min, max: max).draw
     end
 
     def draw_border
       with(line_width: 0.5) { stroke_bounds }
-    end
-
-    def chart_options
-      min, max = min_max first_series
-      {left: left, min: min, max: max}
     end
 
     def first_series
