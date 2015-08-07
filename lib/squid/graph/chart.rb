@@ -27,15 +27,10 @@ module Squid
 
     # Writes the actual value number on top of the chart element.
     def draw_value_label(value, x)
-      label = label_options
-      label.merge! text: format_for(value, @settings[:format])
-      label.merge! color: (value < 0 ? 'ffffff' : '000000')
-
       options = {at: [x+element_padding, text_height+label_padding+y(value)]}
       options.merge! width: width - 2 * element_padding, height: text_height
       options.merge! align: :center, valign: :bottom
-
-      formatted_text_box [label], options
+      formatted_text_box [label_options(value)], options
     end
 
     # Returns the leftmost point of the chart.
@@ -58,9 +53,11 @@ module Squid
       2
     end
 
-    # Default text options for the value labels
-    def label_options
-      {size: font_size * 1.2, styles: [:bold]}
+    # Text options for the value labels
+    def label_options(value)
+      options = {size: font_size * 1.2, styles: [:bold]}
+      options.merge! text: format_for(value, @settings[:format])
+      options.merge! color: (value < 0 ? 'ffffff' : '000000')
     end
 
     # Return the vertical position for a value
