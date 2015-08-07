@@ -26,7 +26,9 @@ RSpec.shared_context 'PDF Inspector', inspect: true do
   let(:inspected_strings) { inspected_text.strings }
   let(:inspected_rectangle) { PDF::Inspector::Graphics::Rectangle.analyze output }
   let(:inspected_rectangles) { inspected_rectangle.rectangles }
-  let(:inspected_colors) { PDF::Inspector::Graphics::Color.analyze output }
+  let(:inspected_color) { PDF::Inspector::Graphics::Color.analyze output }
+  let(:inspected_curve) { PDF::Inspector::Graphics::Curve.analyze output }
+  let(:inspected_coords) { inspected_curve.coords }
   let(:options) { {} }
 
   let(:views) { {2013 => 182, 2014 => 46, 2015 => 102} }

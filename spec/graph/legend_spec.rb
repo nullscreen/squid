@@ -22,7 +22,7 @@ describe 'Graph legend', inspect: true do
     end
 
     it 'draws the square in blue' do
-      expect(inspected_colors.fill_color).to eq [0.18, 0.341, 0.549]
+      expect(inspected_color.fill_color).to eq [0.18, 0.341, 0.549]
     end
   end
 
@@ -53,13 +53,13 @@ describe 'Graph legend', inspect: true do
 
   it 'can have a different color with the :color option' do
     pdf.chart one_series, options.merge(color: '5d9648')
-    expect(inspected_colors.fill_color).to eq [0.365, 0.588, 0.282]
+    expect(inspected_color.fill_color).to eq [0.365, 0.588, 0.282]
   end
 
   it 'can have a different color with Squid.config' do
     Squid.configure {|config| config.color = '5d9648'}
     pdf.chart one_series, options
     Squid.configure {|config| config.color = '2e578c'}
-    expect(inspected_colors.fill_color).to eq [0.365, 0.588, 0.282]
+    expect(inspected_color.fill_color).to eq [0.365, 0.588, 0.282]
   end
 end
