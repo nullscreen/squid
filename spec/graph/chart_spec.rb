@@ -22,6 +22,10 @@ describe 'Graph chart', inspect: true do
       expect(widths.uniq).to be_one
     end
 
+    it 'has blue columns' do
+      expect(inspected_colors.fill_color).to eq [0.18, 0.341, 0.549]
+    end
+
     it 'has all the columns aligned along the "0" value of the graph' do
       y = inspected_rectangles.map{|r| r[:point].last}
       expect(y.uniq).to be_one
@@ -62,5 +66,17 @@ describe 'Graph chart', inspect: true do
     pdf.chart one_series, options
     Squid.configure {|config| config.value_labels = false}
     expect(inspected_strings).not_to be_empty
+  end
+
+  it 'can have a different color with the :color option' do
+    pdf.chart one_series, options.merge(color: '5d9648')
+    expect(inspected_colors.fill_color).to eq [0.365, 0.588, 0.282]
+  end
+
+  it 'can have a different color with Squid.config' do
+    Squid.configure {|config| config.color = '5d9648'}
+    pdf.chart one_series, options
+    Squid.configure {|config| config.color = '2e578c'}
+    expect(inspected_colors.fill_color).to eq [0.365, 0.588, 0.282]
   end
 end
