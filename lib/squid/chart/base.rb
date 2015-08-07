@@ -6,14 +6,18 @@ module Squid
     class Base < Squid::Base
       def draw
         x = left
-        data.each do |value|
-          draw_element value, x
+        data.each.with_index do |value, index|
+          draw_element value, x, previous_value: (data[index - 1] if index > 0)
           draw_value_label value, x if @settings[:labels]
           x += width
         end
       end
 
     private
+
+      # To be overriden by subclasses
+      def draw_element(value, x, options = {})
+      end
 
       # Writes the actual value number on top of the chart element.
       def draw_value_label(value, x)
@@ -23,9 +27,8 @@ module Squid
         formatted_text_box [label_options(value)], options
       end
 
-
       def with_transparent_color
-        with fill_color: @settings[:color] do
+        with fill_color: @settings[:color], stroke_color: @settings[:color] do
           transparent(0.95) { yield }
         end
       end

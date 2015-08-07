@@ -35,6 +35,7 @@ module Squid
       color:        {default: '2e578c',  as: -> (value) { value }},
       format:       {default: 'integer', as: -> (value) { value.to_sym }},
       legend:       {default: 'true',    as: -> (value) { true? value }},
+      line_width:   {default: '3',       as: -> (value) { value.to_i }},
       steps:        {default: '4',       as: -> (value) { value.to_i }},
       height:       {default: '250',     as: -> (value) { value.to_f }},
       ticks:        {default: 'true',    as: -> (value) { true? value }},

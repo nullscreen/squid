@@ -21,6 +21,7 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
 
     p.section 'Chart types' do |s|
       s.example 'point'
+      s.example 'line'
     end
 
     p.section 'Styling' do |s|
@@ -31,6 +32,7 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
       s.example 'format'
       s.example 'border'
       s.example 'value_labels'
+      s.example 'line_width'
     end
 
   end

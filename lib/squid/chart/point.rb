@@ -7,7 +7,7 @@ module Squid
     private
       # Draws a single point to represent the
       # value in the chart. Adds some padding to separate between elements.
-      def draw_element(value, x)
+      def draw_element(value, x, options = {})
         with_transparent_color do
           fill_circle [x + width / 2, y(value)], 5
         end
