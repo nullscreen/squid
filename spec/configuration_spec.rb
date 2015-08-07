@@ -48,6 +48,21 @@ describe Squid::Configuration do
     end
   end
 
+  describe 'color' do
+    let(:color) { %w(5d9648 e7a13d bc2d30 6f3d79 7d807f).sample }
+
+    it 'is blue by default' do
+      ENV['SQUID_COLOR'] = nil
+      expect(config.color).to eq '2e578c'
+    end
+
+    it 'can be set with the environment variable SQUID_COLOR' do
+      ENV['SQUID_COLOR'] = color
+      expect(config.color).to eq color
+      ENV['SQUID_COLOR'] = '2e578c'
+    end
+  end
+
   describe 'format' do
     let(:format) { %i(percentage currency seconds float).sample }
 

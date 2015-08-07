@@ -6,7 +6,7 @@ require 'squid/graph/legend'
 
 module Squid
   class Graph < Base
-    has_settings :baseline, :border, :chart, :format, :height
+    has_settings :baseline, :border, :chart, :color, :format, :height
     has_settings :legend, :steps, :ticks, :value_labels
 
     # Draws the graph.
@@ -27,7 +27,7 @@ module Squid
     end
 
     def draw_legend
-      Legend.new(pdf, data.keys).draw
+      Legend.new(pdf, data.keys, color: color).draw
     end
 
     def draw_grid
@@ -40,7 +40,8 @@ module Squid
 
     def draw_chart
       min, max = min_max first_series
-      options = grid_options.merge min: min, max: max, labels: value_labels, format: format
+      options = grid_options.merge min: min, max: max, labels: value_labels
+      options.merge! format: format, color: color
       Chart.new(pdf, first_series, options).draw
     end
 

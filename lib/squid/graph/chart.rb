@@ -18,16 +18,24 @@ module Squid
     # value in the chart. Adds some padding to separate between elements.
     def draw_element(value, x)
       w = width - 2 * element_padding
-      fill_rectangle [x + element_padding, y(value)], w, y(value) - zero_y
+      with fill_color: @settings[:color] do
+        transparent(0.95) do
+          fill_rectangle [x + element_padding, y(value)], w, y(value) - zero_y
+        end
+      end
     end
 
     # Writes the actual value number on top of the chart element.
     def draw_value_label(value, x)
-      label = format_for value, @settings[:format]
-      options = {height: text_height, size: font_size, style: :bold}
-      options.merge! align: :center, width: width - 2 * element_padding
-      options.merge! at: [x + element_padding, text_height + y(value)]
-      text_box label, text_options.merge(options)
+      label = label_options
+      label.merge! text: format_for(value, @settings[:format])
+      label.merge! color: (value < 0 ? 'ffffff' : '000000')
+
+      options = {at: [x+element_padding, text_height+label_padding+y(value)]}
+      options.merge! width: width - 2 * element_padding, height: text_height
+      options.merge! align: :center, valign: :bottom
+
+      formatted_text_box [label], options
     end
 
     # Returns the leftmost point of the chart.
@@ -43,6 +51,16 @@ module Squid
     # Returns the horizontal space between elements.
     def element_padding
       width / 8
+    end
+
+    # Returns the vertical space between value label and element.
+    def label_padding
+      2
+    end
+
+    # Default text options for the value labels
+    def label_options
+      {size: font_size * 1.2, styles: [:bold]}
     end
 
     # Return the vertical position for a value

@@ -32,6 +32,7 @@ module Squid
       baseline:     {default: 'true',    as: -> (value) { true? value }},
       border:       {default: 'false',   as: -> (value) { true? value }},
       chart:        {default: 'true',    as: -> (value) { true? value }},
+      color:        {default: '2e578c',  as: -> (value) { value }},
       format:       {default: 'integer', as: -> (value) { value.to_sym }},
       legend:       {default: 'true',    as: -> (value) { true? value }},
       steps:        {default: '4',       as: -> (value) { value.to_i }},
