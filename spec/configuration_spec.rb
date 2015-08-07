@@ -93,6 +93,21 @@ describe Squid::Configuration do
     end
   end
 
+  describe 'line_width' do
+    let(:line_width) { rand(9) }
+
+    it 'is 3 by default' do
+      ENV['SQUID_LINE_WIDTH'] = nil
+      expect(config.line_width).to eq 3
+    end
+
+    it 'can be set with the environment variable SQUID_LINE_WIDTH' do
+      ENV['SQUID_LINE_WIDTH'] = line_width.to_s
+      expect(config.line_width).to eq line_width
+      ENV['SQUID_LINE_WIDTH'] = nil
+    end
+  end
+
   describe 'steps' do
     let(:steps) { rand(9) }
 
@@ -139,7 +154,7 @@ describe Squid::Configuration do
   end
 
   describe 'type' do
-    let(:type) { %i(point).sample }
+    let(:type) { %i(point line).sample }
 
     it 'is integer by default' do
       ENV['SQUID_TYPE'] = nil

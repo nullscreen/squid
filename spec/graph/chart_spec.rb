@@ -53,6 +53,23 @@ describe 'Graph chart', inspect: true do
         expect(radii.uniq).to be_one
       end
     end
+
+    context 'given the :type is set to :line' do
+      let(:options) { {legend: false, baseline: false, steps: 0, type: :line} }
+
+      it 'prints the elements by connecting them with lines' do
+        expect(inspected_rectangles).to be_empty
+        expect(inspected_points.size).to be values.size - 1
+      end
+
+      context 'given the :line_width option is set to a value' do
+        let(:options) { {legend: false, baseline: false, steps: 0, type: :line, line_width: 10} }
+
+        it 'draws the line with the given width' do
+          expect(inspected_line.widths).to include(10)
+        end
+      end
+    end
   end
 
   it 'can be disabled with the :chart option' do
@@ -101,5 +118,17 @@ describe 'Graph chart', inspect: true do
     pdf.chart one_series, options
     Squid.configure {|config| config.type = :column}
     expect(inspected_rectangles).to be_empty
+  end
+
+  it 'can have a different line width with the :line_width option' do
+    pdf.chart one_series, options.merge(type: :line, line_width: 7)
+    expect(inspected_line.widths).to include(7)
+  end
+
+  it 'can have a different line width with Squid.config' do
+    Squid.configure {|config| config.type = :line; config.line_width = 7}
+    pdf.chart one_series, options
+    Squid.configure {|config| config.type = :column; config.line_width = 3}
+    expect(inspected_line.widths).to include(7)
   end
 end
