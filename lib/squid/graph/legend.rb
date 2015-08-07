@@ -45,7 +45,9 @@ module Squid
     # @return [Integer] The updated right-margin (after adding the label)
     def draw_square(series, x)
       x -= square_size + square_padding
-      fill_rectangle [x, bounds.height - square_size], square_size, square_size
+      with fill_color: @settings[:color] do
+        fill_rectangle [x, bounds.height-square_size], square_size, square_size
+      end
       x
     end
 

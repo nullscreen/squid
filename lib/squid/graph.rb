@@ -21,8 +21,8 @@ module Squid
     def draw_graph
       draw_legend if legend
       draw_grid if grid
-      draw_baseline if baseline
       draw_chart if chart
+      draw_baseline if baseline
       draw_border if border
     end
 
