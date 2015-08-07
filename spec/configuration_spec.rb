@@ -138,6 +138,21 @@ describe Squid::Configuration do
     end
   end
 
+  describe 'type' do
+    let(:type) { %i(point).sample }
+
+    it 'is integer by default' do
+      ENV['SQUID_TYPE'] = nil
+      expect(config.type).to be :column
+    end
+
+    it 'can be set with the environment variable SQUID_TYPE' do
+      ENV['SQUID_TYPE'] = type.to_s
+      expect(config.type).to be type
+      ENV['SQUID_TYPE'] = nil
+    end
+  end
+
   describe 'value_labels' do
     let(:value_labels) { %w(1 t T true TRUE).sample }
 

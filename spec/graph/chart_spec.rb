@@ -23,7 +23,7 @@ describe 'Graph chart', inspect: true do
     end
 
     it 'has blue columns' do
-      expect(inspected_colors.fill_color).to eq [0.18, 0.341, 0.549]
+      expect(inspected_color.fill_color).to eq [0.18, 0.341, 0.549]
     end
 
     it 'has all the columns aligned along the "0" value of the graph' do
@@ -40,6 +40,17 @@ describe 'Graph chart', inspect: true do
 
       it 'ignores nil values' do
         expect(inspected_rectangles.select{|r| r[:height].zero?}).to be_one
+      end
+    end
+
+    context 'given the :type is set to :point' do
+      let(:options) { {legend: false, baseline: false, steps: 0, type: :point} }
+
+      it 'prints the elements as circles of the same radius' do
+        expect(inspected_rectangles).to be_empty
+        expect(inspected_coords).not_to be_empty
+        radii = inspected_points.map{|x| x.map(&:first).inject(:-)}
+        expect(radii.uniq).to be_one
       end
     end
   end
@@ -70,13 +81,25 @@ describe 'Graph chart', inspect: true do
 
   it 'can have a different color with the :color option' do
     pdf.chart one_series, options.merge(color: '5d9648')
-    expect(inspected_colors.fill_color).to eq [0.365, 0.588, 0.282]
+    expect(inspected_color.fill_color).to eq [0.365, 0.588, 0.282]
   end
 
   it 'can have a different color with Squid.config' do
     Squid.configure {|config| config.color = '5d9648'}
     pdf.chart one_series, options
     Squid.configure {|config| config.color = '2e578c'}
-    expect(inspected_colors.fill_color).to eq [0.365, 0.588, 0.282]
+    expect(inspected_color.fill_color).to eq [0.365, 0.588, 0.282]
+  end
+
+  it 'can have a different type with the :type option' do
+    pdf.chart one_series, options.merge(type: :point)
+    expect(inspected_rectangles).to be_empty
+  end
+
+  it 'can have a different type with Squid.config' do
+    Squid.configure {|config| config.type = :point}
+    pdf.chart one_series, options
+    Squid.configure {|config| config.type = :column}
+    expect(inspected_rectangles).to be_empty
   end
 end

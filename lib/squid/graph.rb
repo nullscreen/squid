@@ -1,13 +1,14 @@
 require 'squid/base'
+require 'squid/chart/column'
+require 'squid/chart/point'
 require 'squid/graph/baseline'
-require 'squid/graph/chart'
 require 'squid/graph/grid'
 require 'squid/graph/legend'
 
 module Squid
   class Graph < Base
     has_settings :baseline, :border, :chart, :color, :format, :height
-    has_settings :legend, :steps, :ticks, :value_labels
+    has_settings :legend, :steps, :ticks, :type, :value_labels
 
     # Draws the graph.
     def draw
@@ -42,7 +43,14 @@ module Squid
       min, max = min_max first_series
       options = grid_options.merge min: min, max: max, labels: value_labels
       options.merge! format: format, color: color
-      Chart.new(pdf, first_series, options).draw
+      chart_class.new(pdf, first_series, options).draw
+    end
+
+    def chart_class
+      case type
+        when :column then Chart::Column
+        when :point then Chart::Point
+      end
     end
 
     def grid_options

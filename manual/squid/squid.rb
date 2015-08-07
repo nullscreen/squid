@@ -19,6 +19,10 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
       s.example 'legend'
     end
 
+    p.section 'Chart types' do |s|
+      s.example 'point'
+    end
+
     p.section 'Styling' do |s|
       s.example 'height'
       s.example 'baseline'
