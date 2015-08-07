@@ -122,4 +122,19 @@ describe Squid::Configuration do
       ENV['SQUID_TICKS'] = nil
     end
   end
+
+  describe 'value_labels' do
+    let(:value_labels) { %w(1 t T true TRUE).sample }
+
+    it 'is false by default' do
+      ENV['SQUID_VALUE_LABELS'] = nil
+      expect(config.value_labels).to be false
+    end
+
+    it 'can be set with the environment variable SQUID_VALUE_LABELS' do
+      ENV['SQUID_VALUE_LABELS'] = value_labels
+      expect(config.value_labels).to be true
+      ENV['SQUID_VALUE_LABELS'] = nil
+    end
+  end
 end

@@ -7,7 +7,7 @@ require 'squid/graph/legend'
 module Squid
   class Graph < Base
     has_settings :baseline, :border, :chart, :format, :height
-    has_settings :legend, :steps, :ticks
+    has_settings :legend, :steps, :ticks, :value_labels
 
     # Draws the graph.
     def draw
@@ -40,7 +40,8 @@ module Squid
 
     def draw_chart
       min, max = min_max first_series
-      Chart.new(pdf, first_series, grid_options.merge(min: min, max: max)).draw
+      options = grid_options.merge min: min, max: max, labels: value_labels, format: format
+      Chart.new(pdf, first_series, options).draw
     end
 
     def grid_options
@@ -105,7 +106,7 @@ module Squid
     def labels_for(values)
       min, max = min_max values
       gap = (min - max)/steps.to_f
-      max.step(by: gap, to: min).map{|value| format_for value}
+      max.step(by: gap, to: min).map{|value| format_for value, format}
     end
 
     # Returns the minimum and maximum value, approximated to significant digits.
@@ -119,21 +120,6 @@ module Squid
     # For instance, rounds 99.67 to 100, which makes for a better axis value.
     def approximate_value_for(value)
       number_to_rounded(value, significant: true, precision: 2).to_f
-    end
-
-    # Returns the formatted value (currency, percentage, ...).
-    def format_for(value)
-      case format
-      when :percentage then number_to_percentage value, precision: 1
-      when :currency then number_to_currency value
-      when :seconds then number_to_minutes_and_seconds value
-      when :float then number_to_delimited value
-      else number_to_delimited value.to_i
-      end.to_s
-    end
-
-    def number_to_minutes_and_seconds(value)
-      "#{value.round / 60}:#{(value.round % 60).to_s.rjust 2, '0'}"
     end
 
     # Returns whether the grid should be drawn at all.

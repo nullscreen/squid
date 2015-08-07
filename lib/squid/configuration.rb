@@ -29,14 +29,15 @@ module Squid
   #
   class Configuration < OpenStruct
     ATTRIBUTES = {
-      baseline:  {default: 'true',    as: -> (value) { true? value }},
-      border:    {default: 'false',   as: -> (value) { true? value }},
-      chart:     {default: 'true',    as: -> (value) { true? value }},
-      format:    {default: 'integer', as: -> (value) { value.to_sym }},
-      legend:    {default: 'true',    as: -> (value) { true? value }},
-      steps:     {default: '4',       as: -> (value) { value.to_i }},
-      height:    {default: '250',     as: -> (value) { value.to_f }},
-      ticks:     {default: 'true',    as: -> (value) { true? value }},
+      baseline:     {default: 'true',    as: -> (value) { true? value }},
+      border:       {default: 'false',   as: -> (value) { true? value }},
+      chart:        {default: 'true',    as: -> (value) { true? value }},
+      format:       {default: 'integer', as: -> (value) { value.to_sym }},
+      legend:       {default: 'true',    as: -> (value) { true? value }},
+      steps:        {default: '4',       as: -> (value) { value.to_i }},
+      height:       {default: '250',     as: -> (value) { value.to_f }},
+      ticks:        {default: 'true',    as: -> (value) { true? value }},
+      value_labels: {default: 'false',   as: -> (value) { true? value }},
     }
 
     attr_accessor *ATTRIBUTES.keys

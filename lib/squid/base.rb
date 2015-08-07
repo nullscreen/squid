@@ -32,6 +32,21 @@ module Squid
       old_values.each{|k, old_value| public_send "#{k}=", old_value }
     end
 
+    # Returns the formatted value (currency, percentage, ...).
+    def format_for(value, format)
+      case format
+      when :percentage then number_to_percentage value, precision: 1
+      when :currency then number_to_currency value
+      when :seconds then number_to_minutes_and_seconds value
+      when :float then number_to_delimited value
+      else number_to_delimited value.to_i
+      end.to_s
+    end
+
+    def number_to_minutes_and_seconds(value)
+      "#{value.round / 60}:#{(value.round % 60).to_s.rjust 2, '0'}"
+    end
+
     # Default options for text elements (labels, categories, ...)
     def text_options
       {valign: :center, overflow: :shrink_to_fit}

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Graph chart', inspect: true do
-  let(:options) { {legend: false} }
+  let(:options) { {legend: false, baseline: false, steps: 0} }
 
   specify 'given no series, is not printed' do
     pdf.chart no_series, options
@@ -27,6 +27,10 @@ describe 'Graph chart', inspect: true do
       expect(y.uniq).to be_one
     end
 
+    it 'does not include value labels on top of the chart' do
+      expect(inspected_strings).to be_empty
+    end
+
     context 'given the series has nil values' do
       let(:values) { {2013 => -50, 2014 => nil, 2015 => 20} }
 
@@ -46,5 +50,17 @@ describe 'Graph chart', inspect: true do
     pdf.chart one_series, options
     Squid.configure {|config| config.chart = true}
     expect(inspected_rectangles).to be_empty
+  end
+
+  it 'can have value labels with the :value_labels option' do
+    pdf.chart one_series, options.merge(value_labels: true)
+    expect(inspected_strings).not_to be_empty
+  end
+
+  it 'can be drawn without ticks with Squid.config' do
+    Squid.configure {|config| config.value_labels = :true}
+    pdf.chart one_series, options
+    Squid.configure {|config| config.value_labels = false}
+    expect(inspected_strings).not_to be_empty
   end
 end
