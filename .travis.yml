@@ -1,6 +1,7 @@
 language: ruby
+cache: bundler
 notifications:
   email: true
 matrix:
   include:
-  - rvm: 2.1.0
+  - rvm: 2.1
