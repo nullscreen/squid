@@ -53,7 +53,7 @@ Multiple options can be combined. Here is a comprehensive list.
 
 ![05-gridlines](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_05.png "chart(data, steps: 6)")
 
-##### `:ticks` shows/hides the ticks between baseline and each category (default: `true`).
+##### `:ticks` shows/hides the ticks between the baseline and each category (default: `true`).
 
 ![06-ticks](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_06.png "chart(data, ticks: false)")
 
