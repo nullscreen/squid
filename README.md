@@ -86,8 +86,9 @@ How to install
 ==============
 
 Squid requires **Ruby 2.1 or higher**.
-To include in your project, add `gem 'squid', '~> 0.1.0'` to the `Gemfile` file of your Ruby project.
 If used in a Rails project, requires **Rails 4.0 or higher**.
+
+To include in your project, add `gem 'squid', github: 'fullscreen/squid'` to the `Gemfile` file of your Ruby project.
 
 How to generate the manual
 ==========================
@@ -97,5 +98,14 @@ How to generate the manual
 How to contribute
 =================
 
-1. Run tests with `bundle exec rspec`
-2. [...]
+If you’ve made it this far in the README… thanks! :v:
+
+I’m still in the process of extracting Squid from a private project, so
+I’m probably adding new features to the `chart` method as you are reading.
+
+Feel free to try it out and send issues or pull requests regarding what
+Squid includes so far.
+
+All pull requests will have to make Travis and Code Climate happy in order to be accepted. :kissing_smiling_eyes:
+You can also run the tests locally with `bundle exec rspec`.
+Happy hacking!
