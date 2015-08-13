@@ -33,7 +33,7 @@ module Squid
     # @return [Integer] The updated right-margin (after adding the label)
     def draw_label(series, x)
       label = series.to_s.titleize
-      x -= width_of label, size: font_size
+      x -= width_of(label, size: font_size).ceil
       options = {size: font_size, height: legend_height, valign: :center}
       text_box label, options.merge(at: [x, bounds.top])
       x
