@@ -5,30 +5,46 @@ module Squid
     # Adds the chart components (columns, lines, ...) to the graph.
     class Base < Squid::Base
       def draw
-        x = left
-        data.each.with_index do |value, index|
-          draw_element value, x, previous_value: (data[index - 1] if index > 0)
-          draw_value_label value, x if @settings[:labels]
-          x += width
+        data.each.with_index do |values, index|
+          draw_series values, index: index, count: data.size
         end
       end
 
     private
 
+      def draw_series(series, options = {})
+        x = left
+        series.each.with_index do |value, index|
+          options[:previous_value] = (series[index - 1] if index > 0)
+          with_transparent_color options[:index] do
+            draw_element value, x, w(series), options
+          end
+          draw_value_label value, x, w(series), options if @settings[:labels]
+          x += w(series)
+        end
+      end
+
       # To be overriden by subclasses
-      def draw_element(value, x, options = {})
+      def draw_element(value, x, w, options = {})
       end
 
       # Writes the actual value number on top of the chart element.
-      def draw_value_label(value, x)
-        options = {at: [x+element_padding, text_height+label_padding+y(value)]}
-        options.merge! width: width - 2 * element_padding, height: text_height
-        options.merge! align: :center, valign: :bottom
+      def draw_value_label(value, x, w, options = {})
+        label_x, label_width = label_position x, w, options
+        options = {align: :center, valign: :bottom, height: text_height}
+        options[:width] = label_width
+        options[:at]= [label_x, text_height + label_padding + y(value)]
         formatted_text_box [label_options(value)], options
       end
 
-      def with_transparent_color
-        with fill_color: @settings[:color], stroke_color: @settings[:color] do
+      # To be overriden by subclasses
+      def label_position(x, w, options = {})
+        [x, w]
+      end
+
+      def with_transparent_color(index)
+        color = @settings[:colors][index]
+        with fill_color: color, stroke_color: color do
           transparent(0.95) { yield }
         end
       end
@@ -38,26 +54,20 @@ module Squid
         @settings[:left] + padding
       end
 
-      # Returns the horizontal space for each element.
-      def width
-        (bounds.right - left) / data.size.to_f
-      end
-
-      # Returns the horizontal space between elements.
-      def element_padding
-        width / 8
+      # Return the horizontal space available for each element of a series.
+      def w(series)
+        (bounds.right - left) / series.size.to_f
       end
 
       # Returns the vertical space between value label and element.
       def label_padding
-        2
+        3
       end
 
       # Text options for the value labels
       def label_options(value)
         options = {size: font_size * 1.2, styles: [:bold]}
         options.merge! text: format_for(value, @settings[:format])
-        options.merge! color: (value < 0 ? 'ffffff' : '000000')
       end
 
       # Return the vertical position for a value

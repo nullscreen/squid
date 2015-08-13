@@ -5,15 +5,12 @@ module Squid
     # Adds a line chart to the graph.
     class Line < Base
     private
-      # Draws a single line to represent the
-      # value in the chart. Adds some padding to separate between elements.
-      def draw_element(value, x, options = {})
+      # Draws a single line to represent the distance between two values of
+      # a series in the chart.
+      def draw_element(value, x, width, options = {})
         return unless previous_value = options[:previous_value]
-
-        with_transparent_color do
-          with cap_style: :round, line_width: @settings[:line_width] do
-            line [x - width / 2, y(previous_value)], [x + width / 2, y(value)]
-          end
+        with cap_style: :round, line_width: @settings[:line_width] do
+          line [x - width/2, y(previous_value)], [x + width/2, y(value)]
         end
       end
     end
