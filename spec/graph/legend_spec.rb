@@ -30,12 +30,16 @@ describe 'Graph legend', inspect: true do
     before { pdf.chart two_series, options }
 
     it 'includes the titleized names of both series' do
-      expect(inspected_strings).to eq ['Views', 'Uniques']
+      expect(inspected_strings.reverse).to eq ['Views', 'Uniques']
     end
 
     it 'prints both names on the same text line' do
       lines = inspected_text.positions.map(&:last).uniq
       expect(lines).to be_one
+    end
+
+    it 'does not only draw the squares in green' do
+      expect(inspected_color.fill_color).to eq [0.18, 0.341, 0.549]
     end
   end
 
@@ -51,15 +55,15 @@ describe 'Graph legend', inspect: true do
     expect(inspected_strings).to be_empty
   end
 
-  it 'can have a different color with the :color option' do
-    pdf.chart one_series, options.merge(color: '5d9648')
+  it 'can have different colors with the :colors option' do
+    pdf.chart one_series, options.merge(colors: ['5d9648'])
     expect(inspected_color.fill_color).to eq [0.365, 0.588, 0.282]
   end
 
-  it 'can have a different color with Squid.config' do
-    Squid.configure {|config| config.color = '5d9648'}
+  it 'can have different colors with Squid.config' do
+    Squid.configure {|config| config.colors = ['5d9648']}
     pdf.chart one_series, options
-    Squid.configure {|config| config.color = '2e578c'}
+    Squid.configure {|config| config.colors = %w(2e578c 5d9648 e7a13d bc2d30 6f3d79 7d807f)}
     expect(inspected_color.fill_color).to eq [0.365, 0.588, 0.282]
   end
 end

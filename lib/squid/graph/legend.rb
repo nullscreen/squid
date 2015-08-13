@@ -10,9 +10,9 @@ module Squid
 
     def draw
       bounding_box [width, bounds.top], width: width, height: legend_height do
-        each_series do |x, series|
+        each_series do |x, series, color|
           x = draw_label series, x
-          x = draw_square series, x
+          x = draw_square series, x, color
         end
       end
     end
@@ -21,8 +21,8 @@ module Squid
 
     def each_series
       x = bounds.right
-      data.each do |series|
-        x = yield x, series
+      data.reverse_each.with_index do |series, index|
+        x = yield x, series, @settings[:colors][data.size - index - 1]
         x -= label_padding
       end
     end
@@ -43,9 +43,9 @@ module Squid
     # @param [Symbol, String] series The series to add to the legend
     # @param [Integer] x The current right-margin of the legend
     # @return [Integer] The updated right-margin (after adding the label)
-    def draw_square(series, x)
+    def draw_square(series, x, color)
       x -= square_size + square_padding
-      with fill_color: @settings[:color] do
+      with fill_color: color do
         fill_rectangle [x, bounds.height-square_size], square_size, square_size
       end
       x

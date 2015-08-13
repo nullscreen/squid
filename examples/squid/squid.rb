@@ -35,5 +35,10 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
       s.example 'line_width'
     end
 
+    p.section 'Multiple series' do |s|
+      s.example 'columns'
+      s.example 'lines'
+      s.example 'points'
+    end
   end
 end

@@ -114,6 +114,22 @@ describe 'Graph axis values', inspect: true do
     end
   end
 
+  context 'given many series' do
+    let(:series_1) { {2013 => 110, 2014 => 30} }
+    let(:series_2) { {2013 => -50, 2014 => 10} }
+    let(:series_3) { {2013 => 20, 2014 => 140} }
+    let(:data) { {series_1: series_1, series_2: series_2, series_3: series_3} }
+    before { pdf.chart data, options }
+
+    it 'start with the maximum of any series' do
+      expect(inspected_strings.first.to_i).to eq 140
+    end
+
+    it 'end with the minimum of any series' do
+      expect(inspected_strings.last.to_i).to eq -50
+    end
+  end
+
   it 'can be set with the :steps option' do
     pdf.chart one_series, options.merge(steps: 8)
     expect(inspected_strings.size).to be 9

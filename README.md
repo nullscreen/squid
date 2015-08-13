@@ -45,9 +45,9 @@ Multiple options can be combined. Here is a comprehensive list.
 
 ![03-type-line](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_03.png "chart(data, type: :line, line_width: 10)")
 
-##### `:color` changes the color of the chart (default: `'2e578c'`).
+##### `:colors` changes the colors of the chart (default: `%w(2e578c 5d9648 e7a13d bc2d30 6f3d79 7d807f)`).
 
-![04-color](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_04.png "chart(data, color: '5d9648')")
+![04-colors](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_04.png "chart(data, colors: ['5d9648'])")
 
 ##### `:steps` changes the number of gridlines (default: `4`).
 
@@ -80,6 +80,21 @@ Multiple options can be combined. Here is a comprehensive list.
 ##### `:height` changes the height of the graph (default: `250`).
 
 ![12-height](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_12.png "chart(data, height: 150)")
+
+Multiple series
+---------------
+
+By providing multiple key/values `data` to the `chart` method, you can plot multiple series on a graph.
+
+For instance, the following code generates the graph below:
+
+```ruby
+data = {safari:  {2013 => 43.2, 2014 => 46.1, 2015 => 50.7},
+       firefox:  {2013 => 56.8, 2014 => 53.9, 2015 => 49.3}}
+chart data, value_labels: true, format: :percentage
+```
+
+![13-multiple-series](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_13.png "chart(data, value_labels: true, format: :percentage)")
 
 
 How to install

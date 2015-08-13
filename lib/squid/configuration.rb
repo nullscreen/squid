@@ -28,11 +28,13 @@ module Squid
   #   ENV['SQUID_GRIDLINES'] =  '4'
   #
   class Configuration < OpenStruct
+    COLORS = '2e578c 5d9648 e7a13d bc2d30 6f3d79 7d807f'
+
     ATTRIBUTES = {
       baseline:     {default: 'true',    as: -> (value) { true? value }},
       border:       {default: 'false',   as: -> (value) { true? value }},
       chart:        {default: 'true',    as: -> (value) { true? value }},
-      color:        {default: '2e578c',  as: -> (value) { value }},
+      colors:       {default: COLORS,    as: -> (value) { value.split }},
       format:       {default: 'integer', as: -> (value) { value.to_sym }},
       legend:       {default: 'true',    as: -> (value) { true? value }},
       line_width:   {default: '3',       as: -> (value) { value.to_i }},

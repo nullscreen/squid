@@ -8,7 +8,7 @@ require 'squid/graph/legend'
 
 module Squid
   class Graph < Base
-    has_settings :baseline, :border, :chart, :color, :format, :height
+    has_settings :baseline, :border, :chart, :colors, :format, :height
     has_settings :legend, :line_width, :steps, :ticks, :type, :value_labels
 
     # Draws the graph.
@@ -29,7 +29,7 @@ module Squid
     end
 
     def draw_legend
-      Legend.new(pdf, data.keys, color: color).draw
+      Legend.new(pdf, data.keys, colors: colors).draw
     end
 
     def draw_grid
@@ -41,11 +41,11 @@ module Squid
     end
 
     def draw_chart
-      min, max = min_max first_series
+      min, max = min_max all_series
       options = grid_options.merge min: min, max: max, labels: value_labels
-      options.merge! format: format, color: color
+      options.merge! format: format, colors: colors
       options.merge! line_width: line_width if type == :line
-      chart_class.new(pdf, first_series, options).draw
+      chart_class.new(pdf, all_series, options).draw
     end
 
     def chart_class
@@ -64,8 +64,9 @@ module Squid
       with(line_width: 0.5) { stroke_bounds }
     end
 
-    def first_series
-      data.values.first.values
+    # @return [Array<Array>] the array of values for each series.
+    def all_series
+      data.values.map &:values
     end
 
     # Returns the categories to print below the baseline.
@@ -101,7 +102,7 @@ module Squid
 
     # Returns the labels to print in the left axis.
     def left_labels
-      @left_labels ||= labels_for first_series
+      @left_labels ||= labels_for all_series
     end
 
     # Returns the labels to print on both axes.
@@ -122,9 +123,10 @@ module Squid
     end
 
     # Returns the minimum and maximum value, approximated to significant digits.
+    # @param [Array<Array>] the array of values for each series.
     def min_max(values)
-      min = (values + [0]).compact.min
-      max = (values + [steps]).compact.max
+      min = (values.flatten + [0]).compact.min
+      max = (values.flatten + [steps]).compact.max
       [min, max].map{|value| approximate_value_for value}
     end
 
