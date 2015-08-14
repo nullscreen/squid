@@ -33,7 +33,7 @@ module Squid
     end
 
     def draw_grid
-      Grid.new(pdf, labels, grid_options.merge(baseline: baseline)).draw
+      Grid.new(pdf, axis_labels, grid_options.merge(baseline: baseline)).draw
     end
 
     def draw_baseline
@@ -76,7 +76,7 @@ module Squid
 
     # Returns the width of the left axis
     def left
-      @left ||= max_width_of left_labels
+      @left ||= max_width_of left_axis_labels
     end
 
     def chart_height
@@ -101,22 +101,22 @@ module Squid
     end
 
     # Returns the labels to print in the left axis.
-    def left_labels
-      @left_labels ||= labels_for all_series
+    def left_axis_labels
+      @left_axis_labels ||= axis_labels_for all_series
     end
 
     # Returns the labels to print on both axes.
-    def labels
-      @labels ||= left_labels.map{|v| {left: v}}
+    def axis_labels
+      @axis_labels ||= left_axis_labels.map{|v| {left: v}}
     end
 
     # Returns the width of the longest label in the given font size.
-    def max_width_of(labels)
-      labels.map{|label| width_of label, size: font_size}.max
+    def max_width_of(axis_labels)
+      axis_labels.map{|label| width_of label, size: font_size}.max
     end
 
     # Transform a numeric value into a label according to the given format.
-    def labels_for(values)
+    def axis_labels_for(values)
       min, max = min_max values
       gap = (min - max)/steps.to_f
       max.step(by: gap, to: min).map{|value| format_for value, format}
