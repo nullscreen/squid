@@ -9,5 +9,3 @@ For more information about changelogs, check
 ## 0.1.0 - unreleased
 
 * [FEATURE] Add `chart` method to Prawn::Document to draw graphs.
-* [FEATURE] Add `height` option to set a custom height.
-

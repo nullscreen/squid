@@ -9,7 +9,7 @@ require 'squid/graph/legend'
 module Squid
   class Graph < Base
     has_settings :baseline, :border, :chart, :colors, :format, :height
-    has_settings :legend, :line_width, :steps, :ticks, :type, :value_labels
+    has_settings :legend, :line_width, :steps, :ticks, :type, :labels
 
     # Draws the graph.
     def draw
@@ -33,7 +33,7 @@ module Squid
     end
 
     def draw_grid
-      Grid.new(pdf, labels, grid_options.merge(baseline: baseline)).draw
+      Grid.new(pdf, axis_labels, grid_options.merge(baseline: baseline)).draw
     end
 
     def draw_baseline
@@ -42,7 +42,7 @@ module Squid
 
     def draw_chart
       min, max = min_max all_series
-      options = grid_options.merge min: min, max: max, labels: value_labels
+      options = grid_options.merge min: min, max: max, labels: labels
       options.merge! format: format, colors: colors
       options.merge! line_width: line_width if type == :line
       chart_class.new(pdf, all_series, options).draw
@@ -76,7 +76,7 @@ module Squid
 
     # Returns the width of the left axis
     def left
-      @left ||= max_width_of left_labels
+      @left ||= max_width_of left_axis_labels
     end
 
     def chart_height
@@ -101,22 +101,22 @@ module Squid
     end
 
     # Returns the labels to print in the left axis.
-    def left_labels
-      @left_labels ||= labels_for all_series
+    def left_axis_labels
+      @left_axis_labels ||= axis_labels_for all_series
     end
 
     # Returns the labels to print on both axes.
-    def labels
-      @labels ||= left_labels.map{|v| {left: v}}
+    def axis_labels
+      @axis_labels ||= left_axis_labels.map{|v| {left: v}}
     end
 
     # Returns the width of the longest label in the given font size.
-    def max_width_of(labels)
-      labels.map{|label| width_of label, size: font_size}.max
+    def max_width_of(axis_labels)
+      axis_labels.map{|label| width_of label, size: font_size}.max
     end
 
     # Transform a numeric value into a label according to the given format.
-    def labels_for(values)
+    def axis_labels_for(values)
       min, max = min_max values
       gap = (min - max)/steps.to_f
       max.step(by: gap, to: min).map{|value| format_for value, format}

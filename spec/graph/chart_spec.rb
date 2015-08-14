@@ -70,8 +70,8 @@ describe 'Graph chart', inspect: true do
         end
       end
 
-      context 'given the :value_labels option is set' do
-        let(:options) { {legend: false, baseline: false, steps: 0, type: :line, value_labels: true} }
+      context 'given the :labels option is set' do
+        let(:options) { {legend: false, baseline: false, steps: 0, type: :line, labels: true} }
 
         it 'draws the value labels on top of each line' do
           expect(inspected_strings).not_to be_empty
@@ -131,15 +131,15 @@ describe 'Graph chart', inspect: true do
     expect(inspected_rectangles).to be_empty
   end
 
-  it 'can have value labels with the :value_labels option' do
-    pdf.chart one_series, options.merge(value_labels: true)
+  it 'can have value labels with the :labels option' do
+    pdf.chart one_series, options.merge(labels: true)
     expect(inspected_strings).not_to be_empty
   end
 
   it 'can be drawn without ticks with Squid.config' do
-    Squid.configure {|config| config.value_labels = :true}
+    Squid.configure {|config| config.labels = :true}
     pdf.chart one_series, options
-    Squid.configure {|config| config.value_labels = false}
+    Squid.configure {|config| config.labels = false}
     expect(inspected_strings).not_to be_empty
   end
 

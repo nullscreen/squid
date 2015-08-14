@@ -42,7 +42,7 @@ module Squid
       height:       {default: '250',     as: -> (value) { value.to_f }},
       ticks:        {default: 'true',    as: -> (value) { true? value }},
       type:         {default: 'column',  as: -> (value) { value.to_sym }},
-      value_labels: {default: 'false',   as: -> (value) { true? value }},
+      labels: {default: 'false',   as: -> (value) { true? value }},
     }
 
     attr_accessor *ATTRIBUTES.keys
