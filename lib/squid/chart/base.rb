@@ -19,7 +19,7 @@ module Squid
           with_transparent_color options[:index] do
             draw_element value, x, w(series), options
           end
-          draw_value_label value, x, w(series), options if @settings[:labels]
+          draw_label value, x, w(series), options if @settings[:labels]
           x += w(series)
         end
       end
@@ -29,7 +29,7 @@ module Squid
       end
 
       # Writes the actual value number on top of the chart element.
-      def draw_value_label(value, x, w, options = {})
+      def draw_label(value, x, w, options = {})
         label_x, label_width = label_position x, w, options
         options = {align: :center, valign: :bottom, height: text_height}
         options[:width] = label_width

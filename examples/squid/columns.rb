@@ -5,5 +5,5 @@ filename = File.basename(__FILE__).gsub('.rb', '.pdf')
 Prawn::ManualBuilder::Example.generate(filename) do
   data = {views: {2013 => 182, 2014 => 46, 2015 => 88},
         uniques: {2013 => 104, 2014 => -27, 2015 => 14}}
-  chart data, value_labels: true
+  chart data, labels: true
 end

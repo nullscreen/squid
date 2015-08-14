@@ -69,9 +69,9 @@ Multiple options can be combined. Here is a comprehensive list.
 
 ![09-format](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_09.png "chart(data, format: :percentage)")
 
-##### `:value_labels` shows/hides the value for each point in the graph (default: `false`).
+##### `:labels` shows/hides the value for each point in the graph (default: `false`).
 
-![10-labels](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_10.png "chart(data, value_labels: true)")
+![10-labels](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_10.png "chart(data, labels: true)")
 
 ##### `:border` shows/hides a border around the graph (default: `false`).
 
@@ -91,10 +91,10 @@ For instance, the following code generates the graph below:
 ```ruby
 data = {safari:  {2013 => 43.2, 2014 => 46.1, 2015 => 50.7},
        firefox:  {2013 => 56.8, 2014 => 53.9, 2015 => 49.3}}
-chart data, value_labels: true, format: :percentage
+chart data, labels: true, format: :percentage
 ```
 
-![13-multiple-series](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_13.png "chart(data, value_labels: true, format: :percentage)")
+![13-multiple-series](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_13.png "chart(data, labels: true, format: :percentage)")
 
 
 How to install

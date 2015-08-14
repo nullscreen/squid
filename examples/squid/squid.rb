@@ -31,7 +31,7 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
       s.example 'gridlines'
       s.example 'format'
       s.example 'border'
-      s.example 'value_labels'
+      s.example 'labels'
       s.example 'line_width'
     end
 
