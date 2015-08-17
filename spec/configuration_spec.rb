@@ -63,6 +63,21 @@ describe Squid::Configuration do
     end
   end
 
+  describe 'every' do
+    let(:every) { rand(9) }
+
+    it 'is 3 by default' do
+      ENV['SQUID_EVERY'] = nil
+      expect(config.every).to eq 1
+    end
+
+    it 'can be set with the environment variable SQUID_EVERY' do
+      ENV['SQUID_EVERY'] = every.to_s
+      expect(config.every).to eq every
+      ENV['SQUID_EVERY'] = nil
+    end
+  end
+
   describe 'format' do
     let(:format) { %i(percentage currency seconds float).sample }
 

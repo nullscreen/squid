@@ -61,25 +61,29 @@ Multiple options can be combined. Here is a comprehensive list.
 
 ![07-baseline](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_07.png "chart(data, baseline: false)")
 
+##### `:every` specifies how often to show category labels on the baseline (default: `1`).
+
+![08-every](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_08.png "chart(data, every: 2)")
+
 ##### `:legend` shows/hides the legend (default: `true`).
 
-![08-legend](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_08.png "chart(data, legend: false)")
+![09-legend](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_09.png "chart(data, legend: false)")
 
 ##### `:format` changes the format of the label values. Can be `:integer` (default), `:float`, `:percentage`, `:currency`, or `:seconds`.
 
-![09-format](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_09.png "chart(data, format: :percentage)")
+![10-format](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_10.png "chart(data, format: :percentage)")
 
 ##### `:labels` shows/hides the value for each point in the graph (default: `false`).
 
-![10-labels](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_10.png "chart(data, labels: true)")
+![11-labels](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_11.png "chart(data, labels: true)")
 
 ##### `:border` shows/hides a border around the graph (default: `false`).
 
-![11-border](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_11.png "chart(data, border: true)")
+![12-border](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_12.png "chart(data, border: true)")
 
 ##### `:height` changes the height of the graph (default: `250`).
 
-![12-height](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_12.png "chart(data, height: 150)")
+![13-height](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_13.png "chart(data, height: 150)")
 
 Multiple series
 ---------------
@@ -94,11 +98,11 @@ data = {safari:  {2013 => 43.2, 2014 => 46.1, 2015 => 50.7},
 chart data, labels: true, format: :percentage
 ```
 
-![13-multiple-columns](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_13.png "chart(data, labels: true, format: :percentage)")
+![14-multiple-columns](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_14.png "chart(data, labels: true, format: :percentage)")
 
 When plotting multiple series, the option `type: :stack` can be set to display stacked columns:
 
-![14-multiple-stacks](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_14.png "chart(data, type: :stack, format: :percentage)")
+![15-multiple-stacks](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_15.png "chart(data, type: :stack, format: :percentage)")
 
 How to install
 ==============

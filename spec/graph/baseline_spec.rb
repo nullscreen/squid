@@ -43,6 +43,14 @@ describe 'Graph baseline', inspect: true do
       ticks = inspected_line.points[0..-3].each_slice(2)
       expect(ticks.size).to be views.size
     end
+
+    context 'given the :every option is set' do
+      let(:options) { {legend: false, steps: 0, every: 2} }
+
+      it 'only include a category every once in a while' do
+        expect(inspected_strings).to eq %w(2013 2015)
+      end
+    end
   end
 
   it 'can be disabled with the :baseline option' do
@@ -67,5 +75,17 @@ describe 'Graph baseline', inspect: true do
     pdf.chart one_series, options
     Squid.configure {|config| config.ticks = true}
     expect(inspected_line.points[0..-3]).to be_empty
+  end
+
+  it 'can be drawn with some categories with the :every option' do
+    pdf.chart one_series, options.merge(every: 3)
+    # expect(inspected_line.points[0..-3]).to be_empty
+  end
+
+  it 'can be drawn with some categories with Squid.config' do
+    Squid.configure {|config| config.every = 3}
+    pdf.chart one_series, options
+    Squid.configure {|config| config.every = 1}
+    # expect(inspected_line.points[0..-3]).to be_empty
   end
 end
