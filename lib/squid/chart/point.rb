@@ -6,8 +6,8 @@ module Squid
     class Point < Base
     private
       # Draws a single point to represent a value of a series in the chart.
-      def draw_element(value, x, width, options = {})
-        fill_circle [x + width/2, y(value)], 5
+      def draw_element(h, x, width, options = {})
+        fill_circle [x + width/2, h + zero_y], 5
       end
     end
   end

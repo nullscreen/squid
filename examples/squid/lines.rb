@@ -1,4 +1,4 @@
-# By default, <code>chart</code> plots a colum for each series.
+# By default, <code>chart</code> plots a column for each series.
 #
 # You can use the <code>:type</code> option to plot a line chart instead.
 filename = File.basename(__FILE__).gsub('.rb', '.pdf')

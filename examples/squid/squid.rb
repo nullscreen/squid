@@ -39,6 +39,7 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
       s.example 'columns'
       s.example 'lines'
       s.example 'points'
+      s.example 'stacks'
     end
   end
 end
