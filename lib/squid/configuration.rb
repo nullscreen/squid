@@ -35,6 +35,7 @@ module Squid
       border:       {default: 'false',   as: -> (value) { true? value }},
       chart:        {default: 'true',    as: -> (value) { true? value }},
       colors:       {default: COLORS,    as: -> (value) { value.split }},
+      every:        {default: '1',       as: -> (value) { value.to_i }},
       format:       {default: 'integer', as: -> (value) { value.to_sym }},
       legend:       {default: 'true',    as: -> (value) { true? value }},
       line_width:   {default: '3',       as: -> (value) { value.to_i }},

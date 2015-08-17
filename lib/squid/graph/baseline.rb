@@ -8,9 +8,9 @@ module Squid
 
     def draw
       x = left
-      data.each do |category|
+      data.each.with_index do |category, index|
         draw_tick x if @settings[:ticks]
-        draw_category category, x
+        draw_category category, x if (index % @settings[:every]).zero?
         x += width
       end
       draw_baseline

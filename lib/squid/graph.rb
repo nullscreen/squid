@@ -9,7 +9,7 @@ require 'squid/graph/legend'
 
 module Squid
   class Graph < Base
-    has_settings :baseline, :border, :chart, :colors, :format, :height
+    has_settings :baseline, :border, :chart, :colors, :every, :format, :height
     has_settings :legend, :line_width, :steps, :ticks, :type, :labels
 
     # Draws the graph.
@@ -38,7 +38,7 @@ module Squid
     end
 
     def draw_baseline
-      Baseline.new(pdf, categories, left: left, ticks: ticks).draw
+      Baseline.new(pdf, categories, left: left, ticks: ticks, every: every).draw
     end
 
     def draw_chart
