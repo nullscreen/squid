@@ -23,14 +23,14 @@ module Squid
 
     def draw_graph
       draw_legend if legend
-      draw_grid if grid
+      draw_grid if steps > 0
       draw_chart if chart
       draw_baseline if baseline
       draw_border if border
     end
 
     def draw_legend
-      Legend.new(pdf, data.keys, colors: colors).draw
+      Legend.new(pdf, data.keys, colors: colors, offset: legend_offset).draw
     end
 
     def draw_grid
@@ -45,7 +45,7 @@ module Squid
       min, max = min_max all_series
       options = grid_options.merge min: min, max: max, labels: labels
       options.merge! format: format, colors: colors
-      options.merge! line_width: line_width if type == :line
+      options.merge! line_width: line_width # if type == :line
       chart_class.new(pdf, all_series, options).draw
     end
 
@@ -59,7 +59,7 @@ module Squid
     end
 
     def grid_options
-      {left: left, height: chart_height, top: chart_top}
+      {left: left, height: chart_height, top: bounds.top - padding_top}
     end
 
     def draw_border
@@ -81,12 +81,10 @@ module Squid
       @left ||= max_width_of left_axis_labels
     end
 
+    # Return the height considering the padding between the grid and the top/
+    # bottom of the graph. Bottom padding is only present if baseline is drawn.
     def chart_height
-      bounds.height - padding_top - padding_bottom
-    end
-
-    def chart_top
-      bounds.top - padding_top
+      bounds.height - padding_top - (baseline ? text_height : 0)
     end
 
     # Return the padding between the top of the graph and the grid.
@@ -94,12 +92,6 @@ module Squid
     # If there is a legend, an equivalent padding is present for the legend.
     def padding_top
       legend_height * (legend ? 2 : 1)
-    end
-
-    # Return the padding between the grid and the bottom of the graph.
-    # It is only present if baseline and categories are drawn
-    def padding_bottom
-      baseline ? text_height : 0
     end
 
     # Returns the labels to print in the left axis.
@@ -135,13 +127,13 @@ module Squid
 
     def extract_min_max(array_of_values, stacked)
       if stacked
-        transposed_array = array_of_values.transpose
-        transposed_array.map{|a| a.partition{|n| n < 0}.map(&:sum)}.transpose
+        array_of_values.transpose.map do |array|
+          array.partition{|n| n < 0}.map(&:sum)
+        end.transpose
       else
         [array_of_values.flatten] * 2
       end
     end
-
 
     # Returns an approximation of a value that looks nicer on a graph axis.
     # For instance, rounds 99.67 to 100, which makes for a better axis value.
@@ -149,9 +141,9 @@ module Squid
       number_to_rounded(value, significant: true, precision: 2).to_f
     end
 
-    # Returns whether the grid should be drawn at all.
-    def grid
-      steps > 0
+    # Returns the padding to leave between legend and right margin
+    def legend_offset
+      legend.is_a?(Hash) ? legend.fetch(:offset, 0) : 0
     end
   end
 end

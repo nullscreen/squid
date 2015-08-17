@@ -15,12 +15,13 @@ Prawn::ManualBuilder::Example.generate 'readme.pdf' do
       s.example '07-baseline'
       s.example '08-every'
       s.example '09-legend'
-      s.example '10-format'
-      s.example '11-labels'
-      s.example '12-border'
-      s.example '13-height'
-      s.example '14-multiple-columns'
-      s.example '15-multiple-stacks'
+      s.example '10-legend-offset'
+      s.example '11-format'
+      s.example '12-labels'
+      s.example '13-border'
+      s.example '14-height'
+      s.example '15-multiple-columns'
+      s.example '16-multiple-stacks'
     end
   end
 end

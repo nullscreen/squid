@@ -9,7 +9,7 @@ module Squid
   class Legend < Base
 
     def draw
-      bounding_box [width, bounds.top], width: width, height: legend_height do
+      bounding_box [left, bounds.top], width: width, height: legend_height do
         each_series do |x, series, color|
           x = draw_label series, x
           x = draw_square series, x, color
@@ -52,8 +52,13 @@ module Squid
     end
 
     # Restrict the legend to the right part of the graph
-    def width
+    def left
       bounds.width/2
+    end
+
+    # Restrict the legend to the right part of the graph
+    def width
+      bounds.width/2 - @settings[:offset]
     end
 
     # Ensure the label fits in the height of the legend

@@ -15,6 +15,21 @@ describe 'Graph legend', inspect: true do
       expect(inspected_strings).to eq ['Views']
     end
 
+    it 'starts (right to left) from the right margin of the graph' do
+      right = inspected_text.positions.first.first
+      expect(right).to be_within(3).of(pdf.bounds.right + 20)
+    end
+
+    context 'given the legend: :offset option is provided' do
+      let(:offset) { 50 }
+      let(:options) { {steps: 0, baseline: false, chart: false, legend: {offset: offset}} }
+
+      it 'starts (right to left) from the right margin of the graph + offset' do
+        right = inspected_text.positions.first.first
+        expect(right).to be_within(3).of(pdf.bounds.right + 20 - offset)
+      end
+    end
+
     it 'draws a small square representing the series' do
       square = inspected_rectangles.first
       expect(square[:width]).to be 5.0
@@ -65,5 +80,12 @@ describe 'Graph legend', inspect: true do
     pdf.chart one_series, options
     Squid.configure {|config| config.colors = %w(2e578c 5d9648 e7a13d bc2d30 6f3d79 7d807f)}
     expect(inspected_color.fill_color).to eq [0.365, 0.588, 0.282]
+  end
+
+  it 'can have an offset from the right margin with the legend: :offset option' do
+    offset = 80
+    pdf.chart one_series, options.merge(legend: {offset: offset})
+    right = inspected_text.positions.first.first
+    expect(right).to be_within(3).of(pdf.bounds.right + 20 - offset)
   end
 end
