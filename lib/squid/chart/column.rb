@@ -7,10 +7,11 @@ module Squid
     private
       # Draws a single column to represent a value of a series in the chart.
       # Adds some padding to separate between elements.
-      def draw_element(value, x, width, options = {})
+      def draw_element(h, x, width, options = {})
         w = item_width_for width, options[:count]
+        y = options.fetch :y, h + zero_y
         offset = padding_for(width) + options[:index] * w
-        fill_rectangle [x + offset, y(value)], w, y(value) - zero_y
+        fill_rectangle [x + offset, y], w, h
       end
 
       # Draw white labels if on top of a column.
@@ -28,7 +29,7 @@ module Squid
         width / 8
       end
 
-      def item_width_for(width, count)
+      def item_width_for(width, count = 1)
         (width - 2 * padding_for(width)) / count
       end
     end

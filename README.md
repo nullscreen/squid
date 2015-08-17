@@ -94,8 +94,11 @@ data = {safari:  {2013 => 43.2, 2014 => 46.1, 2015 => 50.7},
 chart data, labels: true, format: :percentage
 ```
 
-![13-multiple-series](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_13.png "chart(data, labels: true, format: :percentage)")
+![13-multiple-columns](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_13.png "chart(data, labels: true, format: :percentage)")
 
+When plotting multiple series, the option `type: :stack` can be set to display stacked columns:
+
+![14-multiple-stacks](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_14.png "chart(data, type: :stack, format: :percentage)")
 
 How to install
 ==============

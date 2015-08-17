@@ -2,6 +2,7 @@ require 'squid/base'
 require 'squid/chart/column'
 require 'squid/chart/line'
 require 'squid/chart/point'
+require 'squid/chart/stack'
 require 'squid/graph/baseline'
 require 'squid/graph/grid'
 require 'squid/graph/legend'
@@ -50,6 +51,7 @@ module Squid
 
     def chart_class
       case type
+        when :stack then Chart::Stack
         when :column then Chart::Column
         when :line then Chart::Line
         when :point then Chart::Point
@@ -124,11 +126,22 @@ module Squid
 
     # Returns the minimum and maximum value, approximated to significant digits.
     # @param [Array<Array>] the array of values for each series.
-    def min_max(values)
-      min = (values.flatten + [0]).compact.min
-      max = (values.flatten + [steps]).compact.max
+    def min_max(array_of_values)
+      min_values, max_values = extract_min_max(array_of_values, type == :stack)
+      min = (min_values + [0]).compact.min
+      max = (max_values + [steps]).compact.max
       [min, max].map{|value| approximate_value_for value}
     end
+
+    def extract_min_max(array_of_values, stacked)
+      if stacked
+        transposed_array = array_of_values.transpose
+        transposed_array.map{|a| a.partition{|n| n < 0}.map(&:sum)}.transpose
+      else
+        [array_of_values.flatten] * 2
+      end
+    end
+
 
     # Returns an approximation of a value that looks nicer on a graph axis.
     # For instance, rounds 99.67 to 100, which makes for a better axis value.

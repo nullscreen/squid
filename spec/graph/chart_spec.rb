@@ -117,6 +117,26 @@ describe 'Graph chart', inspect: true do
         expect(inspected_points.size).to be 6
       end
     end
+
+    context 'given the :type is set to :stack' do
+      let(:options) { {legend: false, baseline: false, steps: 0, type: :stack} }
+
+      it 'includes one stacked rectangle for each value of each series' do
+        expect(inspected_rectangles.size).to be 9
+      end
+
+      it 'includes as many stacks as the number of values' do
+        expect(inspected_rectangles.map{|r| r[:point].first}.uniq.size).to be 3
+      end
+
+      context 'given the :labels option is set' do
+        let(:options) { {legend: false, baseline: false, steps: 0, type: :stack, labels: true} }
+
+        it 'draws a value labels for each rectangle in the stack' do
+          expect(inspected_strings.size).to be 9
+        end
+      end
+    end
   end
 
   it 'can be disabled with the :chart option' do

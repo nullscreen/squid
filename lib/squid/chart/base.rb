@@ -17,7 +17,7 @@ module Squid
         series.each.with_index do |value, index|
           options[:previous_value] = (series[index - 1] if index > 0)
           with_transparent_color options[:index] do
-            draw_element value, x, w(series), options
+            draw_element h(value), x, w(series), options
           end
           draw_label value, x, w(series), options if @settings[:labels]
           x += w(series)
@@ -25,7 +25,7 @@ module Squid
       end
 
       # To be overriden by subclasses
-      def draw_element(value, x, w, options = {})
+      def draw_element(h, x, w, options = {})
       end
 
       # Writes the actual value number on top of the chart element.
@@ -33,13 +33,17 @@ module Squid
         label_x, label_width = label_position x, w, options
         options = {align: :center, valign: :bottom, height: text_height}
         options[:width] = label_width
-        options[:at]= [label_x, text_height + label_padding + y(value)]
+        options[:at]= [label_x, text_height + label_padding + label_y(value)]
         formatted_text_box [label_options(value)], options
       end
 
       # To be overriden by subclasses
       def label_position(x, w, options = {})
         [x, w]
+      end
+
+      def label_y(value)
+        h(value) + zero_y
       end
 
       def with_transparent_color(index)
@@ -70,9 +74,9 @@ module Squid
         options.merge! text: format_for(value, @settings[:format])
       end
 
-      # Return the vertical position for a value
-      def y(value)
-        zero_y + height_per_unit * value.to_f
+      # Return the height for a value element
+      def h(value)
+        height_per_unit * value.to_f
       end
 
       # Returns the vertical position for the "0" value.
