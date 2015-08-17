@@ -30,7 +30,7 @@ module Squid
     end
 
     def draw_legend
-      Legend.new(pdf, data.keys, colors: colors).draw
+      Legend.new(pdf, data.keys, colors: colors, offset: legend_offset).draw
     end
 
     def draw_grid
@@ -142,7 +142,6 @@ module Squid
       end
     end
 
-
     # Returns an approximation of a value that looks nicer on a graph axis.
     # For instance, rounds 99.67 to 100, which makes for a better axis value.
     def approximate_value_for(value)
@@ -152,6 +151,11 @@ module Squid
     # Returns whether the grid should be drawn at all.
     def grid
       steps > 0
+    end
+
+    # Returns the padding to leave between legend and right margin
+    def legend_offset
+      legend.is_a?(Hash) ? legend.fetch(:offset, 0) : 0
     end
   end
 end
