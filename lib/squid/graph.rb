@@ -1,149 +1,113 @@
-require 'squid/base'
-require 'squid/chart/column'
-require 'squid/chart/line'
-require 'squid/chart/point'
-require 'squid/chart/stack'
-require 'squid/graph/baseline'
-require 'squid/graph/grid'
-require 'squid/graph/legend'
+require 'active_support'
+require 'active_support/core_ext/string/inflections' # for titleize
+
+require 'squid/axis'
+require 'squid/axis_label'
+require 'squid/gridline'
+require 'squid/plotter'
+require 'squid/point'
+require 'squid/settings'
 
 module Squid
-  class Graph < Base
+  # @private
+  class Graph
+    extend Settings
     has_settings :baseline, :border, :chart, :colors, :every, :format, :height
-    has_settings :legend, :line_width, :steps, :ticks, :type, :labels
+    has_settings :legend, :line_widths, :steps, :ticks, :type, :labels
 
-    # Draws the graph.
+    def initialize(document, data = {}, settings = {})
+      @data, @settings = data, settings
+      @plot = Plotter.new document, bottom: bottom
+      @plot.paddings = {left: left.width, right: right.width} if @data.any?
+    end
+
     def draw
-      bounding_box [0, cursor], width: bounds.width, height: height do
-        draw_graph
-      end if data.any?
+      @plot.box(h: height, border: border) { draw_graph if @data.any? }
     end
 
   private
 
     def draw_graph
       draw_legend if legend
-      draw_grid if steps > 0
-      draw_chart if chart
-      draw_baseline if baseline
-      draw_border if border
+      draw_gridlines
+      draw_axis_labels
+      draw_charts if chart
+      draw_categories if baseline
     end
 
     def draw_legend
-      Legend.new(pdf, data.keys, colors: colors, offset: legend_offset).draw
+      labels = @data.keys.reverse.map{|key| key.to_s.titleize}
+      offset = legend.is_a?(Hash) ? legend.fetch(:offset, 0) : 0
+      @plot.legend labels, offset: offset, colors: colors, height: legend_height
     end
 
-    def draw_grid
-      Grid.new(pdf, axis_labels, grid_options.merge(baseline: baseline)).draw
-    end
-
-    def draw_baseline
-      Baseline.new(pdf, categories, left: left, ticks: ticks, every: every).draw
-    end
-
-    def draw_chart
-      min, max = min_max all_series
-      options = grid_options.merge min: min, max: max, labels: labels
-      options.merge! format: format, colors: colors
-      options.merge! line_width: line_width # if type == :line
-      chart_class.new(pdf, all_series, options).draw
-    end
-
-    def chart_class
-      case type
-        when :stack then Chart::Stack
-        when :column then Chart::Column
-        when :line then Chart::Line
-        when :point then Chart::Point
+    def draw_gridlines
+      options = {height: grid_height, count: steps, skip_baseline: baseline}
+      Gridline.for(options).each do |line|
+        @plot.horizontal_line line.y, line_width: 0.5, transparency: 0.25
       end
     end
 
-    def grid_options
-      {left: left, height: chart_height, top: bounds.top - padding_top}
+    def draw_axis_labels
+      @plot.axis_labels AxisLabel.for(left, align: :right, height: grid_height)
+      @plot.axis_labels AxisLabel.for(right, align: :left, height: grid_height)
     end
 
-    def draw_border
-      with(line_width: 0.5) { stroke_bounds }
+    def draw_categories
+      labels = @data.values.first.keys.map{|key| key.to_s}
+      @plot.categories labels, every: every, ticks: ticks
+      @plot.horizontal_line 0.0
     end
 
-    # @return [Array<Array>] the array of values for each series.
-    def all_series
-      data.values.map &:values
+    def draw_charts
+      draw_chart right, type: :column, colors: colors[1..-1]
+      draw_chart left, colors: colors
     end
 
-    # Returns the categories to print below the baseline.
-    def categories
-      data.values.first.keys
+    def draw_chart(axis, options = {})
+      args = {minmax: axis.minmax, height: grid_height, stack: stack?, labels: labels, format: format}
+      points = Point.for axis.data, args
+      case options.delete(:type) {type}
+        when :point then @plot.points points, options
+        when :line, :two_axis then @plot.lines points, options.merge(line_widths: line_widths)
+        when :column then @plot.columns points, options
+        when :stack then @plot.stacks points, options
+      end
     end
 
-    # Returns the width of the left axis
     def left
-      @left ||= max_width_of left_axis_labels
+      @left ||= axis first: 0, last: (two_axis? ? 1 : @data.size)
     end
 
-    # Return the height considering the padding between the grid and the top/
-    # bottom of the graph. Bottom padding is only present if baseline is drawn.
-    def chart_height
-      bounds.height - padding_top - (baseline ? text_height : 0)
+    def right
+      @right ||= axis first: 1, last: (two_axis? ? 1 : 0)
     end
 
-    # Return the padding between the top of the graph and the grid.
-    # In any case, a padding is present (for values above the top of the grid).
-    # If there is a legend, an equivalent padding is present for the legend.
-    def padding_top
-      legend_height * (legend ? 2 : 1)
-    end
-
-    # Returns the labels to print in the left axis.
-    def left_axis_labels
-      @left_axis_labels ||= axis_labels_for all_series
-    end
-
-    # Returns the labels to print on both axes.
-    def axis_labels
-      @axis_labels ||= left_axis_labels.map{|v| {left: v}}
-    end
-
-    # Returns the width of the longest label in the given font size.
-    def max_width_of(axis_labels)
-      axis_labels.map{|label| width_of label, size: font_size}.max
-    end
-
-    # Transform a numeric value into a label according to the given format.
-    def axis_labels_for(values)
-      min, max = min_max values
-      gap = (min - max)/steps.to_f
-      max.step(by: gap, to: min).map{|value| format_for value, format}
-    end
-
-    # Returns the minimum and maximum value, approximated to significant digits.
-    # @param [Array<Array>] the array of values for each series.
-    def min_max(array_of_values)
-      min_values, max_values = extract_min_max(array_of_values, type == :stack)
-      min = (min_values + [0]).compact.min
-      max = (max_values + [steps]).compact.max
-      [min, max].map{|value| approximate_value_for value}
-    end
-
-    def extract_min_max(array_of_values, stacked)
-      if stacked
-        array_of_values.transpose.map do |array|
-          array.partition{|n| n < 0}.map(&:sum)
-        end.transpose
-      else
-        [array_of_values.flatten] * 2
+    def axis(first:, last:)
+      series = @data.values[first, last].map(&:values)
+      Axis.new series, steps: steps, stack: stack?, format: format do |label|
+        @plot.width_of label
       end
     end
 
-    # Returns an approximation of a value that looks nicer on a graph axis.
-    # For instance, rounds 99.67 to 100, which makes for a better axis value.
-    def approximate_value_for(value)
-      number_to_rounded(value, significant: true, precision: 2).to_f
+    def bottom
+      baseline ? 20 : 0
     end
 
-    # Returns the padding to leave between legend and right margin
-    def legend_offset
-      legend.is_a?(Hash) ? legend.fetch(:offset, 0) : 0
+    def legend_height
+      15
+    end
+
+    def grid_height
+      height - bottom - legend_height * (legend ? 2 : 1)
+    end
+
+    def stack?
+      type == :stack
+    end
+
+    def two_axis?
+      type == :two_axis
     end
   end
 end

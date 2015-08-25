@@ -1,4 +1,7 @@
+require 'squid/config'
+
 module Squid
+  # @private
   module Settings
     def has_settings(*keys)
       keys.each do |key|
