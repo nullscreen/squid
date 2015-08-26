@@ -30,20 +30,40 @@ module Squid
   class Configuration < OpenStruct
     COLORS = '2e578c 5d9648 e7a13d bc2d30 6f3d79 7d807f'
 
+    def self.boolean
+      -> (value) { %w(1 t T true TRUE).include? value }
+    end
+    
+    def self.integer
+      -> (value) { value.to_i }
+    end
+
+    def self.symbol
+      -> (value) { value.to_sym }
+    end
+
+    def self.float
+      -> (value) { value.to_f }
+    end
+    
+    def self.array
+      -> (value) { value.split }
+    end
+
     ATTRIBUTES = {
-      baseline:     {default: 'true',    as: -> (value) { true? value }},
-      border:       {default: 'false',   as: -> (value) { true? value }},
-      chart:        {default: 'true',    as: -> (value) { true? value }},
-      colors:       {default: COLORS,    as: -> (value) { value.split }},
-      every:        {default: '1',       as: -> (value) { value.to_i }},
-      format:       {default: 'integer', as: -> (value) { value.to_sym }},
-      legend:       {default: 'true',    as: -> (value) { true? value }},
-      line_width:   {default: '3',       as: -> (value) { value.to_i }},
-      steps:        {default: '4',       as: -> (value) { value.to_i }},
-      height:       {default: '250',     as: -> (value) { value.to_f }},
-      ticks:        {default: 'true',    as: -> (value) { true? value }},
-      type:         {default: 'column',  as: -> (value) { value.to_sym }},
-      labels: {default: 'false',   as: -> (value) { true? value }},
+      baseline:     {default: 'true',      as: boolean},
+      border:       {default: 'false',     as: boolean},
+      chart:        {default: 'true',      as: boolean},
+      colors:       {default: COLORS,      as: array},
+      every:        {default: '1',         as: integer},
+      format:       {default: 'integer',   as: symbol},
+      height:       {default: '250',       as: float},
+      labels:       {default: 'false',     as: boolean},
+      legend:       {default: 'true',      as: boolean},
+      line_widths:  {default: '3',         as: integer},
+      steps:        {default: '4',         as: integer},
+      ticks:        {default: 'true',      as: boolean},
+      type:         {default: 'column',    as: symbol},
     }
 
     attr_accessor *ATTRIBUTES.keys
@@ -55,12 +75,6 @@ module Squid
         value = ENV.fetch var, options[:default]
         public_send "#{key}=", options[:as].call(value)
       end
-    end
-
-  private
-
-    def self.true?(value)
-      value.in? %w(1 t T true TRUE)
     end
   end
 end

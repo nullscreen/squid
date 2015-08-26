@@ -7,3 +7,5 @@ Prawn::ManualBuilder::Example.generate(filename) do
         uniques: {2013 => 104, 2014 => 27, 2015 => 14}}
   chart data, type: :line, labels: true
 end
+
+

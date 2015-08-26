@@ -12,7 +12,6 @@ The **source code** is available on [GitHub](https://github.com/Fullscreen/squid
 [![Online docs](http://img.shields.io/badge/docs-✓-green.svg)](http://www.rubydoc.info/gems/squid/frames)
 [![Gem Version](http://img.shields.io/gem/v/squid.svg)](http://rubygems.org/gems/squid)
 
-
 [Prawn](http://prawnpdf.org) is a great Ruby library to generate PDF files
 but lacks high-level components to draw graphs.
 
@@ -41,9 +40,9 @@ Multiple options can be combined. Here is a comprehensive list.
 
 ![02-type-point](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_02.png "chart(data, type: :point)")
 
-##### `:line_width` changes the line width (default: `3`, only applies to line graphs).
+##### `:line_widths` changes the line width (default: `[3]`, only applies to line graphs).
 
-![03-type-line](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_03.png "chart(data, type: :line, line_width: 10)")
+![03-type-line](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_03.png "chart(data, type: :line, line_widths: [10])")
 
 ##### `:colors` changes the colors of the chart (default: `%w(2e578c 5d9648 e7a13d bc2d30 6f3d79 7d807f)`).
 
@@ -107,6 +106,19 @@ chart data, labels: true, format: :percentage
 When plotting multiple series, the option `type: :stack` can be set to display stacked columns:
 
 ![16-multiple-stacks](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_16.png "chart(data, type: :stack, format: :percentage)")
+
+Finally, the option `type: :two_axis` can be set to display two separate axes in your series belong to two different domains.
+
+For instance, the following code generates the graph below:
+
+```ruby
+data = {views: {2013 => 182, 2014 => 46, 2015 => 88},
+     earnings: {2013 => 104_323, 2014 => 27_234, 2015 => 14_123}}
+chart data, type: :two_axis
+```
+
+![17-two-axis](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_17.png "chart(data, type: :two_axis)")
+
 
 How to install
 ==============

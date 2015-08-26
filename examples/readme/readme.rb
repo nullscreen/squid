@@ -22,6 +22,7 @@ Prawn::ManualBuilder::Example.generate 'readme.pdf' do
       s.example '14-height'
       s.example '15-multiple-columns'
       s.example '16-multiple-stacks'
+      s.example '17-two-axis'
     end
   end
 end
