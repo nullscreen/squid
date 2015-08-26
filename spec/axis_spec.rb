@@ -66,7 +66,7 @@ describe Squid::Axis do
     describe 'given :second format' do
       let(:format) { :seconds }
       it 'returns the labels as minutes:seconds' do
-        expect(labels).to eq %w(1:50 1:10 0:30 -1:50 -1:10)
+        expect(labels).to eq %w(1:50 1:10 0:30 -0:10 -0:50)
       end
     end
 
