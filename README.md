@@ -3,13 +3,13 @@ Squid
 
 Squid helps you write Ruby code to draw graphs in PDF files.
 
-The **source code** is available on [GitHub](https://github.com/Fullscreen/squid) and the **documentation** on [RubyDoc](http://www.rubydoc.info/gems/squid/frames).
+The **source code** is available on [GitHub](https://github.com/Fullscreen/squid) and the **documentation** on [RubyDoc](http://www.rubydoc.info/github/Fullscreen/squid/master/Squid/Interface).
 
 [![Build Status](http://img.shields.io/travis/Fullscreen/squid/master.svg)](https://travis-ci.org/Fullscreen/squid)
 [![Coverage Status](http://img.shields.io/coveralls/Fullscreen/squid/master.svg)](https://coveralls.io/r/Fullscreen/squid)
 [![Dependency Status](http://img.shields.io/gemnasium/Fullscreen/squid.svg)](https://gemnasium.com/Fullscreen/squid)
 [![Code Climate](http://img.shields.io/codeclimate/github/Fullscreen/squid.svg)](https://codeclimate.com/github/Fullscreen/squid)
-[![Online docs](http://img.shields.io/badge/docs-✓-green.svg)](http://www.rubydoc.info/gems/squid/frames)
+[![Online docs](http://img.shields.io/badge/docs-✓-green.svg)](http://www.rubydoc.info/github/Fullscreen/squid/master/Squid/Interface)
 [![Gem Version](http://img.shields.io/gem/v/squid.svg)](http://rubygems.org/gems/squid)
 
 [Prawn](http://prawnpdf.org) is a great Ruby library to generate PDF files
@@ -119,7 +119,6 @@ chart data, type: :two_axis
 
 ![17-two-axis](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_17.png "chart(data, type: :two_axis)")
 
-
 How to install
 ==============
 
@@ -138,12 +137,11 @@ How to contribute
 
 If you’ve made it this far in the README… thanks! :v:
 
-I’m still in the process of extracting Squid from a private project, so
-I’m probably adding new features to the `chart` method as you are reading.
-
-Feel free to try it out and send issues or pull requests regarding what
-Squid includes so far.
+I’m about to release version 1 of this gem.
+Feel free to try it out and send issues or pull requests.
 
 All pull requests will have to make Travis and Code Climate happy in order to be accepted. :kissing_smiling_eyes:
+
 You can also run the tests locally with `bundle exec rspec`.
+
 Happy hacking!
