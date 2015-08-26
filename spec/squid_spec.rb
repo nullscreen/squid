@@ -12,6 +12,15 @@ describe 'Prawn::Document#chart' do
     expect(rectangles_of chart).to be_empty
   end
 
+  context 'given series without values' do
+    let(:settings) { options.merge steps: 2 }
+    let(:data) { {series_1: {}, series_2: {}} }
+
+    it 'does not plot anything' do
+      expect(rectangles_of chart).to be_empty
+    end
+  end
+
   context 'given one series' do
     let(:values) { {2013 => 50, 2014 => -30, 2015 => 20} }
     let(:data) { {series: values} }

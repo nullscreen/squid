@@ -20,7 +20,7 @@ module Squid
 
     def labels
       min, max = minmax
-      values = if @data.empty? || @steps.zero?
+      values = if min.nil? || max.nil? || @steps.zero?
         []
       else
         max.step(by: (min - max)/@steps.to_f, to: min)
@@ -39,11 +39,11 @@ module Squid
     end
 
     def min
-      [values.first.min, 0].min if @data.any?
+      [values.first.min, 0].min if @data.any? && values.first.any?
     end
 
     def max
-      [values.last.max, @steps].max if @data.any?
+      [values.last.max, @steps].max if @data.any? && values.last.any?
     end
 
     def values
