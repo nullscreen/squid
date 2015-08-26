@@ -80,7 +80,7 @@ module Squid
     end
 
     def right
-      @right ||= axis first: 1, last: (two_axis? ? 1 : 0)
+      @right ||= axis first: 1, last: (two_axis? ? @data.size : 0)
     end
 
     def axis(first:, last:)
