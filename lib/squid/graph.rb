@@ -105,11 +105,15 @@ module Squid
     end
 
     def legend_height
-      15
+      legend ? 15 : 0
+    end
+
+    def legend_bottom
+      legend.is_a?(Hash) ? legend.fetch(:bottom, 15) : 15
     end
 
     def grid_height
-      height - bottom - legend_height * (legend ? 2 : 1)
+      height - bottom - legend_height - legend_bottom
     end
 
     def stack?
