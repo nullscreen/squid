@@ -37,8 +37,8 @@ module Squid
 
     def draw_legend
       labels = @data.keys.reverse.map{|key| key.to_s.titleize}
-      offset = legend.is_a?(Hash) ? legend.fetch(:offset, 0) : 0
-      @plot.legend labels, offset: offset, colors: colors, height: legend_height
+      right = legend.is_a?(Hash) ? legend.fetch(:right, 0) : 0
+      @plot.legend labels, right: right, colors: colors, height: legend_height
     end
 
     def draw_gridlines

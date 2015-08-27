@@ -22,10 +22,10 @@ module Squid
 
     # Draws the graph legend with the given labels.
     # @param [Array<LegendItem>] The labels to write as part of the legend.
-    def legend(labels, height:, offset: 0, colors: [])
+    def legend(labels, height:, right: 0, colors: [])
       left = @pdf.bounds.width/2
       box(x: left, y: @pdf.bounds.top, w: left, h: height) do
-        x = @pdf.bounds.right - offset
+        x = @pdf.bounds.right - right
         options = {size: 7, height: @pdf.bounds.height, valign: :center}
         labels.each.with_index do |label, i|
           index = labels.size - 1 - i

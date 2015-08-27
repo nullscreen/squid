@@ -68,9 +68,9 @@ Multiple options can be combined. Here is a comprehensive list.
 
 ![09-legend](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_09.png "chart(data, legend: false)")
 
-##### `:legend` can also set the distance of the legend from the right margin (default: `{offset: 0}`).
+##### `:legend` can also set the distance of the legend from the right margin (default: `{right: 0}`).
 
-![10-legend-offset](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_10.png "chart(data, legend: {offset: 50})")
+![10-legend-offset](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_10.png "chart(data, legend: {right: 50})")
 
 ##### `:format` changes the format of the axis labels. Can be `:integer` (default), `:float`, `:percentage`, `:currency`, or `:seconds`.
 

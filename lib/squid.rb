@@ -7,7 +7,7 @@ module Squid
   module Interface
     # Plots a graph the current document.
     #
-    # @param [Hash<#to_s, [Hash<#to_s, Numeric>]>] data the series to plot in 
+    # @param [Hash<#to_s, [Hash<#to_s, Numeric>]>] data the series to plot in
     #   the graph. Each key is the name of the series, and each value contains
     #   the values for the series. Values are also a hash, where each key is
     #   a category, and each value the numerical value for that category.
@@ -21,8 +21,8 @@ module Squid
     # @option settings [Numeric] :height (250) the full height of the graph.
     # @option settings [Boolean] :labels (false) whether to plot value labels.
     # @option settings [<Boolean, Hash>] :legend (true) whether to plot the
-    #   legend. If a Hash is provided, the `:offset` option can be set to
-    #   specify the offset between the legend and the right margin.
+    #   legend. If a Hash is provided, the `:right` option can be
+    #   set to specify the right margin of the legend.
     # @option settings [Numeric] :line_width (3) the line width for line graphs.
     # @option settings [Numeric] :steps (4) the number of gridlines.
     # @option settings [Boolean] :ticks (true) whether to plot the ticks.
