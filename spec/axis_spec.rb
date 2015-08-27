@@ -6,7 +6,7 @@ describe Squid::Axis do
   let(:stack?) { false }
   let(:format) { :integer }
   let(:block) { nil }
-  let(:series) { [[-1.0, 9.9, 3.0], [0, 2.0, -50.0]] }
+  let(:series) { [[-1.0, 9.9, 3.0], [nil, 2.0, -50.0]] }
 
   describe '#labels' do
     subject(:axis) { Squid::Axis.new series, options }
