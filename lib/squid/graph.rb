@@ -37,8 +37,8 @@ module Squid
 
     def draw_legend
       labels = @data.keys.reverse.map{|key| key.to_s.titleize}
-      offset = legend.is_a?(Hash) ? legend.fetch(:offset, 0) : 0
-      @plot.legend labels, offset: offset, colors: colors, height: legend_height
+      right = legend.is_a?(Hash) ? legend.fetch(:right, 0) : 0
+      @plot.legend labels, right: right, colors: colors, height: legend_height
     end
 
     def draw_gridlines
@@ -105,11 +105,15 @@ module Squid
     end
 
     def legend_height
-      15
+      legend ? 15 : 0
+    end
+
+    def legend_bottom
+      legend.is_a?(Hash) ? legend.fetch(:bottom, 15) : 15
     end
 
     def grid_height
-      height - bottom - legend_height * (legend ? 2 : 1)
+      height - bottom - legend_height - legend_bottom
     end
 
     def stack?
