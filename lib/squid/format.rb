@@ -16,6 +16,7 @@ module Squid
     end
 
     def number_to_minutes_and_seconds(value)
+      return unless value
       signum = '-' if value < 0
       "#{signum}#{value.abs.round/60}:#{(value.abs.round%60).to_s.rjust 2, '0'}"
     end
