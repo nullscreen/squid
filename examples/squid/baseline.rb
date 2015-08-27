@@ -4,6 +4,6 @@
 #
 filename = File.basename(__FILE__).gsub('.rb', '.pdf')
 Prawn::ManualBuilder::Example.generate(filename) do
-  data = {views: {2013 => 182, 2014 => 46, 2015 => 802000000000000000}}
-  chart data, baseline: false, format: :float
+  data = {earnings: {2013 => 182, 2014 => 46, 2015 => 8020}}
+  chart data, baseline: false, formats: [:currency]
 end

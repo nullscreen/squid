@@ -17,19 +17,18 @@ describe Squid::Configuration do
   subject { Squid::Configuration.new }
   sample_false = %w(0 f F false FALSE).sample
   sample_true =  %w(1 t T true TRUE).sample
-  colors = ["2e578c", "5d9648", "e7a13d", "bc2d30", "6f3d79", "7d807f"]
 
-  it_behaves_like 'a configurable setting', method: 'baseline',    env: 'SQUID_BASELINE',    default: true,     sample_value: sample_false
-  it_behaves_like 'a configurable setting', method: 'border',      env: 'SQUID_BORDER',      default: false,    sample_value: sample_true
-  it_behaves_like 'a configurable setting', method: 'chart',       env: 'SQUID_CHART',       default: true,     sample_value: sample_false
-  it_behaves_like 'a configurable setting', method: 'colors',      env: 'SQUID_COLORS',      default: colors,   sample_value: 'ff0000 00ff00'
-  it_behaves_like 'a configurable setting', method: 'every',       env: 'SQUID_EVERY',       default: 1,        sample_value: '2'
-  it_behaves_like 'a configurable setting', method: 'format',      env: 'SQUID_FORMAT',      default: :integer, sample_value: 'percentage'
-  it_behaves_like 'a configurable setting', method: 'height',      env: 'SQUID_HEIGHT',      default: 250,      sample_value: '150'
-  it_behaves_like 'a configurable setting', method: 'labels',      env: 'SQUID_LABELS',      default: false,    sample_value: sample_true
-  it_behaves_like 'a configurable setting', method: 'legend',      env: 'SQUID_LEGEND',      default: true,     sample_value: sample_false
-  it_behaves_like 'a configurable setting', method: 'line_widths', env: 'SQUID_LINE_WIDTHS', default: 3,        sample_value: '4'
-  it_behaves_like 'a configurable setting', method: 'steps',       env: 'SQUID_STEPS',       default: 4,        sample_value: '0'
-  it_behaves_like 'a configurable setting', method: 'ticks',       env: 'SQUID_TICKS',       default: true,     sample_value: sample_false
-  it_behaves_like 'a configurable setting', method: 'type',        env: 'SQUID_TYPE',        default: :column,  sample_value: 'line'
+  it_behaves_like 'a configurable setting', method: 'baseline',    env: 'SQUID_BASELINE',    default: true,       sample_value: sample_false
+  it_behaves_like 'a configurable setting', method: 'border',      env: 'SQUID_BORDER',      default: false,      sample_value: sample_true
+  it_behaves_like 'a configurable setting', method: 'chart',       env: 'SQUID_CHART',       default: true,       sample_value: sample_false
+  it_behaves_like 'a configurable setting', method: 'colors',      env: 'SQUID_COLORS',      default: [],         sample_value: 'ff0000'
+  it_behaves_like 'a configurable setting', method: 'every',       env: 'SQUID_EVERY',       default: 1,          sample_value: '2'
+  it_behaves_like 'a configurable setting', method: 'formats',     env: 'SQUID_FORMATS',     default: [],         sample_value: 'percentage'
+  it_behaves_like 'a configurable setting', method: 'height',      env: 'SQUID_HEIGHT',      default: 250,        sample_value: '150'
+  it_behaves_like 'a configurable setting', method: 'labels',      env: 'SQUID_LABELS',      default: [],         sample_value: sample_true
+  it_behaves_like 'a configurable setting', method: 'legend',      env: 'SQUID_LEGEND',      default: true,       sample_value: sample_false
+  it_behaves_like 'a configurable setting', method: 'line_widths', env: 'SQUID_LINE_WIDTHS', default: []   ,      sample_value: '4'
+  it_behaves_like 'a configurable setting', method: 'steps',       env: 'SQUID_STEPS',       default: 4,          sample_value: '0'
+  it_behaves_like 'a configurable setting', method: 'ticks',       env: 'SQUID_TICKS',       default: true,       sample_value: sample_false
+  it_behaves_like 'a configurable setting', method: 'type',        env: 'SQUID_TYPE',        default: :column,    sample_value: 'line'
 end

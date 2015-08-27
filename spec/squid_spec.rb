@@ -4,7 +4,7 @@ describe 'Prawn::Document#chart' do
   let(:pdf) { Prawn::Document.new }
   let(:chart) { pdf.chart(data, settings); pdf.render }
   let(:data) { {} }
-  let(:options) { {legend: false, baseline: false, steps: 0} }
+  let(:options) { {legend: false, baseline: false, steps: 0, format: :currency} }
   let(:settings) { options }
   let(:blue_rgb) { [0.18, 0.341, 0.549] }
 
@@ -47,11 +47,11 @@ describe 'Prawn::Document#chart' do
       expect(strings_of chart).to be_empty
     end
 
-    context 'given the :labels option is set' do
-      let(:settings) { options.merge labels: true }
+    context 'given the :label option is set to true' do
+      let(:settings) { options.merge label: true }
 
-      it 'includes the value labels on top of each item' do
-        expect(strings_of chart).not_to be_empty
+      it 'includes the formatted value labels on top of each item' do
+        expect(strings_of chart).to eq %w($50.00 -$30.00 $20.00)
       end
     end
 
@@ -108,11 +108,11 @@ describe 'Prawn::Document#chart' do
       expect(widths.uniq).to be_one
     end
 
-    context 'given the :labels option is set' do
-      let(:settings) { options.merge labels: true }
+    context 'given the :labels option is set for some series' do
+      let(:settings) { options.merge labels: [true, false, true] }
 
-      it 'draws a value labels for each rectangle in the stack' do
-        expect(strings_of(chart).size).to be 9
+      it 'draws a value labels for each rectangle of those series' do
+        expect(strings_of(chart).size).to be 6
       end
     end
 
@@ -143,6 +143,13 @@ describe 'Prawn::Document#chart' do
 
       it 'includes as many stacks as the number of values' do
         expect(rectangles_of(chart).map{|r| r[:point].first}.uniq.size).to be 3
+      end
+    end
+
+    context 'given multiple options are provided' do
+      let(:settings) { {type: :two_axis, colors: ['4ecdc4','c7f464','556270'], line_widths: [4, 2, 2]} }
+      it 'applies all the options successfully' do
+        expect(rectangles_of(chart).size).to be 9
       end
     end
   end
@@ -186,14 +193,14 @@ describe 'Prawn::Document#chart' do
       it { expect(points_of(chart).size).to be 9 }
     end
 
-    describe 'shows/hides the value labels with the :labels option' do
-      let(:settings) { options.merge labels: true }
+    describe 'shows/hides the value labels with the :label option' do
+      let(:settings) { options.merge label: true }
       it { expect(strings_of chart).not_to be_empty }
     end
 
-    describe 'shows/hides the value labels with Squid.configuration.labels' do
-      before { Squid.configure {|config| config.labels = true} }
-      after { Squid.configure {|config| config.labels = false} }
+    describe 'shows/hides the value labels with Squid.configuration.label' do
+      before { Squid.configure {|config| config.labels = [true]} }
+      after { Squid.configure {|config| config.labels = [false]} }
       it { expect(strings_of chart).not_to be_empty }
     end
 
@@ -217,6 +224,11 @@ describe 'Prawn::Document#chart' do
       end
     end
 
+    describe 'uses the color provided with the :color option' do
+      let(:settings) { options.merge color: 'ff0000' }
+      it { expect(colors_of(chart).fill_color).to eq [1.0, 0.0, 0.0] }
+    end
+
     describe 'uses the colors provided with the :colors option' do
       let(:settings) { options.merge colors: [ %w(ff0000) ] }
       it { expect(colors_of(chart).fill_color).to eq [1.0, 0.0, 0.0] }
@@ -224,8 +236,30 @@ describe 'Prawn::Document#chart' do
 
     describe 'uses the colors provided with Squid.configuration.colors' do
       before { Squid.configure {|config| config.colors = ['ff0000']} }
-      after { Squid.configure {|config| config.colors = Squid::Configuration::COLORS.split} }
+      after { Squid.configure {|config| config.colors = []} }
       it { expect(colors_of(chart).fill_color).to eq [1.0, 0.0, 0.0] }
+    end
+
+    describe 'formats value labels with the value of the :format option' do
+      let(:settings) { options.merge label: true, format: :percentage }
+      it { expect(strings_of chart).to eq %w(50.0% -30.0% 20.0%) }
+    end
+
+    describe 'formats value labels with the value of the :formats option' do
+      let(:settings) { options.merge labels: [true], formats: [:percentage] }
+      it { expect(strings_of chart).to eq %w(50.0% -30.0% 20.0%) }
+    end
+
+    describe 'formats value labels with the values from Squid.configuration' do
+      before { Squid.configure {|config| config.labels = [true]; config.formats = [:percentage]} }
+      after { Squid.configure {|config| config.labels = []; config.formats = []} }
+      let(:settings) { options.except :format }
+      it { expect(strings_of chart).to eq %w(50.0% -30.0% 20.0%) }
+    end
+
+    describe 'uses the line width provided with the :line_width option' do
+      let(:settings) { options.merge type: :line, line_width: 6 }
+      it { expect(lines_of(chart).widths).to include(6) }
     end
 
     describe 'uses the line widths provided with the :line_widths option' do
@@ -233,9 +267,9 @@ describe 'Prawn::Document#chart' do
       it { expect(lines_of(chart).widths).to include(6) }
     end
 
-    describe 'uses the colors provided with Squid.configuration.line_widths' do
+    describe 'uses the line widths provided with Squid.configuration.line_widths' do
       before { Squid.configure {|config| config.line_widths = [6]} }
-      after { Squid.configure {|config| config.line_widths = [3]} }
+      after { Squid.configure {|config| config.line_widths = []} }
       let(:settings) { options.merge type: :line }
       it { expect(lines_of(chart).widths).to include(6) }
     end

@@ -5,7 +5,7 @@ filename = File.basename(__FILE__).gsub('.rb', '.pdf')
 Prawn::ManualBuilder::Example.generate(filename) do
   data = {views: {2013 => 182, 2014 => -46, 2015 => 88},
         uniques: {2013 => 104, 2014 => 27, 2015 => 14}}
-  chart data, type: :line, labels: true
+  chart data, type: :line, labels: [false, true], formats: %i(percentage percentage), line_widths: [0.5]
 end
 
 

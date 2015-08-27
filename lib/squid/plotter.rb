@@ -28,10 +28,17 @@ module Squid
         x = @pdf.bounds.right - offset
         options = {size: 7, height: @pdf.bounds.height, valign: :center}
         labels.each.with_index do |label, i|
-          color = Array.wrap(colors[labels.size - 1 - i]).first
+          index = labels.size - 1 - i
+          series_color = colors.fetch index, series_colors(index)
+          color = Array.wrap(series_color).first
           x = legend_item label, x, color, options
         end
       end
+    end
+
+    def series_colors(index)
+      default_colors = %w(2e578c 5d9648 e7a13d bc2d30 6f3d79 7d807f)
+      default_colors.fetch(index % default_colors.size)
     end
 
     # Draws a horizontal line.
@@ -66,34 +73,35 @@ module Squid
       end
     end
 
-    def points(series, colors: [])
-      items(series, colors: colors) do |point, w, i, padding|
+    def points(series, options = {})
+      items(series, options) do |point, w, i, padding|
         x, y = (point.index + 0.5)*w + left, point.y + @bottom
         @pdf.fill_circle [x, y], 5
       end
     end
 
-    def lines(series, colors: [], line_widths: [])
+    def lines(series, options = {})
       x, y = nil, nil
-      items(series, colors: colors) do |point, w, i, padding|
+      line_widths = options.delete(:line_widths) { [] }
+      items(series, options) do |point, w, i, padding|
         prev_x, prev_y = x, y
         x, y = (point.index + 0.5)*w + left, point.y + @bottom
-        line_width = Array.wrap(line_widths).fetch(i, 1)
+        line_width = line_widths.fetch i, 3
         with line_width: line_width, cap_style: :round do
           @pdf.line [prev_x, prev_y], [x,y] unless point.index.zero? || prev_y.nil? || prev_x > x
         end
       end
     end
 
-    def stacks(series, colors: [])
-      items(series, colors: colors, fill: true) do |point, w, i, padding|
+    def stacks(series, options = {})
+      items(series, options.merge(fill: true)) do |point, w, i, padding|
         x, y = point.index*w + padding + left, point.y + @bottom
         @pdf.fill_rectangle [x, y], w - 2*padding, point.height
       end
     end
 
-    def columns(series, colors: [])
-      items(series, colors: colors, fill: true, count: series.size) do |point, w, i, padding|
+    def columns(series, options = {})
+      items(series, options.merge(fill: true, count: series.size)) do |point, w, i, padding|
         item_w = (w - 2 * padding)/ series.size
         x, y = point.index*w + padding + left + i*item_w, point.y + @bottom
         @pdf.fill_rectangle [x, y], item_w, point.height
@@ -127,13 +135,15 @@ module Squid
       options
     end
 
-    def items(series, colors: [], fill: false, count: 1, &block)
+    def items(series, colors: [], fill: false, count: 1, starting_at: 0, &block)
       series.reverse_each.with_index do |points, reverse_index|
         index = series.size - reverse_index - 1
+        color_index = index + starting_at
         w = width / points.size.to_f
-        series_colors = Array.wrap(colors[index]).cycle
+        series_color = colors.fetch color_index, series_colors(color_index)
+        item_color = Array.wrap(series_color).cycle
         points.select(&:y).each do |point|
-          item point, series_colors.next, w, fill, index, count, &block
+          item point, item_color.next, w, fill, index, count, &block
         end
       end
     end

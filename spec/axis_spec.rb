@@ -6,7 +6,7 @@ describe Squid::Axis do
   let(:stack?) { false }
   let(:format) { :integer }
   let(:block) { nil }
-  let(:series) { [[-10.0, 109.9, 30.0], [0, 20.0, -50.0]] }
+  let(:series) { [[-1.0, 9.9, 3.0], [0, 2.0, -50.0]] }
 
   describe '#labels' do
     subject(:axis) { Squid::Axis.new series, options }
@@ -29,7 +29,7 @@ describe Squid::Axis do
     describe 'given stacked series' do
       let(:stack?) { false }
       it 'ranges the labels from the min and max of all series' do
-        expect(labels.first).to eq '110'
+        expect(labels.first).to eq '9'
         expect(labels.last).to eq '-50'
       end
     end
@@ -37,7 +37,7 @@ describe Squid::Axis do
     describe 'given non-stacked series' do
       let(:stack?) { true }
       it 'ranges the labels from the cumulative min and max of all series' do
-        expect(labels.first).to eq '130'
+        expect(labels.first).to eq '12'
         expect(labels.last).to eq '-50'
       end
     end
@@ -45,35 +45,35 @@ describe Squid::Axis do
     describe 'given :integer format' do
       let(:format) { :integer }
       it 'returns the labels as integers' do
-        expect(labels).to eq %w(110 70 30 -10 -50)
+        expect(labels).to eq %w(9 -5 -20 -35 -50)
       end
     end
 
     describe 'given :percentage format' do
       let(:format) { :percentage }
       it 'returns the labels as percentages with 1 significant digit' do
-        expect(labels).to eq %w(110.0% 70.0% 30.0% -10.0% -50.0%)
+        expect(labels).to eq %w(9.9% -5.1% -20.0% -35.0% -50.0%)
       end
     end
 
     describe 'given :currency format' do
       let(:format) { :currency }
       it 'returns the labels as currency with 2 significant digits' do
-        expect(labels).to eq %w($110.00 $70.00 $30.00 -$10.00 -$50.00)
+        expect(labels).to eq %w($9.90 -$5.07 -$20.05 -$35.03 -$50.00)
       end
     end
 
     describe 'given :second format' do
       let(:format) { :seconds }
       it 'returns the labels as minutes:seconds' do
-        expect(labels).to eq %w(1:50 1:10 0:30 -1:50 -1:10)
+        expect(labels).to eq %w(0:10 -0:05 -0:20 -0:35 -0:50)
       end
     end
 
     describe 'given :float format' do
       let(:format) { :float }
       it 'returns the labels as floats with all significant digits' do
-        expect(labels).to eq %w(110.0 70.0 30.0 -10.0 -50.0)
+        expect(labels).to eq %w(9.9 -5.1 -20 -35 -50)
       end
     end
   end
@@ -89,7 +89,7 @@ describe Squid::Axis do
     describe 'given no block, returns the maximum value of the block' do
       subject(:axis) { Squid::Axis.new series, options, &block }
       let(:block) { -> (value) { value.to_i } }
-      it { expect(width).to eq 110 }
+      it { expect(width).to eq 9 }
     end
   end
 end

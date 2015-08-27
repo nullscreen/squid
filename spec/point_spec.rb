@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Squid::Point do
-  let(:options) { {minmax: minmax, height: height, labels: labels?, stack: stack?, format: format} }
+  let(:options) { {minmax: minmax, height: height, labels: labels, stack: stack?, formats: formats} }
   let(:minmax) { [-50, 150] }
   let(:height) { 100 }
-  let(:labels?) { false }
+  let(:labels) { [false] }
   let(:stack?) { false }
-  let(:format) { :percentage }
+  let(:formats) { [:percentage, :currency] }
   let(:series) { [[-10.0, 109.9, 30.0], [0, 20.0, -50.0]] }
 
   describe '.for' do
@@ -38,11 +38,11 @@ describe Squid::Point do
     end
 
     context 'given the :labels option is set' do
-      let(:labels?) { true }
+      let(:labels) { [true, true] }
 
       it 'returns a formatted label for each value' do
-        expect(points.first.map &:label).to eq ["-10.0%", "109.9%", "30.0%"]
-        expect(points.last.map &:label).to eq ["0.0%", "20.0%", "-50.0%"]
+        expect(points.first.map &:label).to eq %w(-10.0% 109.9% 30.0%)
+        expect(points.last.map &:label).to eq %w($0.00 $20.00 -$50.00)
       end
     end
 
