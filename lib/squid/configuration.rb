@@ -28,12 +28,10 @@ module Squid
   #   ENV['SQUID_GRIDLINES'] =  '4'
   #
   class Configuration < OpenStruct
-    COLORS = '2e578c 5d9648 e7a13d bc2d30 6f3d79 7d807f'
-
     def self.boolean
       -> (value) { %w(1 t T true TRUE).include? value }
     end
-    
+
     def self.integer
       -> (value) { value.to_i }
     end
@@ -45,25 +43,25 @@ module Squid
     def self.float
       -> (value) { value.to_f }
     end
-    
-    def self.array
-      -> (value) { value.split }
+
+    def self.array(proc = nil)
+      -> (values) { values.split.map{|value| proc ? proc.call(value) : value} }
     end
 
     ATTRIBUTES = {
-      baseline:     {default: 'true',      as: boolean},
-      border:       {default: 'false',     as: boolean},
-      chart:        {default: 'true',      as: boolean},
-      colors:       {default: COLORS,      as: array},
-      every:        {default: '1',         as: integer},
-      format:       {default: 'integer',   as: symbol},
-      height:       {default: '250',       as: float},
-      labels:       {default: 'false',     as: boolean},
-      legend:       {default: 'true',      as: boolean},
-      line_widths:  {default: '3',         as: integer},
-      steps:        {default: '4',         as: integer},
-      ticks:        {default: 'true',      as: boolean},
-      type:         {default: 'column',    as: symbol},
+      baseline:     {as: boolean,        default: 'true'},
+      border:       {as: boolean,        default: 'false'},
+      chart:        {as: boolean,        default: 'true'},
+      colors:       {as: array},
+      every:        {as: integer,        default: '1'},
+      formats:      {as: array(symbol)},
+      height:       {as: float,          default: '250'},
+      labels:       {as: array(boolean)},
+      legend:       {as: boolean,        default: 'true'},
+      line_widths:  {as: array(float)},
+      steps:        {as: integer,        default: '4'},
+      ticks:        {as: boolean,        default: 'true'},
+      type:         {as: symbol,         default: 'column'},
     }
 
     attr_accessor *ATTRIBUTES.keys
@@ -72,7 +70,7 @@ module Squid
     def initialize
       ATTRIBUTES.each do |key, options|
         var = "squid_#{key}".upcase
-        value = ENV.fetch var, options[:default]
+        value = ENV.fetch var, options.fetch(:default, '')
         public_send "#{key}=", options[:as].call(value)
       end
     end

@@ -12,7 +12,7 @@ module Squid
   # @private
   class Graph
     extend Settings
-    has_settings :baseline, :border, :chart, :colors, :every, :format, :height
+    has_settings :baseline, :border, :chart, :colors, :every, :formats, :height
     has_settings :legend, :line_widths, :steps, :ticks, :type, :labels
 
     def initialize(document, data = {}, settings = {})
@@ -60,18 +60,29 @@ module Squid
     end
 
     def draw_charts
-      draw_chart right, type: :column, colors: colors[1..-1]
-      draw_chart left, colors: colors
+      draw_chart right, second_axis: true
+      draw_chart left
     end
 
-    def draw_chart(axis, options = {})
-      args = {minmax: axis.minmax, height: grid_height, stack: stack?, labels: labels, format: format}
+    def draw_chart(axis, second_axis: false)
+      args = {minmax: axis.minmax, height: grid_height, stack: stack?}
+      args[:labels] = items_of labels, skip_first_if: second_axis
+      args[:formats] = items_of formats, skip_first_if: second_axis
       points = Point.for axis.data, args
-      case options.delete(:type) {type}
+      options = {colors: colors, starting_at: (second_axis ? 1: 0)}
+      case (second_axis ? :column : type)
         when :point then @plot.points points, options
         when :line, :two_axis then @plot.lines points, options.merge(line_widths: line_widths)
         when :column then @plot.columns points, options
         when :stack then @plot.stacks points, options
+      end
+    end
+
+    def items_of(array, skip_first_if:)
+      if skip_first_if
+        array.empty? ? [] : array[1..-1]
+      else
+        array
       end
     end
 
@@ -85,9 +96,8 @@ module Squid
 
     def axis(first:, last:)
       series = @data.values[first, last].map(&:values)
-      Axis.new series, steps: steps, stack: stack?, format: format do |label|
-        @plot.width_of label
-      end
+      options = {steps: steps, stack: stack?, format: formats[first]}
+      Axis.new(series, options) {|label| @plot.width_of label}
     end
 
     def bottom

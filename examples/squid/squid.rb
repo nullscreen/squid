@@ -18,14 +18,15 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
       s.example 'basic'
       s.example 'legend'
     end
-    
+
     p.section 'Chart types' do |s|
       s.example 'point'
       s.example 'line'
     end
-    
+
     p.section 'Styling' do |s|
       s.example 'height'
+      s.example 'color'
       s.example 'baseline'
       s.example 'ticks'
       s.example 'every'
@@ -36,7 +37,7 @@ Prawn::ManualBuilder::Example.generate 'squid.pdf' do
       s.example 'line_width'
       s.example 'legend_offset'
     end
-    
+
     p.section 'Multiple series' do |s|
       s.example 'columns'
       s.example 'lines'

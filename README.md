@@ -40,11 +40,11 @@ Multiple options can be combined. Here is a comprehensive list.
 
 ![02-type-point](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_02.png "chart(data, type: :point)")
 
-##### `:line_widths` changes the line width (default: `[3]`, only applies to line graphs).
+##### `:line_width` changes the line width (default: `3`, only applies to line graphs).
 
-![03-type-line](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_03.png "chart(data, type: :line, line_widths: [10])")
+![03-type-line](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_03.png "chart(data, type: :line, line_width: 10)")
 
-##### `:colors` changes the colors of the chart (default: `%w(2e578c 5d9648 e7a13d bc2d30 6f3d79 7d807f)`).
+##### `:color` changes the color of the chart (default: `'2e578c'`).
 
 ![04-colors](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_04.png "chart(data, colors: ['5d9648'])")
 
@@ -72,13 +72,13 @@ Multiple options can be combined. Here is a comprehensive list.
 
 ![10-legend-offset](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_10.png "chart(data, legend: {offset: 50})")
 
-##### `:format` changes the format of the label values. Can be `:integer` (default), `:float`, `:percentage`, `:currency`, or `:seconds`.
+##### `:format` changes the format of the axis labels. Can be `:integer` (default), `:float`, `:percentage`, `:currency`, or `:seconds`.
 
 ![11-format](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_11.png "chart(data, format: :percentage)")
 
-##### `:labels` shows/hides the value for each point in the graph (default: `false`).
+##### `:label` shows/hides the value for each point in the graph (default: `false`).
 
-![12-labels](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_12.png "chart(data, labels: true)")
+![12-label](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_12.png "chart(data, label: true)")
 
 ##### `:border` shows/hides a border around the graph (default: `false`).
 
@@ -101,11 +101,20 @@ data = {safari:  {2013 => 43.2, 2014 => 46.1, 2015 => 50.7},
 chart data, labels: true, format: :percentage
 ```
 
-![15-multiple-columns](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_15.png "chart(data, labels: true, format: :percentage)")
+![15-multiple-columns](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_15.png "chart(data, label: true, format: :percentage)")
 
 When plotting multiple series, the option `type: :stack` can be set to display stacked columns:
 
 ![16-multiple-stacks](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_16.png "chart(data, type: :stack, format: :percentage)")
+
+Any value set for the `:color`, `:format`, `:line_width` and `:label` options will be applied to the first series only:
+
+![17-singular-options](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_17.png "chart data, type: :line, color: '6f3d79', format: :percentage, line_width: 0.5, label: true")
+
+To customize each series, use the _plural_ options `:colors`, `:formats`, `:line_widths` and `:labels` instead:
+
+![18-plural-options](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_18.png "chart data, type: :line, colors: ['6f3d79', '7d807f'], formats: [:percentage, :percentage], line_widths: [0.5, 6], labels: [true, true]")
+
 
 Finally, the option `type: :two_axis` can be set to display two separate axes in your series belong to two different domains.
 
@@ -117,7 +126,7 @@ data = {views: {2013 => 182, 2014 => 46, 2015 => 88},
 chart data, type: :two_axis
 ```
 
-![17-two-axis](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_17.png "chart(data, type: :two_axis)")
+![19-two-axis](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_19.png "chart(data, type: :two_axis)")
 
 How to install
 ==============
