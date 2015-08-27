@@ -68,7 +68,7 @@ Multiple options can be combined. Here is a comprehensive list.
 
 ![09-legend](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_09.png "chart(data, legend: false)")
 
-##### `:legend` can also set the right and bottom margins of the legend (default: `{right: 0, bottom: 0}`).
+##### `:legend` can also set the right and bottom margins of the legend (default: `{right: 0, bottom: 15}`).
 
 ![10-legend-offset](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_10.png "chart(data, legend: {right: 50})")
 
