@@ -1,0 +1,9 @@
+markdown: kramdown
+permalink: none
+baseurl: /squid
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout:  "default"

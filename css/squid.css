@@ -1,0 +1,71 @@
+/* LAYOUT */
+
+html, body                    {height: 100%;}
+
+body                          {padding-top: 25px}
+h1                            {margin-top: 0}
+/*
+h4, .sidebar                  {margin-top: 20px}
+h5                            {margin-top: 15px}
+pre                           {margin-bottom: 25px}
+dl                            {margin-top: 30px}
+dt                            {margin-bottom: 3px}
+*/
+
+header.img {width: 400px}
+
+.sidebar                      {padding-left: 20px}
+.navbar-brand img             {height: 39px; display: inline}
+
+/* TYPOGRAPHY */
+body                          {font-family: monospace}
+pre, .sidebar                 {line-height: 1.8em}
+
+p {line-height: 1.8em}
+
+                              p, h1 {font-size: 1.0em}
+@media (min-width:768px)     {p, h1 {font-size: 1.1em}}
+@media (min-width:992px)     {p, h1 {font-size: 1.2em}}
+@media (min-width:1200px)    {p, h1 {font-size: 1.3em}}
+
+
+a {color: #7FDA89}
+a {text-decoration: underline}
+a:hover {color: #259073}
+
+pre, p>code {background-color: #f6fff7; color: #041122; }
+p>code {font-size: 0.85em; padding: 3px 5px; }
+pre, p>code {border-radius: 2px; border: 1px solid #7FDA89}
+pre  {padding: 6px 10px; }
+
+img.section {margin-top: 70px; margin-bottom: 30px; width: 360px}
+
+/* <code style="background: #f6fff7; color: #041122; border-radius: 2px; padding: 3px 5px; font-size: 15px; border: 1px solid #7FDA89">gem 'squid', '~> 1.0'</code> to your Gemfile.
+<code class="language-ruby" data-lang="ruby"><span class="n">video</span> <span class="o">=</span> <span class="no">Yt</span><span class="o">::</span><span class="no">Video</span><span class="o">.</span><span class="n">new</span> <span class="nb">id</span><span class="p">:</span>  <span class="c1"># =&gt; All these methods return #&lt;Yt::Video:0x... @id="BPNYv0vd78A"&gt;</span></code>
+
+
+
+*/
+
+/*
+.sidebar                      {font-size: 1.3em}
+dt                            {font-size: 1.1em}
+*/
+
+/* COLORS */
+body                          {background-color: #041122; color: #eefff0}
+
+/*
+.navbar-default .navbar-brand {color: #10a17c}
+.navbar-default               {border-color: #10a17c; background-color: #fff}
+.label.label-success          {background-color: #10a17c;}
+.label.label-warning          {background-color: #c066b6;}
+.label.label-danger           {background-color: #ebd55d; color: #333}
+*/
+.o                            {color: #555555}
+.no                           {color: #10a17c}
+.s1                           {color: #306636}
+.s2                           {color: #306636}
+.ss                           {color: #10a17c}
+.c1                           {color: #999999}
+.mi                           {color: #6b65dd}

@@ -1,1 +1,117 @@
-My Page
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Squid · A Ruby library to plot charts in PDF files">
+    <meta name="keywords" content="PDF, Ruby, Prawn, charts, graphs, reports, Excel, Number, Sales">
+    <meta name="author" content="Claudio B.">
+    <title>Squid · A Ruby library to plot charts in PDF files</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/squid.css">
+    <link href="{{ site.baseurl }}/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="{{ site.baseurl }}/favicon.ico" rel="icon">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <header class="col-xs-12 text-center">
+          <img alt="Squid" src="{{ site.baseurl }}/images/title_squid.png">
+          <h1>» A Ruby library to plot charts in PDF files «</h1>
+        </header>
+
+        <div class="col-xs-4" >
+          <img alt="Example graph #1" class="img-rounded img-responsive" style="margin-top: 30px; background: #f6fff7; border: 1px solid #7FDA89" src="{{ site.baseurl }}/images/example_01.png">
+        </div>
+        <div class="col-xs-4">
+          <img alt="Example graph #1" class="img-rounded img-responsive" style="margin-top: 30px; background: #f6fff7; border: 1px solid #7FDA89" src="{{ site.baseurl }}/images/example_02.png">
+        </div>
+        <div class="col-xs-4">
+          <img alt="Example graph #1" class="img-rounded img-responsive" style="margin-top: 30px; background: #f6fff7; border: 1px solid #7FDA89" src="{{ site.baseurl }}/images/example_03.png">
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <img alt="How to install" src="{{ site.baseurl }}/images/title_how_to_install.png" class="section">
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <p>Either type <code>gem install squid</code> or add <code>gem 'squid', '1.0.0.beta4'</code> to your Gemfile.</p>
+          <p>Note that <b>Ruby >= 2.1</b> is required. And <b>Rails >= 4.0</b>, if used with Rails.</p>
+          <p>The project is open source (MIT license) and the code <a href="https://github.com/fullscreen/squid">available on GitHub</a>.</p>
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <img alt="How to use" src="{{ site.baseurl }}/images/title_how_to_use.png" class="section">
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <p>Squid adds a single method <code>chart(data = {}, settings = {})</code> to the <code>Prawn::Document</code> class.</p>
+          <p>If you have never used <a href="http://prawnpdf.org">Prawn</a> to generate PDF files, you should first read its <a href="http://prawnpdf.org/manual.pdf">manual</a>.</p>
+          <p>Generating a PDF file with a chart is as easy as running the following Ruby code:</p>
+        </div>
+
+        <div class="col-xs-6 col-xs-offset-3">
+          <pre><code><span class="o">require </span><span class="s1">'squid'</span>
+<span class="no">Prawn</span><span class="o">::</span><span class="no">Document</span><span class="o">.generate</span><span class="s1"> 'web traffic.pdf'</span><span class="o"> do</span>
+  <span class="o">chart</span><span class="ss"> views</span><span class="p">: {</span><span class="mi">2013</span><span class="o"> => </span><span class="mi">182</span><span class="o">,</span><span class="mi"> 2014</span><span class="o"> => </span><span class="mi">46</span><span class="o">, </span><span class="mi">2015</span><span class="o"> => </span><span class="mi">134</span><span class="o">}</span>
+<span class="o">end</span></code></pre>
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <img alt="Data" src="{{ site.baseurl }}/images/title_data.png" class="section">
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <p>Provide the <code>data</code> to plot as a Hash of Hashes, one key/value pair per series.</p>
+          <p>For instance, you can plot <i>views</i> and <i>uniques</i> of a web site with:</p>
+        </div>
+
+        <div class="col-xs-10 col-xs-offset-1 text-center">
+          <pre><code><span class="p">{</span><span class="ss">views</span><span class="p">: {</span><span class="mi">2013</span><span class="o"> => </span><span class="mi">182</span><span class="o">,</span><span class="mi"> 2014</span><span class="o"> => </span><span class="mi">46</span><span class="o">, </span><span class="mi">2015</span><span class="o"> => </span><span class="mi">134</span><span class="o">}, <span class="ss">uniques</span><span class="p">: {</span><span class="mi">2013</span><span class="o"> => </span><span class="mi">98</span><span class="o">,</span><span class="mi"> 2014</span><span class="o"> => </span><span class="mi">32</span><span class="o">, </span><span class="mi">2015</span><span class="o"> => </span><span class="mi">61</span><span class="o">}}</span></code></pre>
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <p>The names of the series (Views and Uniques) will be displayed in the legend.</p>
+          <p>The names of the categories (2013, 2014 and 2015) will be displayed on the baseline.</p>
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <img alt="Settings" src="{{ site.baseurl }}/images/title_settings.png" class="section">
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <p>Provide the <code>settings</code> for the graph as a Hash. The valid keys are listed below.</p>
+          <p>The images illustrate the effect of applying each setting to the sample data above.</p>
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <h1>TO DO</h1>
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <img alt="Acknowledgments" src="{{ site.baseurl }}/images/title_acknowledgments.png" class="section">
+        </div>
+
+        <div class="col-xs-12 text-center">
+          <p>Thanks to <a href="http://fullscreen.com">Fullscreen</a> for letting me work on <a href="http://claudiob.github.io">open source projects</a>.</p>
+          <p>Thanks to <a href="https://practicingruby.com">Gregory Brown</a> for creating the wonderful <a href="http://prawnpdf.org">Prawn</a>.</p>
+          <p>Thanks to <a href="https://rubytogether.org">Ruby Together</a> for maintaining <a href="http://rubygems.org">RubyGems</a>.</p>
+          <p>Thanks to <a href="http://www.colourlovers.com/lover/redrobin">Red Robin</a> for designing the logo.</p>
+          <p>Thanks to those who <a href="https://twitter.com/intent/tweet?text=Check+out+Squid+·+A+Ruby+library+to+plot+charts+in+PDF+files+http%3A%2F%2Ffullscreen.github.io%2Fsquid">tweet about Squid</a>.</p>
+          <p>And to those who <a href="https://github.com/Fullscreen/squid/graphs/contributors">contribute</a>.</p>
+        </div>
+
+
+
+        <div class="col-xs-12" role="main">
+          <h2>{{ page.h2 }}</h2>
+          {{ content }}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
