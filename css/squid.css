@@ -33,8 +33,8 @@ p, h1                         {font-size: 0.95em}
 @media (min-width:992px)      {p, h1 {font-size: 1.3em}}
 
 /* COLORS */
-body                          {background-color: #041122; color: #eefff0}
-pre, p>code, figcaption>code  {background-color: #f6fff7; color: #041122}
+body                          {background-color: #051222; color: #eefff0}
+pre, p>code, figcaption>code  {background-color: #f6fff7; color: #051222}
 figure>img, pre, p>code       {background-color: #f6fff7; border-color: #7fda89}
 a                             {color: #7fda89}
 a:hover                       {color: #259073}
