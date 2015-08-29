@@ -1,6 +1,6 @@
 ---
+layout: null
 ---
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,28 +24,28 @@
           <h1>» A Ruby library to plot charts in PDF files «</h1>
         </header>
 
-        <div class="col-xs-4" >
-          <img alt="Example graph #1" class="img-rounded img-responsive" style="margin-top: 30px; background: #f6fff7; border: 1px solid #7FDA89" src="{{ site.baseurl }}/images/example_01.png">
-        </div>
-        <div class="col-xs-4">
-          <img alt="Example graph #1" class="img-rounded img-responsive" style="margin-top: 30px; background: #f6fff7; border: 1px solid #7FDA89" src="{{ site.baseurl }}/images/example_02.png">
-        </div>
-        <div class="col-xs-4">
-          <img alt="Example graph #1" class="img-rounded img-responsive" style="margin-top: 30px; background: #f6fff7; border: 1px solid #7FDA89" src="{{ site.baseurl }}/images/example_03.png">
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1">
+          <img alt="Example graph #1" class="img-rounded img-responsive" src="{{ site.baseurl }}/images/example_01.png">
+        </figure>
+        <figure class="col-md-4 col-md-offset-0 hidden-sm col-xs-10 col-xs-offset-1">
+          <img alt="Example graph #2" class="img-rounded img-responsive" src="{{ site.baseurl }}/images/example_02.png">
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1">
+          <img alt="Example graph #3" class="img-rounded img-responsive" src="{{ site.baseurl }}/images/example_03.png">
+        </figure>
+
+        <div class="col-xs-12 text-center">
+          <img alt="How to install" src="{{ site.baseurl }}/images/title_how_to_install.png">
         </div>
 
         <div class="col-xs-12 text-center">
-          <img alt="How to install" src="{{ site.baseurl }}/images/title_how_to_install.png" class="section">
-        </div>
-
-        <div class="col-xs-12 text-center">
-          <p>Either type <code>gem install squid</code> or add <code>gem 'squid', '1.0.0.beta4'</code> to your Gemfile.</p>
+          <p>Either type <code>gem install squid</code> or add <code>gem 'squid'</code> to your Gemfile.</p>
           <p>Note that <b>Ruby >= 2.1</b> is required. And <b>Rails >= 4.0</b>, if used with Rails.</p>
           <p>The project is open source (MIT license) and the code <a href="https://github.com/fullscreen/squid">available on GitHub</a>.</p>
         </div>
 
         <div class="col-xs-12 text-center">
-          <img alt="How to use" src="{{ site.baseurl }}/images/title_how_to_use.png" class="section">
+          <img alt="How to use" src="{{ site.baseurl }}/images/title_how_to_use.png">
         </div>
 
         <div class="col-xs-12 text-center">
@@ -54,15 +54,15 @@
           <p>Generating a PDF file with a chart is as easy as running the following Ruby code:</p>
         </div>
 
-        <div class="col-xs-6 col-xs-offset-3">
+        <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
           <pre><code><span class="o">require </span><span class="s1">'squid'</span>
 <span class="no">Prawn</span><span class="o">::</span><span class="no">Document</span><span class="o">.generate</span><span class="s1"> 'web traffic.pdf'</span><span class="o"> do</span>
-  <span class="o">chart</span><span class="ss"> views</span><span class="p">: {</span><span class="mi">2013</span><span class="o"> => </span><span class="mi">182</span><span class="o">,</span><span class="mi"> 2014</span><span class="o"> => </span><span class="mi">46</span><span class="o">, </span><span class="mi">2015</span><span class="o"> => </span><span class="mi">134</span><span class="o">}</span>
+  <span class="o">chart</span><span class="ss"> views:</span><span class="p"> {</span><span class="mi">2013</span><span class="o"> => </span><span class="mi">182</span><span class="o">,</span><span class="mi"> 2014</span><span class="o"> => </span><span class="mi">46</span><span class="o">, </span><span class="mi">2015</span><span class="o"> => </span><span class="mi">134</span><span class="o">}</span>
 <span class="o">end</span></code></pre>
         </div>
 
         <div class="col-xs-12 text-center">
-          <img alt="Data" src="{{ site.baseurl }}/images/title_data.png" class="section">
+          <img alt="Data" src="{{ site.baseurl }}/images/title_data.png">
         </div>
 
         <div class="col-xs-12 text-center">
@@ -70,8 +70,8 @@
           <p>For instance, you can plot <i>views</i> and <i>uniques</i> of a web site with:</p>
         </div>
 
-        <div class="col-xs-10 col-xs-offset-1 text-center">
-          <pre><code><span class="p">{</span><span class="ss">views</span><span class="p">: {</span><span class="mi">2013</span><span class="o"> => </span><span class="mi">182</span><span class="o">,</span><span class="mi"> 2014</span><span class="o"> => </span><span class="mi">46</span><span class="o">, </span><span class="mi">2015</span><span class="o"> => </span><span class="mi">134</span><span class="o">}, <span class="ss">uniques</span><span class="p">: {</span><span class="mi">2013</span><span class="o"> => </span><span class="mi">98</span><span class="o">,</span><span class="mi"> 2014</span><span class="o"> => </span><span class="mi">32</span><span class="o">, </span><span class="mi">2015</span><span class="o"> => </span><span class="mi">61</span><span class="o">}}</span></code></pre>
+        <div class="col-sm-10 col-sm-offset-1 col-xs-12 text-center">
+          <pre><code><span class="p">{</span><span class="ss">views:</span><span class="p"> {</span><span class="mi">2013</span><span class="o"> => </span><span class="mi">182</span><span class="o">,</span><span class="mi"> 2014</span><span class="o"> => </span><span class="mi">46</span><span class="o">, </span><span class="mi">2015</span><span class="o"> => </span><span class="mi">134</span><span class="o">},</span><br class="visible-xs visible-sm"/> <span class="ss">uniques:</span><span class="p"> {</span><span class="mi">2013</span><span class="o"> => </span><span class="mi">98</span><span class="o">,</span><span class="mi"> 2014</span><span class="o"> => </span><span class="mi">32</span><span class="o">, </span><span class="mi">2015</span><span class="o"> => </span><span class="mi">61</span><span class="o">}}</span></code></pre>
         </div>
 
         <div class="col-xs-12 text-center">
@@ -80,20 +80,99 @@
         </div>
 
         <div class="col-xs-12 text-center">
-          <img alt="Settings" src="{{ site.baseurl }}/images/title_settings.png" class="section">
+          <img alt="Settings" src="{{ site.baseurl }}/images/title_settings.png">
         </div>
 
         <div class="col-xs-12 text-center">
           <p>Provide the <code>settings</code> for the graph as a Hash. The valid keys are listed below.</p>
           <p>The images illustrate the effect of applying each setting to the sample data above.</p>
         </div>
-
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart(data)" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/01.png">
+            <figcaption><code><span class="o">chart data</span><span class="c1"> # no settings</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, type: :point" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/02.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> type: :point</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, type: :line" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/03.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> type: :line</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, type: :stack" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/04.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> type: :stack</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, type: :two_axis" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/05.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> type: :two_axis</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, type: :line, line_widths: [2, 6]" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/06.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> type: :line</span><span class="o">,</span><span class="ss"> line_widths: </span><span class="o">[</span><span class="mi">2</span><span class="o">,</span><span class="mi"> 6</span><span class="o">]</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, colors: %w(e7a13d bc2d30)" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/07.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> colors: </span><span class="s1">%w(e7a13d bc2d30)</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, steps: 8" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/08.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> steps: </span><span class="mi">8</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, ticks: false" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/09.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> ticks: </span><span class="no">false</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, baseline: false" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/10.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> baseline: </span><span class="no">false</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, every: 2" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/11.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> every: </span><span class="mi">2</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, legend: false" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/12.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> legend: </span><span class="no">false</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, legend: {right: 50, bottom: 50}" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/13.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> legend: </span><span class="o">{</span><span class="ss">right: </span><span class="mi">50</span><span class="o">,</span><span class="ss"> bottom:</span><span class="mi"> 50</span><span class="o">}</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, border: true" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/14.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> border: </span><span class="no">true</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, height: 150" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/15.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> height: </span><span class="mi">150</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, labels: [false, true]" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/16.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> labels: </span><span class="o">[</span><span class="no">false</span><span class="o">,</span><span class="no"> true</span><span class="o">]</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, format: :percentage" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/17.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> format: :percentage</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, format: :currency" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/18.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> format: :currency</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, format: :float" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/19.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> format: :float</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-sm-6 col-sm-offset-0 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, format: :seconds" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/20.png">
+            <figcaption><code><span class="o">chart data,</span><span class="ss"> format: :seconds</span></code></figcaption>
+        </figure>
+        <figure class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 text-center">
+            <img alt="chart data, format: :percentage, type: :line, line_width: 0.5, color: '6f3d79', label: true" class="img-rounded img-responsive" src="{{ site.baseurl }}/screenshots/21.png">
+            <figcaption><code><span class="c1"># multiple settings at once</span></code></figcaption>
+        </figure>
         <div class="col-xs-12 text-center">
-          <h1>TO DO</h1>
-        </div>
-
-        <div class="col-xs-12 text-center">
-          <img alt="Acknowledgments" src="{{ site.baseurl }}/images/title_acknowledgments.png" class="section">
+          <img alt="Acknowledgments" src="{{ site.baseurl }}/images/title_acknowledgments.png">
         </div>
 
         <div class="col-xs-12 text-center">
@@ -105,11 +184,9 @@
           <p>And to those who <a href="https://github.com/Fullscreen/squid/graphs/contributors">contribute</a>.</p>
         </div>
 
-
-
-        <div class="col-xs-12" role="main">
-          <h2>{{ page.h2 }}</h2>
-          {{ content }}
+        <div class="col-xs-12 text-center">
+          <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=Fullscreen&amp;repo=squid&amp;type=watch&amp;count=true" width="100" height="20" title="Star on GitHub"></iframe>
+          <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=Fullscreen&amp;repo=squid&amp;type=fork&amp;count=true" width="102" height="20" title="Fork on GitHub"></iframe>
         </div>
       </div>
     </div>
