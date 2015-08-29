@@ -26,107 +26,16 @@ data = {views: {2013 => 182, 2014 => 46, 2015 => 134}}
 chart data
 ```
 
-![01-basic](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_01.png "chart(data)")
+![01-basic](https://raw.githubusercontent.com/fullscreen/squid/master/examples/readme.png "chart(data)")
 
+A comprehensive guide to Squid options
+======================================
 
-Graph options
--------------
+All the settings available for the `chart` method are detailed on the [Squid homepage](http://fullscreen.github.io/squid):
 
-By providing `options` to the `chart` method, you can customize the format of the graph.
+[![Squid homepage](https://cloud.githubusercontent.com/assets/7408595/9561009/3a333b1c-4de8-11e5-9eeb-0c45649e41b7.png)](http://fullscreen.github.io/squid)
 
-Multiple options can be combined. Here is a comprehensive list.
-
-##### `:type` sets the type of graph. Can be `:column` (default), `:point`, or `:line`.
-
-![02-type-point](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_02.png "chart(data, type: :point)")
-
-##### `:line_width` changes the line width (default: `3`, only applies to line graphs).
-
-![03-type-line](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_03.png "chart(data, type: :line, line_width: 10)")
-
-##### `:color` changes the color of the chart (default: `'2e578c'`).
-
-![04-colors](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_04.png "chart(data, colors: ['5d9648'])")
-
-##### `:steps` changes the number of gridlines (default: `4`).
-
-![05-gridlines](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_05.png "chart(data, steps: 6)")
-
-##### `:ticks` shows/hides the ticks between the baseline and each category (default: `true`).
-
-![06-ticks](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_06.png "chart(data, ticks: false)")
-
-##### `:baseline` shows/hides the baseline (default: `true`).
-
-![07-baseline](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_07.png "chart(data, baseline: false)")
-
-##### `:every` specifies how often to show category labels on the baseline (default: `1`).
-
-![08-every](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_08.png "chart(data, every: 2)")
-
-##### `:legend` shows/hides the legend (default: `true`).
-
-![09-legend](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_09.png "chart(data, legend: false)")
-
-##### `:legend` can also set the right and bottom margins of the legend (default: `{right: 0, bottom: 15}`).
-
-![10-legend-offset](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_10.png "chart(data, legend: {right: 50})")
-
-##### `:format` changes the format of the axis labels. Can be `:integer` (default), `:float`, `:percentage`, `:currency`, or `:seconds`.
-
-![11-format](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_11.png "chart(data, format: :percentage)")
-
-##### `:label` shows/hides the value for each point in the graph (default: `false`).
-
-![12-label](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_12.png "chart(data, label: true)")
-
-##### `:border` shows/hides a border around the graph (default: `false`).
-
-![13-border](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_13.png "chart(data, border: true)")
-
-##### `:height` changes the height of the graph (default: `250`).
-
-![14-height](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_14.png "chart(data, height: 150)")
-
-Multiple series
----------------
-
-By providing multiple key/values `data` to the `chart` method, you can plot multiple series on a graph.
-
-For instance, the following code generates the graph below:
-
-```ruby
-data = {safari:  {2013 => 43.2, 2014 => 46.1, 2015 => 50.7},
-       firefox:  {2013 => 56.8, 2014 => 53.9, 2015 => 49.3}}
-chart data, labels: true, format: :percentage
-```
-
-![15-multiple-columns](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_15.png "chart(data, label: true, format: :percentage)")
-
-When plotting multiple series, the option `type: :stack` can be set to display stacked columns:
-
-![16-multiple-stacks](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_16.png "chart(data, type: :stack, format: :percentage)")
-
-Any value set for the `:color`, `:format`, `:line_width` and `:label` options will be applied to the first series only:
-
-![17-singular-options](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_17.png "chart data, type: :line, color: '6f3d79', format: :percentage, line_width: 0.5, label: true")
-
-To customize each series, use the _plural_ options `:colors`, `:formats`, `:line_widths` and `:labels` instead:
-
-![18-plural-options](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_18.png "chart data, type: :line, colors: ['6f3d79', '7d807f'], formats: [:percentage, :percentage], line_widths: [0.5, 6], labels: [true, true]")
-
-
-Finally, the option `type: :two_axis` can be set to display two separate axes in your series belong to two different domains.
-
-For instance, the following code generates the graph below:
-
-```ruby
-data = {views: {2013 => 182, 2014 => 46, 2015 => 88},
-     earnings: {2013 => 104_323, 2014 => 27_234, 2015 => 14_123}}
-chart data, type: :two_axis
-```
-
-![19-two-axis](https://raw.githubusercontent.com/fullscreen/squid/master/examples/screenshots/readme_19.png "chart(data, type: :two_axis)")
+Please proceed to [http://fullscreen.github.io/squid](http://fullscreen.github.io/squid) for more details and examples.
 
 How to install
 ==============
