@@ -43,7 +43,7 @@ How to install
 Squid requires **Ruby 2.1 or higher**.
 If used in a Rails project, requires **Rails 4.0 or higher**.
 
-To include in your project, add `gem 'squid', github: 'fullscreen/squid'` to the `Gemfile` file of your Ruby project.
+To include in your project, add `gem 'squid, ~> 1.0', github: 'fullscreen/squid'` to the `Gemfile` file of your Ruby project.
 
 How to generate the manual
 ==========================
@@ -54,9 +54,7 @@ How to contribute
 =================
 
 If you’ve made it this far in the README… thanks! :v:
-
-I’m about to release version 1 of this gem.
-Feel free to try it out and send issues or pull requests.
+Feel free to try it the gem, explore the code, and send issues or pull requests.
 
 All pull requests will have to make Travis and Code Climate happy in order to be accepted. :kissing_smiling_eyes:
 

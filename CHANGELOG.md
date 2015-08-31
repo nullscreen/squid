@@ -6,6 +6,6 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
-## 1.0.0 - unreleased
+## 1.0.0 - 2015.08.31
 
 * [FEATURE] Add `chart` method to Prawn::Document to draw graphs.
