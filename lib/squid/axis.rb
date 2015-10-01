@@ -39,11 +39,15 @@ module Squid
     end
 
     def min
-      [values.first.min, 0].min if @data.any? && values.first.any?
+      if @data.any? && values.first && values.first.any?
+        [values.first.min, 0].min
+      end
     end
 
     def max
-      [values.last.max, @steps].max if @data.any? && values.last.any?
+      if @data.any? && values.last && values.last.any?
+        [values.last.max, @steps].max
+      end
     end
 
     def values
