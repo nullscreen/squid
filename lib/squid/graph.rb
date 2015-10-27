@@ -36,7 +36,7 @@ module Squid
     end
 
     def draw_legend
-      labels = @data.keys.reverse.map{|key| key.to_s.titleize}
+      labels = @data.keys.reverse.map{|key| key.to_s}
       right = legend.is_a?(Hash) ? legend.fetch(:right, 0) : 0
       @plot.legend labels, right: right, colors: colors, height: legend_height
     end
