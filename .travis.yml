@@ -4,4 +4,7 @@ notifications:
   email: true
 matrix:
   include:
-  - rvm: 2.1
+  - rvm: 2.1.5
+    gemfile: gemfiles/Gemfile.activesupport-4.x
+  - rvm: 2.2.4
+    gemfile: gemfiles/Gemfile.activesupport-5.x
