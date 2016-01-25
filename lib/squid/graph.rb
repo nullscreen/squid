@@ -1,5 +1,5 @@
 require 'active_support'
-require 'active_support/core_ext/string/inflections' # for titleize
+require 'active_support/core_ext/string/inflections' # for singularize
 
 require 'squid/axis'
 require 'squid/axis_label'
@@ -36,7 +36,7 @@ module Squid
     end
 
     def draw_legend
-      labels = @data.keys.reverse.map{|key| key.to_s.titleize}
+      labels = @data.keys.reverse.map{|key| key.to_s}
       right = legend.is_a?(Hash) ? legend.fetch(:right, 0) : 0
       @plot.legend labels, right: right, colors: colors, height: legend_height
     end

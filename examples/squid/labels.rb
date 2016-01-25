@@ -4,6 +4,6 @@
 #
 filename = File.basename(__FILE__).gsub('.rb', '.pdf')
 Prawn::ManualBuilder::Example.generate(filename) do
-  data = {a_very_long_label_to_test_padding_with_labels: {2013 => 182000, 2014 => -182000, 2015 => 182000}}
+  data = {'A very long label to test padding with labels' => {2013 => 182000, 2014 => -182000, 2015 => 182000}}
   chart data, label: true
 end

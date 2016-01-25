@@ -180,8 +180,6 @@ module Squid
       x - entry_padding
     end
 
-
-
     # Convenience method to wrap a block by setting and unsetting a Prawn
     # property such as line_width.
     def with(new_values = {})
