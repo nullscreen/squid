@@ -1,5 +1,5 @@
 require 'active_support'
-require 'active_support/core_ext/string/inflections' # for titleize
+require 'active_support/core_ext/string/inflections' # for singularize
 
 require 'squid/axis'
 require 'squid/axis_label'

@@ -6,6 +6,10 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
+## 1.2.0 - 2016.01.24
+
+* [ENHANCEMENT] Do not titleize the chart labels (see issue #39)
+
 ## 1.1.0 - 2015.18.12
 
 * [ENHANCEMENT] Support ActiveSupport/Rails >= 5.0.0.beta1

@@ -156,7 +156,7 @@ describe 'Prawn::Document#chart' do
 
   context 'given non-default options' do
     let(:values) { {2013 => 50, 2014 => -30, 2015 => 20} }
-    let(:data) { {series: values} }
+    let(:data) { {'BWK p.a.' => values} }
 
     describe 'shows/hides the chart with the :chart option' do
       let(:settings) { options.merge chart: false }
@@ -172,6 +172,7 @@ describe 'Prawn::Document#chart' do
     describe 'shows/hides the legend with the :legend option' do
       let(:settings) { options.merge legend: true }
       it { expect(strings_of chart).not_to be_empty }
+      it { expect(strings_of chart).to include 'BWK p.a.' }
     end
 
     describe 'shows/hides the chart with Squid.configuration.chart' do
