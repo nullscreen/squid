@@ -6,6 +6,10 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
+## 1.3.0 - 2016.03.01
+
+* [ENHANCEMENT] When axis values are integer, ensure they are not truncated (see issue #48)
+
 ## 1.2.0 - 2016.01.24
 
 * [ENHANCEMENT] Do not titleize the chart labels (see issue #39)

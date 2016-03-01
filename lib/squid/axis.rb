@@ -46,7 +46,16 @@ module Squid
 
     def max
       if @data.any? && values.last && values.last.any?
-        [values.last.max, @steps].max
+        closest_step_to values.last.max
+      end
+    end
+
+    def closest_step_to(value)
+      if @format == :integer
+        p "VALUE: #{((value - min) / @steps + 1) * @steps + min}"
+        ((value - min) / @steps + 1) * @steps + min
+      else
+        [value, @steps].max
       end
     end
 
