@@ -4,7 +4,7 @@ describe Squid::Axis do
   let(:options) { {steps: steps, stack: stack?, format: format} }
   let(:steps) { 4 }
   let(:stack?) { false }
-  let(:format) { :integer }
+  let(:format) { nil }
   let(:block) { nil }
   let(:series) { [[-1.0, 9.9, 3.0], [nil, 2.0, -50.0]] }
 
@@ -44,8 +44,8 @@ describe Squid::Axis do
 
     describe 'given :integer format' do
       let(:format) { :integer }
-      it 'returns the labels as integers' do
-        expect(labels).to eq %w(9 -5 -20 -35 -50)
+      it 'returns the labels as integers, rounded to the closest step' do
+        expect(labels).to eq %w(14 -2 -18 -34 -50)
       end
     end
 
@@ -86,10 +86,17 @@ describe Squid::Axis do
       it { expect(width).to be_zero }
     end
 
-    describe 'given no block, returns the maximum value of the block' do
+    describe 'given non-integer values, returns the maximum value of the block' do
       subject(:axis) { Squid::Axis.new series, options, &block }
       let(:block) { -> (value) { value.to_i } }
       it { expect(width).to eq 9 }
+    end
+
+    describe 'given integer values, returns the maximum value, rounded to the closest step' do
+      subject(:axis) { Squid::Axis.new series, options, &block }
+      let(:format) { :integer }
+      let(:block) { -> (value) { value.to_i } }
+      it { expect(width).to eq 14 }
     end
   end
 end
