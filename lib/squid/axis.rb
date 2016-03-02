@@ -52,7 +52,6 @@ module Squid
 
     def closest_step_to(value)
       if @format == :integer
-        p "VALUE: #{((value - min) / @steps + 1) * @steps + min}"
         ((value - min) / @steps + 1) * @steps + min
       else
         [value, @steps].max

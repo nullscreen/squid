@@ -6,6 +6,10 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
+## 1.3.2 - unreleased
+
+* [ENHANCEMENT] Remove a 'puts' statement left over from development
+
 ## 1.3.0 - 2016.03.01
 
 * [ENHANCEMENT] When axis values are integer, ensure they are not truncated (see issue #48)
