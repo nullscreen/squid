@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 describe Squid::Point do
-  let(:options) { {minmax: minmax, height: height, labels: labels, stack: stack?, formats: formats} }
+  let(:options) { {minmax: minmax, height: height, labels: labels, stack: stack?, formats: formats, precision: precision} }
   let(:minmax) { [-50, 150] }
   let(:height) { 100 }
   let(:labels) { [false] }
+  let(:precision) { 0 }
   let(:stack?) { false }
   let(:formats) { [:percentage, :seconds] }
   let(:series) { [[-10.0, 109.9, 30.0], [nil, 20.0, -50.0]] }
