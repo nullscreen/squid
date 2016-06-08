@@ -242,7 +242,7 @@ describe 'Prawn::Document#chart' do
     end
 
     describe 'formats value labels with the value of the :format option' do
-      let(:settings) { options.merge label: true, format: :percentage }
+      let(:settings) { options.merge label: true, format: :percentage}
       it { expect(strings_of chart).to eq %w(50.0% -30.0% 20.0%) }
     end
 

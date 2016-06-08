@@ -5,7 +5,7 @@ describe Squid::Point do
   let(:minmax) { [-50, 150] }
   let(:height) { 100 }
   let(:labels) { [false] }
-  let(:precision) { 0 }
+  let(:precision) { 1 }
   let(:stack?) { false }
   let(:formats) { [:percentage, :seconds] }
   let(:series) { [[-10.0, 109.9, 30.0], [nil, 20.0, -50.0]] }

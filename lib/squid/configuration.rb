@@ -57,7 +57,7 @@ module Squid
       formats:                 {as: array(symbol)},
       height:                  {as: float,          default: '250'},
       labels:                  {as: array(boolean)},
-      label_percent_precision: {as: integer,        default: '0'},
+      label_percent_precision: {as: integer,        default: '1'},
       y_axis_max:              {as: integer,        default: '0'},
       legend:                  {as: boolean,        default: 'true'},
       legend_font_size:        {as: integer,        default: '7'},
