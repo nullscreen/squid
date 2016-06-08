@@ -7,8 +7,8 @@ module Squid
     include Format
     attr_reader :data
 
-    def initialize(data, steps:, stack:, format:, &block)
-      @data, @steps, @stack, @format = data, steps, stack, format
+    def initialize(data, steps:, stack:, format:, precision:, y_max:, &block)
+      @data, @steps, @stack, @format, @precision, @y_max = data, steps, stack, format, precision, y_max
       @width_proc = block if block_given?
     end
 
@@ -25,7 +25,7 @@ module Squid
       else
         max.step(by: (min - max)/@steps.to_f, to: min)
       end
-      @labels ||= values.map{|value| format_for value, @format}
+      @labels ||= values.map{|value| format_for value, @format, @precision}
     end
 
     def width
@@ -45,6 +45,8 @@ module Squid
     end
 
     def max
+      return @y_max unless @y_max == 0
+
       if @data.any? && values.last && values.last.any?
         closest_step_to values.last.max
       end

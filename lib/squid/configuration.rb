@@ -49,19 +49,22 @@ module Squid
     end
 
     ATTRIBUTES = {
-      baseline:     {as: boolean,        default: 'true'},
-      border:       {as: boolean,        default: 'false'},
-      chart:        {as: boolean,        default: 'true'},
-      colors:       {as: array},
-      every:        {as: integer,        default: '1'},
-      formats:      {as: array(symbol)},
-      height:       {as: float,          default: '250'},
-      labels:       {as: array(boolean)},
-      legend:       {as: boolean,        default: 'true'},
-      line_widths:  {as: array(float)},
-      steps:        {as: integer,        default: '4'},
-      ticks:        {as: boolean,        default: 'true'},
-      type:         {as: symbol,         default: 'column'},
+      baseline:                {as: boolean,        default: 'true'},
+      border:                  {as: boolean,        default: 'false'},
+      chart:                   {as: boolean,        default: 'true'},
+      colors:                  {as: array},
+      every:                   {as: integer,        default: '1'},
+      formats:                 {as: array(symbol)},
+      height:                  {as: float,          default: '250'},
+      labels:                  {as: array(boolean)},
+      label_percent_precision: {as: integer,        default: '0'},
+      y_axis_max:              {as: integer,        default: '0'},
+      legend:                  {as: boolean,        default: 'true'},
+      legend_font_size:        {as: integer,        default: '7'},
+      line_widths:             {as: array(float)},
+      steps:                   {as: integer,        default: '4'},
+      ticks:                   {as: boolean,        default: 'true'},
+      type:                    {as: symbol,         default: 'column'}
     }
 
     attr_accessor *ATTRIBUTES.keys
