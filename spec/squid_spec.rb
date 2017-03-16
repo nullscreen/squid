@@ -6,7 +6,7 @@ describe 'Prawn::Document#chart' do
   let(:data) { {} }
   let(:options) { {legend: false, baseline: false, steps: 0, format: :currency} }
   let(:settings) { options }
-  let(:blue_rgb) { [0.18, 0.341, 0.549] }
+  let(:blue_rgb) { [0.1804, 0.3412, 0.549] }
 
   specify 'given no data, does not plot anything' do
     expect(rectangles_of chart).to be_empty
