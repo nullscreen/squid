@@ -6,8 +6,9 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
-## 1.3.2 - unreleased
+## 1.4.0 - 2017.03.15
 
+* [ENHANCEMENT] Require Prawn ~> 2.2.0
 * [ENHANCEMENT] Remove a 'puts' statement left over from development
 
 ## 1.3.0 - 2016.03.01

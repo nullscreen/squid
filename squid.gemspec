@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency             'prawn', '~> 2.0'
+  spec.add_dependency             'prawn', '~> 2.2'
   spec.add_dependency             'activesupport', '>= 4.0' # 3.2 does not have ActiveSupport::NumberHelper#number_to_rounded
   spec.add_development_dependency 'pdf-inspector', '~> 1.2'
   spec.add_development_dependency 'prawn-manual_builder', '~> 0.2.0'
