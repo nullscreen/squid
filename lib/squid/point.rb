@@ -4,7 +4,7 @@ module Squid
   class Point
     extend Format
 
-    def self.for(series, minmax:, height:, labels:, stack:, formats:)
+    def self.for(series, minmax:, height:, labels:, stack:, formats:, precision:)
       @min = Hash.new 0
       @max = Hash.new 0
       min, max = minmax
@@ -14,7 +14,7 @@ module Squid
           h = y_for value, index: i, stack: false, &offset if value
           y = y_for value, index: i, stack: stack, &offset if value
           y = y - offset.call([min, 0].min) if value
-          label = format_for value, formats[series_i] if labels[series_i]
+          label = format_for value, formats[series_i], precision if labels[series_i]
           new y: y, height: h, index: i, label: label, negative: value.to_f < 0
         end
       end

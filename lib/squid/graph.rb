@@ -14,6 +14,7 @@ module Squid
     extend Settings
     has_settings :baseline, :border, :chart, :colors, :every, :formats, :height
     has_settings :legend, :line_widths, :steps, :ticks, :type, :labels
+    has_settings :legend_font_size, :label_percent_precision, :y_axis_max
 
     def initialize(document, data = {}, settings = {})
       @data, @settings = data, settings
@@ -38,7 +39,7 @@ module Squid
     def draw_legend
       labels = @data.keys.reverse.map{|key| key.to_s}
       right = legend.is_a?(Hash) ? legend.fetch(:right, 0) : 0
-      @plot.legend labels, right: right, colors: colors, height: legend_height
+      @plot.legend labels, right: right, colors: colors, height: legend_height, font_size: legend_font_size
     end
 
     def draw_gridlines
@@ -65,7 +66,7 @@ module Squid
     end
 
     def draw_chart(axis, second_axis: false)
-      args = {minmax: axis.minmax, height: grid_height, stack: stack?}
+      args = {minmax: axis.minmax, height: grid_height, stack: stack?, precision: label_percent_precision}
       args[:labels] = items_of labels, skip_first_if: second_axis
       args[:formats] = items_of formats, skip_first_if: second_axis
       points = Point.for axis.data, args
@@ -96,7 +97,7 @@ module Squid
 
     def axis(first:, last:)
       series = @data.values[first, last].map(&:values)
-      options = {steps: steps, stack: stack?, format: formats[first]}
+      options = {steps: steps, stack: stack?, format: formats[first], precision: label_percent_precision, y_max: y_axis_max}
       Axis.new(series, options) {|label| @plot.width_of label}
     end
 

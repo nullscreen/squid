@@ -22,11 +22,11 @@ module Squid
 
     # Draws the graph legend with the given labels.
     # @param [Array<LegendItem>] The labels to write as part of the legend.
-    def legend(labels, height:, right: 0, colors: [])
+    def legend(labels, height:, right: 0, colors: [], font_size:)
       left = @pdf.bounds.width/2
       box(x: left, y: @pdf.bounds.top, w: left, h: height) do
         x = @pdf.bounds.right - right
-        options = {size: 7, height: @pdf.bounds.height, valign: :center}
+        options = {size: font_size, height: @pdf.bounds.height, valign: :center}
         labels.each.with_index do |label, i|
           index = labels.size - 1 - i
           series_color = colors.fetch index, series_colors(index)
@@ -170,14 +170,18 @@ module Squid
     # symbol with the matching color. Labels are written from right to left.
     # @param
     def legend_item(label, x, color, options)
-      size, symbol_padding, entry_padding = 5, 3, 12
-      x -= @pdf.width_of(label, size: 7).ceil
-      @pdf.text_box label, options.merge(at: [x, @pdf.bounds.height])
+      size, symbol_padding, entry_padding = 5, 3, 28
+      x -= @pdf.width_of(label, size: 12).ceil
+      @pdf.text_box legend_formatter(label), options.merge(at: [x, @pdf.bounds.height])
       x -= (symbol_padding + size)
       with fill_color: color do
         @pdf.fill_rectangle [x, @pdf.bounds.height - size], size, size
       end
       x - entry_padding
+    end
+
+    def legend_formatter str
+      str.to_s.humanize.titleize
     end
 
     # Convenience method to wrap a block by setting and unsetting a Prawn
