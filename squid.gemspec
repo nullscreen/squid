@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/fullscreen/squid'
   spec.license       = 'MIT'
 
-  spec.required_ruby_version = '>= 2.1.0' # 2.0 does not have Numeric#step(by:, to:)
+  spec.required_ruby_version = '>= 2.2.0' # support for 2.1 has ended
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'exe'
