@@ -14,7 +14,7 @@ module Squid
           h = y_for value, index: i, stack: false, &offset if value
           y = y_for value, index: i, stack: stack, &offset if value
           y = y - offset.call([min, 0].min) if value
-          label = format_for value, formats[series_i] if labels[series_i]
+          label = format_for value, formats[series_i]
           new y: y, height: h, index: i, label: label, negative: value.to_f < 0
         end
       end
