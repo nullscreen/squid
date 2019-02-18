@@ -33,7 +33,7 @@ module Squid
     end
 
     def self.integer
-      -> (value) { value.to_i }
+      -> (value) { value.to_i if value.present? }
     end
 
     def self.symbol
@@ -59,6 +59,8 @@ module Squid
       labels:       {as: array(boolean)},
       legend:       {as: boolean,        default: 'true'},
       line_widths:  {as: array(float)},
+      min:          {as: integer},
+      max:          {as: integer},
       steps:        {as: integer,        default: '4'},
       ticks:        {as: boolean,        default: 'true'},
       type:         {as: symbol,         default: 'column'},
