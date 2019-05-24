@@ -286,6 +286,23 @@ describe 'Prawn::Document#chart' do
       it { expect(circles_of chart).not_to be_empty }
     end
   end
+
+  context 'given long data keys with narrow space' do
+    let(:settings) { options.merge every: 1, baseline: true }
+    let(:data) { {"Views per playlist start"=>
+      {"STORYTIME/MISC"=>1.2,
+       "PRANKS/CHALLENGES"=>1.3,
+       "SKITS"=>1.1,
+       "*MUSIC*"=>1.0,
+       "RELATIONSHIPS/ADVICE/TIPS"=>1.1,
+       "LOVE/LIFE/FAMILY FUN"=>1.1,
+       "TRAVEL VLOGS"=>1.1,
+       "FITNESS/WORKOUTS"=>1.1}} }
+
+    it 'does not raise Prawn::Errors::CannotFit error' do
+      expect { chart }.not_to raise_error
+    end
+  end
 end
 
 def rectangles_of(output)
@@ -305,7 +322,7 @@ def circles_of(output)
 end
 
 def points_of(output)
- lines_of(output).points.each_slice(2)
+  lines_of(output).points.each_slice(2)
 end
 
 def lines_of(output)

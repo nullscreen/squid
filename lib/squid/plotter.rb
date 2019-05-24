@@ -123,7 +123,7 @@ module Squid
     end
 
     def category_options
-      text_options.merge align: :center, leading: -3, disable_wrap_by_char: true
+      text_options.merge align: :center, leading: -3, disable_wrap_by_char: false
     end
 
     def text_options
