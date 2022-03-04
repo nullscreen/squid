@@ -13,7 +13,7 @@ module Squid
   class Graph
     extend Settings
     has_settings :baseline, :border, :chart, :colors, :every, :formats, :height
-    has_settings :legend, :line_widths, :steps, :ticks, :type, :labels
+    has_settings :legend, :line_widths, :steps, :ticks, :type, :labels, :min, :max
 
     def initialize(document, data = {}, settings = {})
       @data, @settings = data, settings
@@ -96,7 +96,7 @@ module Squid
 
     def axis(first:, last:)
       series = @data.values[first, last].map(&:values)
-      options = {steps: steps, stack: stack?, format: formats[first]}
+      options = {steps: steps, stack: stack?, format: formats[first], min: min, max: max}
       Axis.new(series, options) {|label| @plot.width_of label}
     end
 

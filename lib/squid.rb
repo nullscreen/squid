@@ -27,6 +27,8 @@ module Squid
     # @option settings [Numeric] :steps (4) the number of gridlines.
     # @option settings [Boolean] :ticks (true) whether to plot the ticks.
     # @option settings [Symbol] :type (:column) the type of graph.
+    # @option settings [Numeric] :min
+    # @option settings [Numeric] :max
     def chart(data =  {}, settings = {})
       Graph.new(self, data, settings).draw
     end
