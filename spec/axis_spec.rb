@@ -76,6 +76,13 @@ describe Squid::Axis do
         expect(labels).to eq %w(9.9 -5.1 -20 -35 -50)
       end
     end
+
+    describe 'given :min and :max' do
+      let(:options) { {steps: steps, stack: stack?, format: format, min: -500, max: 1000 } }
+      it "uses the give values as first and last label" do
+        expect(labels).to eq ["1,000", "625", "250", "-125", "-500"]
+      end
+    end
   end
 
   describe '#width' do

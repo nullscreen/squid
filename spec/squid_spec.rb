@@ -241,6 +241,11 @@ describe 'Prawn::Document#chart' do
       it { expect(colors_of(chart).fill_color).to eq [1.0, 0.0, 0.0] }
     end
 
+    describe 'uses a given range with max and min options' do
+      let(:settings) { options.merge(steps: 5, max: 100, min: -100).except(:format) }
+      it { expect(strings_of chart).to eq ["100", "60", "20", "-20", "-60", "-100"] }
+    end
+
     describe 'formats value labels with the value of the :format option' do
       let(:settings) { options.merge label: true, format: :percentage }
       it { expect(strings_of chart).to eq %w(50.0% -30.0% 20.0%) }

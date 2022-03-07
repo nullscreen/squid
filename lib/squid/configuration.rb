@@ -36,6 +36,10 @@ module Squid
       -> (value) { value.to_i }
     end
 
+    def self.optional_integer
+      -> (value) { value && value.to_i }
+    end
+
     def self.symbol
       -> (value) { value.to_sym }
     end
@@ -62,6 +66,8 @@ module Squid
       steps:        {as: integer,        default: '4'},
       ticks:        {as: boolean,        default: 'true'},
       type:         {as: symbol,         default: 'column'},
+      min:          {as: optional_integer, default: nil},
+      max:          {as: optional_integer, default: nil},
     }
 
     attr_accessor *ATTRIBUTES.keys

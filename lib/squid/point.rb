@@ -9,11 +9,16 @@ module Squid
       @max = Hash.new 0
       min, max = minmax
       offset = -> (value) { value * height.to_f / (max-min) }
+      y_offset = nil
       series.map.with_index do |values, series_i|
         values.map.with_index do |value, i|
-          h = y_for value, index: i, stack: false, &offset if value
-          y = y_for value, index: i, stack: stack, &offset if value
-          y = y - offset.call([min, 0].min) if value
+          if value
+            h = y_for value, index: i, stack: false, &offset
+            y = y_for value, index: i, stack: stack, &offset
+            y_offset ||= offset.call(min || 0) # only calculate this once, since the result will never change
+            y = y - y_offset
+          end
+
           label = format_for value, formats[series_i] if labels[series_i]
           new y: y, height: h, index: i, label: label, negative: value.to_f < 0
         end
