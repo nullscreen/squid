@@ -59,5 +59,15 @@ describe Squid::Point do
         expect(points.last.map &:y).to eq [nil, 89.95, 0.0]
       end
     end
+
+    context "given a positive min" do
+      let(:minmax) { [100, 150] }
+      let(:series) { [[110.0, 100, 130.0], [nil, 120.0, 150.0]] }
+
+      it 'generates y values relative to the minimum' do
+        expect(points.first.map &:y).to eq [20.0, 0.0, 60.0]
+        expect(points.last.map &:y).to eq [nil, 40.0, 100.0]
+      end
+    end
   end
 end
