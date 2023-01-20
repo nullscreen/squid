@@ -68,13 +68,13 @@ module Squid
         x = left + w * (index)
         padding = 2
         options = category_options.merge(width: every*w-2*padding, at: [x+padding-w*(every/2.0-0.5), @bottom])
-        @pdf.text_box label, options if (index % every).zero?
+        @pdf.text_box label, **options if (index % every).zero?
         @pdf.stroke_vertical_line @bottom, @bottom - 2, at: x + w/2 if ticks
       end
     end
 
     def points(series, options = {})
-      items(series, options) do |point, w, i, padding|
+      items(series, **options) do |point, w, i, padding|
         x, y = (point.index + 0.5)*w + left, point.y + @bottom
         @pdf.fill_circle [x, y], 5
       end
@@ -83,7 +83,7 @@ module Squid
     def lines(series, options = {})
       x, y = nil, nil
       line_widths = options.delete(:line_widths) { [] }
-      items(series, options) do |point, w, i, padding|
+      items(series, **options) do |point, w, i, padding|
         prev_x, prev_y = x, y
         x, y = (point.index + 0.5)*w + left, point.y + @bottom
         line_width = line_widths.fetch i, 3
@@ -94,14 +94,14 @@ module Squid
     end
 
     def stacks(series, options = {})
-      items(series, options.merge(fill: true)) do |point, w, i, padding|
+      items(series, **options.merge(fill: true)) do |point, w, i, padding|
         x, y = point.index*w + padding + left, point.y + @bottom
         @pdf.fill_rectangle [x, y], w - 2*padding, point.height
       end
     end
 
     def columns(series, options = {})
-      items(series, options.merge(fill: true, count: series.size)) do |point, w, i, padding|
+      items(series, **options.merge(fill: true, count: series.size)) do |point, w, i, padding|
         item_w = (w - 2 * padding)/ series.size
         x, y = point.index*w + padding + left + i*item_w, point.y + @bottom
         @pdf.fill_rectangle [x, y], item_w, point.height

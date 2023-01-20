@@ -6,7 +6,7 @@ describe 'Prawn::Document#chart' do
   let(:data) { {} }
   let(:options) { {legend: false, baseline: false, steps: 0, format: :currency} }
   let(:settings) { options }
-  let(:blue_rgb) { [0.1804, 0.3412, 0.549] }
+  let(:blue_rgb) { %w[2e 57 8c].map { |c| (c.hex / 255.0).round(4) } }
 
   specify 'given no data, does not plot anything' do
     expect(rectangles_of chart).to be_empty
@@ -40,7 +40,7 @@ describe 'Prawn::Document#chart' do
     end
 
     it 'has blue columns' do
-      expect(colors_of(chart).fill_color).to eq blue_rgb
+      expect(colors_of(chart).fill_color.map { |c| c.round(4) }).to eq blue_rgb
     end
 
     it 'does not include value labels on top of the chart' do
