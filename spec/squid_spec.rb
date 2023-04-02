@@ -6,7 +6,7 @@ describe 'Prawn::Document#chart' do
   let(:data) { {} }
   let(:options) { {legend: false, baseline: false, steps: 0, format: :currency} }
   let(:settings) { options }
-  let(:blue_rgb) { %w[2e 57 8c].map { |c| (c.hex / 255.0).round(4) } }
+  let(:blue_rgb) { [0.1804, 0.3412, 0.549] }
 
   specify 'given no data, does not plot anything' do
     expect(rectangles_of chart).to be_empty
