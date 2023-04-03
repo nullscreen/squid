@@ -36,3 +36,8 @@ jobs:
           bundler-cache: true
       - name: rspec
         run: bundle exec rspec
+      - name: Upload coverage reports to Codecov
+        if: matrix.ruby_version == '2.7' && matrix.rails_version == '6'
+        uses: codecov/codecov-action@v3
+        with:
+          files: coverage/coverage.xml
