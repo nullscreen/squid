@@ -6,6 +6,10 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
+## Unreleased
+
+* [REMOVED] Remove support for Ruby < 2.4
+
 ## 1.4.1 - 2017.09.05
 
 * [ENHANCEMENT] Require Ruby >= 2.2 (since support for 2.1 has ended)
