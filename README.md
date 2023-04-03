@@ -5,7 +5,7 @@ Squid helps you write Ruby code to draw graphs in PDF files.
 
 The **source code** is available on [GitHub](https://github.com/Fullscreen/squid) and the **documentation** on [RubyDoc](http://www.rubydoc.info/github/Fullscreen/squid/master/Squid/Interface).
 
-[![Build Status](http://img.shields.io/travis/Fullscreen/squid/master.svg)](https://travis-ci.org/Fullscreen/squid)
+[![Build Status](https://github.com/nullscreen/squid/actions/workflows/ci.yml/badge.svg)](https://github.com/nullscreen/squid/actions)
 [![Coverage Status](http://img.shields.io/coveralls/Fullscreen/squid/master.svg)](https://coveralls.io/r/Fullscreen/squid)
 [![Dependency Status](http://img.shields.io/gemnasium/Fullscreen/squid.svg)](https://gemnasium.com/Fullscreen/squid)
 [![Code Climate](http://img.shields.io/codeclimate/github/Fullscreen/squid.svg)](https://codeclimate.com/github/Fullscreen/squid)
@@ -56,7 +56,7 @@ How to contribute
 If you’ve made it this far in the README… thanks! :v:
 Feel free to try it the gem, explore the code, and send issues or pull requests.
 
-All pull requests will have to make Travis and Code Climate happy in order to be accepted. :kissing_smiling_eyes:
+All pull requests will have to make GitHub Actions and Code Climate happy in order to be accepted. :kissing_smiling_eyes:
 
 You can also run the tests locally with `bundle exec rspec`.
 

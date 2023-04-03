@@ -1,0 +1,51 @@
+name: CI
+on: [push]
+
+jobs:
+  specs:
+    name: Run Specs
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby_version:
+          - 2.2.10
+          - 2.4.10
+          - 2.7.8
+          - 3.0.6
+          - 3.1.4
+          - 3.2.2
+        gemfile:
+          - activesupport-4.x
+          - activesupport-5.x
+          - activesupport-6.x
+          - activesupport-7.x
+        exclude:
+          - ruby_version: 2.2.10
+            gemfile: activesupport-6.x
+          - ruby_version: 2.2.10
+            gemfile: activesupport-7.x
+          - ruby_version: 2.4.10
+            gemfile: activesupport-6.x
+          - ruby_version: 2.4.10
+            gemfile: activesupport-7.x
+          - ruby_version: 2.7.8
+            gemfile: activesupport-4.x
+          - ruby_version: 3.0.6
+            gemfile: activesupport-4.x
+          - ruby_version: 3.1.4
+            gemfile: activesupport-4.x
+          - ruby_version: 3.2.2
+            gemfile: activesupport-4.x
+
+    env:
+      BUNDLE_GEMFILE: gemfiles/Gemfile.${{ matrix.gemfile }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby_version }}
+          bundler-cache: true
+      - name: RSpec
+        run: bundle exec rspec spec
